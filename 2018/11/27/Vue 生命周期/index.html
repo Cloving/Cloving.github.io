@@ -2,18 +2,24 @@
 <html lang="zh">
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
-<title>Hexo</title>
+<title>Vue生命周期 - Hexo</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-    <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/index.html">
+    <meta name="description" content="简介定义：每个 Vue 实例在被创建之前都要经过一系列的初始化过程。例如需要设置数据监听、编译模板、挂载实例到 DOM、在数据变化时更新 DOM 等，不同的时期对应不同的周期； 生命周期函数：不同周期开放出来的接口；">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue生命周期">
+<meta property="og:url" content="http://yoursite.com/2018/11/27/Vue 生命周期/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="简介定义：每个 Vue 实例在被创建之前都要经过一系列的初始化过程。例如需要设置数据监听、编译模板、挂载实例到 DOM、在数据变化时更新 DOM 等，不同的时期对应不同的周期； 生命周期函数：不同周期开放出来的接口；">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/Cloving/Atlas-Github/master/note/Vue%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E5%9B%BE.png">
+<meta property="og:updated_time" content="2018-09-18T07:49:20.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
+<meta name="twitter:title" content="Vue生命周期">
+<meta name="twitter:description" content="简介定义：每个 Vue 实例在被创建之前都要经过一系列的初始化过程。例如需要设置数据监听、编译模板、挂载实例到 DOM、在数据变化时更新 DOM 等，不同的时期对应不同的周期； 生命周期函数：不同周期开放出来的接口；">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Cloving/Atlas-Github/master/note/Vue%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E5%9B%BE.png">
 
 
 
@@ -79,7 +85,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/">
             
-                <img src="/images/logo.svg" alt="Hexo" height="28">
+                <img src="/images/logo.svg" alt="Vue生命周期" height="28">
             
             </a>
         </div>
@@ -87,7 +93,7 @@
             
             <div class="navbar-start">
                 
-                <a class="navbar-item is-active" href="/">Home</a>
+                <a class="navbar-item" href="/">Home</a>
                 
                 <a class="navbar-item" href="/archives">Archives</a>
                 
@@ -124,8 +130,7 @@
     <section class="section">
         <div class="container">
             <div class="columns">
-                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main">
-    <div class="card">
+                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main"><div class="card">
     
     <div class="card-content article ">
         
@@ -149,127 +154,85 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                <a class="has-link-black-ter" href="/2018/11/27/Vue 生命周期/">Vue生命周期</a>
+                Vue生命周期
             
         </h1>
         <div class="content">
             <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p><strong>定义</strong>：每个 <code>Vue</code> 实例在被创建之前都要经过一系列的初始化过程。例如需要设置数据监听、编译模板、挂载实例到 <code>DOM</code>、在数据变化时更新 <code>DOM</code> 等，不同的时期对应不同的周期；</p>
 <p><strong>生命周期函数：</strong>不同周期开放出来的接口；</p>
+<a id="more"></a>
+<p><img src="https://raw.githubusercontent.com/Cloving/Atlas-Github/master/note/Vue%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E5%9B%BE.png" alt="Vue生命周期"></p>
+<p><strong>Vue的生命周期函数主要包括以下几个:</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">beforeCreate</th>
+<th>created</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">beforeMount</td>
+<td>mounted</td>
+</tr>
+<tr>
+<td style="text-align:left">beforeUpdate</td>
+<td>updated</td>
+</tr>
+<tr>
+<td style="text-align:left">beforeDestroy</td>
+<td>destroyed</td>
+</tr>
+</tbody>
+</table>
+<h2 id="流程解读"><a href="#流程解读" class="headerlink" title="流程解读"></a>流程解读</h2><p><strong>第一步：</strong>初始化事件和生命周期。此时\$data、\$el和message均处于undefined状态。（前缀 <code>$</code>，以便与用户定义的属性区分开来）。</p>
+<p><strong>beforeCreate</strong>：此时组件实例未创建，各个属性均没有生成。</p>
+<p><strong>第二步：</strong>Init ==injections== &amp; reactivity。属性均已==注入==绑定，而且被<code>$watch</code>变成<code>reactivity</code>。但是<code>$el</code>还是没有生成，也就是<code>DOM</code>没有生成；</p>
+<p><strong>created：</strong>\$data和message均已存在，\$el还没有。</p>
+<p><strong>第三步：</strong>判断vue实例中是否有\$el。如果有，则判断是否有template。如果没有则在手动挂载\$el之后，再判断是否有template。</p>
+<p><strong>第四步：</strong></p>
+<p>1、在实例内部有template属性的时候，直接用内部的，然后调用render函数去渲染。 </p>
+<p>2、在实例内部没有找到template，就调用外部的html。实例内部的template属性比外部的优先级高。</p>
+<p>3、要是前两者都不满足，那么就抛出错误。</p>
+<p><strong>beforeMount：</strong>只编译了模板，并没有挂载属性。即此时存在的还是虚拟DOM</p>
+<p><strong>第五步：</strong>创建vm.$el替换虚拟DOM（vm为初始化的实例对象）。</p>
+<p><strong>mounted：</strong>此时属性已挂载。\$data、\$el和message均处于已定义的状态。</p>
+<h3 id="beforeUpdate和updated："><a href="#beforeUpdate和updated：" class="headerlink" title="beforeUpdate和updated："></a>beforeUpdate和updated：</h3><p>当数据改变时，这两个生命周期函数控制view层重新渲染。</p>
+<p><strong>渲染步骤：</strong>数据改变——导致虚拟DOM的改变——调用这两个生命钩子去改变视图</p>
+<p><strong>1、</strong>只有当数据与模板中的数据绑定才会这两个函数才会有效；</p>
+<figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> vm = <span class="hljs-keyword">new</span> Vue(&#123;<br>  <span class="hljs-attr">el</span>: <span class="hljs-string">'#app'</span>,<br>  <span class="hljs-attr">template</span>: <span class="hljs-string">'&lt;div id="app"&gt;&lt;/div&gt;'</span>,  <span class="hljs-comment">// 这里需要是&lt;div id="app"&gt;&#123;&#123;a&#125;&#125;&lt;/div&gt;才有效果</span><br>  beforeUpdate: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>&#123;<br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'调用了beforeUpdate'</span>)<br>  &#125;,<br>  <span class="hljs-attr">updated</span>: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>&#123;<br>    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'调用了uodated'</span>)<br>  &#125;,<br>  <span class="hljs-attr">data</span>: &#123;<br>    <span class="hljs-attr">a</span>: <span class="hljs-number">1</span><br>  &#125;<br>&#125;)<br><br>vm.a = <span class="hljs-number">2</span> <span class="hljs-comment">// 虽然数据发生了改变，但是并未与模板绑定，所以控制台不会打印任何一条语句</span><br></code></pre></td></tr></table></figure>
+<p><strong>2、</strong>数据改变后，在beforeUpdate和updated中分别<code>console.log(this.$el)</code>发现输出结果相同</p>
+<p><strong>beforeUpdate：</strong>数据更新时调用，发生在虚拟 DOM 重新渲染和打补丁之前。<br><strong>updated：</strong>由于数据更改导致的虚拟 DOM 重新渲染和打补丁，在这之后会调用该钩子。</p>
+<p>this.$el是一个对象，或者说是一个指针。所以更新之后显示的都是一样的。可以通过</p>
+<figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-built_in">console</span>.log(<span class="hljs-string">"真实的DOM结构: "</span>+ <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'app'</span>).innerHTML)<br></code></pre></td></tr></table></figure>
+<p>观察真实的DOM结构比对。实际中可以发现beforeUpdate中还是原来的数据，updated变成了之后的数据。</p>
+<h3 id="beforeDestory和destoryed："><a href="#beforeDestory和destoryed：" class="headerlink" title="beforeDestory和destoryed："></a>beforeDestory和destoryed：</h3><p>1、使用<code>app.$destroy()</code>进行销毁；</p>
+<p>销毁后DOM元素仍然存在，但是再次改变data的值，beforeUpdate和updated均不起作用。即<code>Vue</code> 实例指示的所有东西都会解绑定，所有的事件监听器会被移除，所有的子实例也会被销毁</p>
+<h2 id="生命周期函数的使用场景："><a href="#生命周期函数的使用场景：" class="headerlink" title="生命周期函数的使用场景："></a>生命周期函数的使用场景：</h2><figure class="highlight hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs json">beforeCreate : 举个栗子：可以在这加个loading事件 <br>created ：在这结束loading，还做一些初始化，实现函数自执行 <br>mounted ： 在这发起后端请求，拿回数据，配合路由钩子做一些事情<br>beforeDestroy： 你确认删除XX吗？ destroyed ：当前组件已被删除，清空相关内容<br></code></pre></td></tr></table></figure>
+<h2 id="示例代码：（监测-el、-data、-message变化）"><a href="#示例代码：（监测-el、-data、-message变化）" class="headerlink" title="示例代码：（监测\$el、\$data、\$message变化）"></a>示例代码：（监测\$el、\$data、\$message变化）</h2><figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><code class="hljs javascript">&lt;!DOCTYPE html&gt;<br>&lt;html lang="en"&gt;<br>&lt;head&gt;<br>  &lt;meta charset="UTF-8"&gt;<br>  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;<br>  &lt;meta http-equiv="X-UA-Compatible" content="ie=edge"&gt;<br>  &lt;title&gt;vue生命周期学习&lt;/title&gt;<br>  &lt;script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"&gt;&lt;/script&gt;<br>&lt;/head&gt;<br>&lt;body&gt;<br>  &lt;div id="app"&gt;<br>    &lt;h1&gt;&#123;&#123;message&#125;&#125;&lt;/h1&gt;<br>  &lt;/div&gt;<br>&lt;/body&gt;<br>&lt;script&gt;<br>  var vm = new Vue(&#123;<br>    el: '#app',<br>    data: &#123;<br>      message: 'Vue的生命周期'<br>    &#125;,<br>    // 模板将会 替换 挂载的元素<br>    beforeCreate: function() &#123;<br>      console.group('------beforeCreate创建前状态------');<br>      console.log("%c%s", "color:red" , "el     : " + this.$el); //undefined<br>      console.log("%c%s", "color:red","data   : " + this.$data); //undefined <br>      console.log("%c%s", "color:red","message: " + this.message) <br>    &#125;,<br>    created: function() &#123;<br>      console.group('------created创建完毕状态------');<br>      console.log("%c%s", "color:red","el     : " + this.$el); //undefined<br>      console.log("%c%s", "color:red","data   : " + this.$data); //已被初始化 <br>      console.log("%c%s", "color:red","message: " + this.message); //已被初始化<br>    &#125;,<br>    beforeMount: function() &#123;<br>      console.group('------beforeMount挂载前状态------');<br>      console.log("%c%s", "color:red","el     : " + (this.$el)); //已被初始化<br>      console.log(this.$el);<br>      console.log("%c%s", "color:red","data   : " + this.$data); //已被初始化  <br>      console.log("%c%s", "color:red","message: " + this.message); //已被初始化  <br>    &#125;,<br>    mounted: function() &#123;<br>      console.group('------mounted 挂载结束状态------');<br>      console.log("%c%s", "color:red","el     : " + this.$el); //已被初始化<br>      console.log(this.$el);<br>      console.log("%c%s", "color:red","data   : " + this.$data); //已被初始化<br>      console.log("%c%s", "color:red","message: " + this.message); //已被初始化 <br>    &#125;,<br>    beforeUpdate: function () &#123;<br>      console.group('beforeUpdate 更新前状态===============》');<br>      console.log("真实的DOM结构: "+ document.getElementById('app').innerHTML)<br>      console.log("%c%s", "color:red","el     : " + this.$el);<br>      console.log(this.$el);   <br>      console.log("%c%s", "color:red","data   : " + this.$data); <br>      console.log("%c%s", "color:red","message: " + this.message); <br>    &#125;,<br>    updated: function () &#123;<br>      console.group('updated 更新完成状态===============》');<br>      console.log("真实的DOM结构: "+ document.getElementById('app').innerHTML)<br>      console.log("%c%s", "color:red","el     : " + this.$el);<br>      console.log(this.$el); <br>      console.log("%c%s", "color:red","data   : " + this.$data); <br>      console.log("%c%s", "color:red","message: " + this.message); <br>    &#125;,<br>    beforeDestroy: function () &#123;<br>      console.group('beforeDestroy 销毁前状态===============》');<br>      console.log("%c%s", "color:red","el     : " + this.$el);<br>      console.log(this.$el);    <br>      console.log("%c%s", "color:red","data   : " + this.$data); <br>      console.log("%c%s", "color:red","message: " + this.message); <br>    &#125;,<br>    destroyed: function () &#123;<br>      console.group('destroyed 销毁完成状态===============》');<br>      console.log("%c%s", "color:red","el     : " + this.$el);<br>      console.log(this.$el);  <br>      console.log("%c%s", "color:red","data   : " + this.$data); <br>      console.log("%c%s", "color:red","message: " + this.message)<br>    &#125;<br>  &#125;)<br>&lt;/script&gt;<br>&lt;/html&gt;<br></code></pre></td></tr></table></figure>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c#">https://segmentfault.com/a/1190000011381906<br>https://cn.vuejs.org/v2/api/#template<br>https://juejin.im/post/5afd7eb16fb9a07ac5605bb3<br>https://segmentfault.com/q/1010000011521681<br></code></pre></td></tr></table></figure>
+
         </div>
         
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/2018/11/27/Vue 生命周期/#more">阅读更多</a>
-                </div>
-            </div>
-        </div>
         
         
     </div>
 </div>
 
 
-
-
-
-    <div class="card">
-    
-    <div class="card-content article ">
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
         
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2018-11-27T08:46:36.100Z">2018-11-27</time>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    1 分钟 读完 (大约 121 个字)
-                </span>
-                
-            </div>
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2018/11/27/hello-world/">
+                <span class="level-item">Hello World</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
         </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2018/11/27/hello-world/">Hello World</a>
-            
-        </h1>
-        <div class="content">
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo new <span class="hljs-string">"My New Post"</span><br></code></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo server<br></code></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo generate<br></code></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo deploy<br></code></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-        </div>
-        
-        
         
     </div>
 </div>
-
-
-
-
-
-    <div class="card">
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2018-09-10T10:44:07.000Z">2018-09-10</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/Hexo/">Hexo</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    3 分钟 读完 (大约 407 个字)
-                </span>
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2018/09/10/hexo/">置顶Hexo各种配置</a>
-            
-        </h1>
-        <div class="content">
-            <p>本文主要用于记录:</p>
-<ol>
-<li>使用Hexo配置Blog的具体过程;</li>
-<li>在配置中所遇到的各种问题;</li>
-<li>不定时持续更新……</li>
-</ol>
-        </div>
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/2018/09/10/hexo/#more">阅读更多</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
 
 
 </div>
@@ -712,7 +675,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/">
                 
-                    <img src="/images/logo.svg" alt="Hexo" height="28">
+                    <img src="/images/logo.svg" alt="Vue生命周期" height="28">
                 
                 </a>
                 <p class="is-size-7">
