@@ -5,8 +5,7 @@ html {
   font-size: 14px;
 }
 body {
-  background-color: #f7f7f7;
-  background-image: no-repeat fixed url("https://raw.githubusercontent.com/Cloving/Atlas-Github/master/blog/backgroundImage/bg_9.png");
+  background: no-repeat fixed url("https://raw.githubusercontent.com/Cloving/Atlas-Github/master/blog/backgroundImage/bg_9.png");
 }
 body,
 button,
