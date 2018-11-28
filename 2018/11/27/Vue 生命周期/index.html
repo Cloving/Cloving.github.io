@@ -240,20 +240,18 @@
     <div class="card-content">
         <h3 class="title is-5 has-text-weight-normal">评论</h3>
         
-<div id="comment-container"></div>
-<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
-<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<div id="valine-thread"></div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
 <script>
-	var gitment = new Gitment({
-		id: '2018/11/27/Vue 生命周期/',
-		owner: 'Cloving',
-		repo: 'https://github.com/Cloving/comment-system.git',
-		oauth: {
-			client_id: '02ce1d4e30445d0414db',
-			client_secret: '50ee7420cbedf0e806391d08f300145dfc04dc47',
-		},
-	})
-	gitment.render('comment-container')
+    new Valine({
+        el: '#valine-thread' ,
+        notify: false,
+        verify: false,
+        app_id: 'cnWuYXtAptT6FdU8rGmtCKXy-gzGzoHsz',
+        app_key: 'mxfKEzvpXpL0bnGXGrp129vf',
+        placeholder: '请在这里输入您想说的话'
+    });
 </script>
 
     </div>
