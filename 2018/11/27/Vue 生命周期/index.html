@@ -2,7 +2,7 @@
 <html lang="zh">
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
-<title>Vue生命周期 - Hexo</title>
+<title>Vue生命周期 - Daito</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
@@ -11,7 +11,7 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="Vue生命周期">
 <meta property="og:url" content="http://yoursite.com/2018/11/27/Vue 生命周期/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:site_name" content="Daito">
 <meta property="og:description" content="简介定义：每个 Vue 实例在被创建之前都要经过一系列的初始化过程。例如需要设置数据监听、编译模板、挂载实例到 DOM、在数据变化时更新 DOM 等，不同的时期对应不同的周期； 生命周期函数：不同周期开放出来的接口；">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://raw.githubusercontent.com/Cloving/Atlas-Github/master/note/Vue%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E5%9B%BE.png">
@@ -25,7 +25,7 @@
 
 
 
-<link rel="icon" href="/images/favicon.svg">
+<link rel="icon" href="/images/favicon.png">
 
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
@@ -93,15 +93,15 @@
             
             <div class="navbar-start">
                 
-                <a class="navbar-item" href="/">Home</a>
+                <a class="navbar-item" href="/">首页</a>
                 
-                <a class="navbar-item" href="/archives">Archives</a>
+                <a class="navbar-item" href="/archives">归档</a>
                 
-                <a class="navbar-item" href="/categories">Categories</a>
+                <a class="navbar-item" href="/categories">分类</a>
                 
-                <a class="navbar-item" href="/tags">Tags</a>
+                <a class="navbar-item" href="/tags">标签</a>
                 
-                <a class="navbar-item" href="/about">About</a>
+                <a class="navbar-item" href="/about">关于我</a>
                 
             </div>
             
@@ -235,6 +235,29 @@
 </div>
 
 
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">评论</h3>
+        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+	var gitment = new Gitment({
+		id: '2018/11/27/Vue 生命周期/',
+		owner: 'Cloving',
+		repo: 'https://github.com/Cloving/comment-system.git',
+		oauth: {
+			client_id: '02ce1d4e30445d0414db',
+			client_secret: '50ee7420cbedf0e806391d08f300145dfc04dc47',
+		},
+	})
+	gitment.render('comment-container')
+</script>
+
+    </div>
+</div>
 </div>
                 
 
@@ -352,18 +375,18 @@
     <div class="card-content">
         <div class="menu">
         <h3 class="menu-label">
-            链接
+            链接库
         </h3>
         <ul class="menu-list">
         
             <li>
-                <a class="level is-mobile" href="https://hexo.io" target="_blank">
+                <a class="level is-mobile" href="https://book.douban.com/people/127352614/" target="_blank">
                     <span class="level-left">
-                        <span class="level-item">Hexo</span>
+                        <span class="level-item">豆瓣读书</span>
                     </span>
-                    <span class="level-right">
-                        <span class="level-item tag">https://hexo.io</span>
-                    </span>
+                    <!-- <span class="level-right">
+                        <span class="level-item tag">https://book.douban.com/people/127352614/</span>
+                    </span> -->
                 </a>
             </li>
         
@@ -372,9 +395,9 @@
                     <span class="level-left">
                         <span class="level-item">PPOffice</span>
                     </span>
-                    <span class="level-right">
+                    <!-- <span class="level-right">
                         <span class="level-item tag">https://github.com/ppoffice</span>
-                    </span>
+                    </span> -->
                 </a>
             </li>
         
@@ -641,8 +664,10 @@
                 
                 </a>
                 <p class="is-size-7">
-                &copy; 2018 John Doe&nbsp;
-                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a href="http://github.com/ppoffice/hexo-theme-icarus">Icarus</a>
+                    &copy; 2018 Cloving&nbsp;
+                    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> &  Theme by 
+                    <a href="http://github.com/ppoffice/hexo-theme-icarus">Icarus</a> & Theme modified by
+                    <a href="http://yaodongsheng.com/about">Daito</a>
                 </p>
             </div>
             <div class="level-end">
