@@ -5,14 +5,14 @@ html {
   font-size: 14px;
 }
 body {
-  background: fixed url("https://github.com/Cloving/Atlas-Github/blob/master/blog/backgroundImage/bg_9.png?raw=true");
+  background: no-repeat fixed url("https://raw.githubusercontent.com/Cloving/Atlas-Github/master/blog/backgroundImage/bg_9.png");
 }
 body,
 button,
 input,
 select,
 textarea {
-  font-family: "PingFang SC", "Source Han Sans SC", "Ubuntu", "Roboto", "Open Sans", "Microsoft YaHei", sans-serif;
+  font-family: "Ubuntu", "Roboto", "Open Sans", "Microsoft YaHei", sans-serif;
 }
 @media screen and (min-width: 1280px) {
   .is-1-column .container,
@@ -54,6 +54,9 @@ textarea {
   overflow: hidden;
   border-radius: 3px;
 }
+.card:hover {
+  box-shadow: 0 8px 17px 2px rgba(0,0,0,0.2);
+}
 .card + .card,
 .card + .column-right-shadow {
   margin-top: 1.5rem;
@@ -62,28 +65,6 @@ textarea {
   overflow: visible;
   box-shadow: none;
   background: transparent;
-}
-.card-item {
-  position: relative;
-  transition: all 0.3s ease-in-out;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-  transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
-}
-.card-item:after {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-  transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
-}
-.card-item:hover {
-  -webkit-transform: scale(1.25, 1.25);
-  transform: scale(1.25, 1.25);
 }
 img.thumbnail {
   object-fit: cover;

@@ -2,22 +2,18 @@
 <html lang="zh">
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
-<title>Hexo配置 - Daito - 修行的路注定是孤独的</title>
+<title>分类: 基础原理类 - Daito - 修行的路注定是孤独的</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-    <meta name="description" content="本文主要用于记录:  使用Hexo配置Blog的具体过程; 在配置中所遇到的各种问题; 不定时持续更新……">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Hexo配置">
-<meta property="og:url" content="http://yoursite.com/2018/09/10/hexo/index.html">
+    <meta property="og:type" content="website">
+<meta property="og:title" content="Daito - 修行的路注定是孤独的">
+<meta property="og:url" content="http://yoursite.com/categories/Vue/基础原理类/index.html">
 <meta property="og:site_name" content="Daito - 修行的路注定是孤独的">
-<meta property="og:description" content="本文主要用于记录:  使用Hexo配置Blog的具体过程; 在配置中所遇到的各种问题; 不定时持续更新……">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-11-29T08:23:53.784Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo配置">
-<meta name="twitter:description" content="本文主要用于记录:  使用Hexo配置Blog的具体过程; 在配置中所遇到的各种问题; 不定时持续更新……">
+<meta name="twitter:title" content="Daito - 修行的路注定是孤独的">
 
 
 
@@ -128,12 +124,26 @@
     <section class="section">
         <div class="container">
             <div class="columns">
-                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main"><div class="card card-item">
+                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main"><div class="card">
+    <div class="card-content">
+        <nav class="breadcrumb" aria-label="breadcrumbs">
+        <ul>
+            <li><a href="/categories">分类</a></li>
+            
+            <li><a href="/categories/Vue/">Vue</a></li>
+            
+            <li class="is-active"><a href="#" aria-current="page">基础原理类</a></li>
+        </ul>
+        </nav>
+    </div>
+</div>
+
+    <div class="card card-item">
     
     <div class="card-image">
-        <span class="image is-7by1">
-            <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/backgroundImage/bg_1.jpeg?raw=true" alt="Hexo配置">
-        </span>
+        <a href="/2018/09/10/Vue 生命周期/" class="image is-7by1">
+            <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/backgroundImage/bg_1.jpeg?raw=true" alt="Vue生命周期">
+        </a>
     </div>
     
     <div class="card-content article ">
@@ -143,14 +153,14 @@
                 <time class="level-item has-text-grey" datetime="2018-09-10T10:44:07.000Z">2018-09-10</time>
                 
                 <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/Hexo/">Hexo</a>
+                <a class="has-link-grey -link" href="/categories/Vue/">Vue</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/Vue/基础原理类/">基础原理类</a>
                 </div>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    3 分钟 读完 (大约 407 个字)
+                    10 分钟 读完 (大约 1550 个字)
                 </span>
                 
             </div>
@@ -158,45 +168,21 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                Hexo配置
+                <a class="has-link-black-ter" href="/2018/09/10/Vue 生命周期/">Vue生命周期</a>
             
         </h1>
         <div class="content">
-            <p>本文主要用于记录:</p>
-<ol>
-<li>使用Hexo配置Blog的具体过程;</li>
-<li>在配置中所遇到的各种问题;</li>
-<li>不定时持续更新……</li>
-</ol>
-<a id="more"></a>
-<h1 id="PageStyle"><a href="#PageStyle" class="headerlink" title="PageStyle"></a>PageStyle</h1><h2 id="选中文字的颜色与背景色设置"><a href="#选中文字的颜色与背景色设置" class="headerlink" title="选中文字的颜色与背景色设置"></a>选中文字的颜色与背景色设置</h2><p>默认情况下选中文字，文字颜色会变成白色，背景色会变成蓝色。如果需要对默认的颜色进行修改。那么需要以下命令操作。<br><figure class="highlight css hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-pseudo">::-moz-selection</span> <br>  <span class="hljs-selector-tag">color</span> <span class="hljs-selector-tag">white</span><br>  <span class="hljs-selector-tag">text-shadow</span> <span class="hljs-selector-tag">none</span><br>  <span class="hljs-selector-tag">background</span> <span class="hljs-selector-id">#ff7e79</span><br><br><span class="hljs-selector-pseudo">::selection</span> <br>  <span class="hljs-selector-tag">color</span> <span class="hljs-selector-tag">white</span><br>  <span class="hljs-selector-tag">text-shadow</span> <span class="hljs-selector-tag">none</span><br>  <span class="hljs-selector-tag">background</span> <span class="hljs-selector-id">#ff7e79</span><br></code></pre></td></tr></table></figure></p>
-<h2 id="桌面板娘"><a href="#桌面板娘" class="headerlink" title="桌面板娘"></a>桌面板娘</h2><p>桌面板娘需要用到<a href="https://github.com/EYHN/hexo-helper-live2d" target="_blank" rel="noopener">hexo-helper-live2d</a>与<a href="https://github.com/xiazeyu/live2d-widget-models" target="_blank" rel="noopener">live2d-widget-model</a>。<a href="https://zh.moegirl.org/zh-hans/Live2D" target="_blank" rel="noopener">live2d</a>的原理是通过将一系列的2D图像进行平移、旋转和变形等操作，生成一个具有自然动画效果的可动人物模型。</p>
-<p>1.在package.json中添加hexo-helper-live2d依赖，之后在blog根目录执行yarn;</p>
-<p>2.之后在根目录下的_config.yml文件中添加相应配置(参考<a href="https://github.com/EYHN/hexo-helper-live2d" target="_blank" rel="noopener">hexo-helper-live2d</a>)。不能够在theme下的_config.yml文件中配置，否则不起效果;</p>
-<p>3.如果想要更改live2d的模型(参考<a href="https://github.com/xiazeyu/live2d-widget-models" target="_blank" rel="noopener">live2d-widget-model</a>)。在blog的node_modules中执行<br><figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript">npm install live2d-widget-model-XXX<br></code></pre></td></tr></table></figure></p>
-<p>XXX表示模型的名称。之后在文件_config.yml中输入对应的模型：<br><figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs javascript">model:<br>  use: live2d-widget-model-koharu<br></code></pre></td></tr></table></figure></p>
-<p>注意以上操作不能实时更改，需要在之后重新执行：<br><figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs javascript">hexo clean<br>hexo g<br>hexo s<br></code></pre></td></tr></table></figure></p>
-
+            <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p><strong>定义</strong>：每个 <code>Vue</code> 实例在被创建之前都要经过一系列的初始化过程。例如需要设置数据监听、编译模板、挂载实例到 <code>DOM</code>、在数据变化时更新 <code>DOM</code> 等，不同的时期对应不同的周期；</p>
+<p><strong>生命周期函数：</strong>不同周期开放出来的接口；</p>
         </div>
         
         
-        
-        <div class="social-share"></div>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css">
-<script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script>
-        
-    </div>
-</div>
-
-
-<div class="card card-transparent">
-    <div class="level post-navigation is-flex-wrap is-mobile">
-        
-        <div class="level-start">
-            <a class="level level-item has-link-grey  article-nav-prev" href="/2018/11/29/Vue 生命周期/">
-                <i class="level-item fas fa-chevron-left"></i>
-                <span class="level-item">Vue生命周期</span>
-            </a>
+        <div class="level is-mobile">
+            <div class="level-start">
+                <div class="level-item">
+                <a class="button is-size-7 is-light" href="/2018/09/10/Vue 生命周期/#more">阅读更多</a>
+                </div>
+            </div>
         </div>
         
         
@@ -205,26 +191,8 @@
 
 
 
-<div class="card">
-    <div class="card-content">
-        <h3 class="title is-5 has-text-weight-normal">评论</h3>
-        
-<div id="valine-thread"></div>
-<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
-<script>
-    new Valine({
-        el: '#valine-thread' ,
-        notify: false,
-        verify: false,
-        app_id: 'cnWuYXtAptT6FdU8rGmtCKXy-gzGzoHsz',
-        app_key: 'mxfKEzvpXpL0bnGXGrp129vf',
-        placeholder: '请在这里输入您想说的话'
-    });
-</script>
 
-    </div>
-</div>
+
 </div>
                 
 
@@ -276,7 +244,7 @@
                         分类
                     </p>
                     <p class="title has-text-weight-normal">
-                        2
+                        4
                     </p>
                 </div>
             </div>
@@ -286,7 +254,7 @@
                         标签
                     </p>
                     <p class="title has-text-weight-normal">
-                        0
+                        3
                     </p>
                 </div>
             </div>
@@ -373,14 +341,6 @@
             </h3>
             <ul class="menu-list">
             <li>
-        <a class="level is-marginless" href="/categories/Hexo/">
-            <span class="level-start">
-                <span class="level-item">Hexo</span>
-            </span>
-            <span class="level-end">
-                <span class="level-item tag">1</span>
-            </span>
-        </a></li><li>
         <a class="level is-marginless" href="/categories/Vue/">
             <span class="level-start">
                 <span class="level-item">Vue</span>
@@ -388,13 +348,46 @@
             <span class="level-end">
                 <span class="level-item tag">1</span>
             </span>
-        </a></li>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/Vue/基础原理类/">
+            <span class="level-start">
+                <span class="level-item">基础原理类</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li></ul></li><li>
+        <a class="level is-marginless" href="/categories/数据结构与算法/">
+            <span class="level-start">
+                <span class="level-item">数据结构与算法</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/数据结构与算法/二分查找/">
+            <span class="level-start">
+                <span class="level-item">二分查找</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li></ul></li>
             </ul>
         </div>
     </div>
 </div>
     
         
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            标签云
+        </h3>
+        <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/Vue/" style="font-size: 10px;">Vue</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a>
+    </div>
+</div>
+
     
     
         <div class="column-right-shadow is-hidden-widescreen ">
@@ -408,18 +401,18 @@
         
         <article class="media">
             
-            <a href="/2018/11/29/Vue 生命周期/" class="media-left">
+            <a href="/2018/10/20/二分搜索算法/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/backgroundImage/bg_2.jpeg?raw=true" alt="Vue生命周期">
+                    <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/backgroundImage/bg_2.jpeg?raw=true" alt="二分查找算法">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-11-29T08:23:45.691Z">2018-11-29</time></div>
-                    <a href="/2018/11/29/Vue 生命周期/" class="has-link-black-ter is-size-6">Vue生命周期</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-10-20T11:52:07.000Z">2018-10-20</time></div>
+                    <a href="/2018/10/20/二分搜索算法/" class="has-link-black-ter is-size-6">二分查找算法</a>
                     <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Vue/">Vue</a>
+                        <a class="has-link-grey -link" href="/categories/数据结构与算法/">数据结构与算法</a> / <a class="has-link-grey -link" href="/categories/数据结构与算法/二分查找/">二分查找</a>
                     </p>
                 </div>
             </div>
@@ -427,18 +420,18 @@
         
         <article class="media">
             
-            <a href="/2018/09/10/hexo/" class="media-left">
+            <a href="/2018/09/10/Vue 生命周期/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/backgroundImage/bg_1.jpeg?raw=true" alt="Hexo配置">
+                    <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/backgroundImage/bg_1.jpeg?raw=true" alt="Vue生命周期">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-09-10T10:44:07.000Z">2018-09-10</time></div>
-                    <a href="/2018/09/10/hexo/" class="has-link-black-ter is-size-6">Hexo配置</a>
+                    <a href="/2018/09/10/Vue 生命周期/" class="has-link-black-ter is-size-6">Vue生命周期</a>
                     <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Hexo/">Hexo</a>
+                        <a class="has-link-grey -link" href="/categories/Vue/">Vue</a> / <a class="has-link-grey -link" href="/categories/Vue/基础原理类/">基础原理类</a>
                     </p>
                 </div>
             </div>
@@ -457,9 +450,9 @@
         <ul class="menu-list">
         
         <li>
-            <a class="level is-marginless" href="/archives/2018/11/">
+            <a class="level is-marginless" href="/archives/2018/10/">
                 <span class="level-start">
-                    <span class="level-item">十一月 2018</span>
+                    <span class="level-item">十月 2018</span>
                 </span>
                 <span class="level-end">
                     <span class="level-item tag">1</span>
@@ -490,6 +483,39 @@
                 标签
             </h3>
             <ul class="menu-list">
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/C/">
+                        <span class="level-start">
+                            <span class="level-item">C++</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/Vue/">
+                        <span class="level-start">
+                            <span class="level-item">Vue</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/数据结构/">
+                        <span class="level-start">
+                            <span class="level-item">数据结构</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
                 
             </ul>
         </div>
@@ -516,18 +542,18 @@
         
         <article class="media">
             
-            <a href="/2018/11/29/Vue 生命周期/" class="media-left">
+            <a href="/2018/10/20/二分搜索算法/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/backgroundImage/bg_2.jpeg?raw=true" alt="Vue生命周期">
+                    <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/backgroundImage/bg_2.jpeg?raw=true" alt="二分查找算法">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-11-29T08:23:45.691Z">2018-11-29</time></div>
-                    <a href="/2018/11/29/Vue 生命周期/" class="has-link-black-ter is-size-6">Vue生命周期</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-10-20T11:52:07.000Z">2018-10-20</time></div>
+                    <a href="/2018/10/20/二分搜索算法/" class="has-link-black-ter is-size-6">二分查找算法</a>
                     <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Vue/">Vue</a>
+                        <a class="has-link-grey -link" href="/categories/数据结构与算法/">数据结构与算法</a> / <a class="has-link-grey -link" href="/categories/数据结构与算法/二分查找/">二分查找</a>
                     </p>
                 </div>
             </div>
@@ -535,18 +561,18 @@
         
         <article class="media">
             
-            <a href="/2018/09/10/hexo/" class="media-left">
+            <a href="/2018/09/10/Vue 生命周期/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/backgroundImage/bg_1.jpeg?raw=true" alt="Hexo配置">
+                    <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/backgroundImage/bg_1.jpeg?raw=true" alt="Vue生命周期">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-09-10T10:44:07.000Z">2018-09-10</time></div>
-                    <a href="/2018/09/10/hexo/" class="has-link-black-ter is-size-6">Hexo配置</a>
+                    <a href="/2018/09/10/Vue 生命周期/" class="has-link-black-ter is-size-6">Vue生命周期</a>
                     <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/Hexo/">Hexo</a>
+                        <a class="has-link-grey -link" href="/categories/Vue/">Vue</a> / <a class="has-link-grey -link" href="/categories/Vue/基础原理类/">基础原理类</a>
                     </p>
                 </div>
             </div>
@@ -565,9 +591,9 @@
         <ul class="menu-list">
         
         <li>
-            <a class="level is-marginless" href="/archives/2018/11/">
+            <a class="level is-marginless" href="/archives/2018/10/">
                 <span class="level-start">
-                    <span class="level-item">十一月 2018</span>
+                    <span class="level-item">十月 2018</span>
                 </span>
                 <span class="level-end">
                     <span class="level-item tag">1</span>
@@ -598,6 +624,39 @@
                 标签
             </h3>
             <ul class="menu-list">
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/C/">
+                        <span class="level-start">
+                            <span class="level-item">C++</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/Vue/">
+                        <span class="level-start">
+                            <span class="level-item">Vue</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/数据结构/">
+                        <span class="level-start">
+                            <span class="level-item">数据结构</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
                 
             </ul>
         </div>
