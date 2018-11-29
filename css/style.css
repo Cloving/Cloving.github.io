@@ -5,7 +5,7 @@ html {
   font-size: 14px;
 }
 body {
-  background: no-repeat fixed url("/images/bg.png");
+  background: no-repeat fixed url("https://github.com/Cloving/Atlas-Github/blob/master/bgImage.png?raw=true");
 }
 body,
 button,
@@ -55,7 +55,10 @@ textarea {
   border-radius: 3px;
 }
 .card:hover {
-  box-shadow: 0 8px 17px 2px rgba(0,0,0,0.2);
+  box-shadow: 8px 8px 17px 2px rgba(0,0,0,0.2);
+}
+.card:hover .card-image {
+  filter: blur(8px);
 }
 .card + .card,
 .card + .column-right-shadow {
@@ -65,9 +68,6 @@ textarea {
   overflow: visible;
   box-shadow: none;
   background: transparent;
-}
-.card .card-image:hover {
-  filter: blur(8px);
 }
 img.thumbnail {
   object-fit: cover;
