@@ -5,7 +5,7 @@ html {
   font-size: 14px;
 }
 body {
-  background: fixed url("https://raw.githubusercontent.com/Cloving/Atlas-Github/master/blog/backgroundImage/bg_9.png");
+  background: fixed url("https://github.com/Cloving/Atlas-Github/blob/master/blog/backgroundImage/bg_9.png?raw=true");
 }
 body,
 button,
@@ -52,7 +52,7 @@ textarea {
 }
 .card {
   overflow: hidden;
-  border-radius: 10px;
+  border-radius: 3px;
 }
 .card + .card,
 .card + .column-right-shadow {
@@ -64,12 +64,26 @@ textarea {
   background: transparent;
 }
 .card-item {
-  transition: box-shadow 2s;
-  box-shadow: 0;
+  position: relative;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+  transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+.card-item:after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 .card-item:hover {
-  transition: box-shadow 2s;
-  box-shadow: 0 8px 17px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+  -webkit-transform: scale(1.25, 1.25);
+  transform: scale(1.25, 1.25);
 }
 img.thumbnail {
   object-fit: cover;
