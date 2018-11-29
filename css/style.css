@@ -66,6 +66,9 @@ textarea {
   box-shadow: none;
   background: transparent;
 }
+.card .card-image:hover {
+  filter: blur(8px);
+}
 img.thumbnail {
   object-fit: cover;
   width: 100%;
@@ -352,7 +355,7 @@ img.thumbnail {
 }
 .content code,
 .content pre {
-  font-size: 0.85em;
+  font-size: 1em;
   font-family: "Source Code Pro", monospace, "Microsoft YaHei";
 }
 .content code {
