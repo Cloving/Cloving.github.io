@@ -17,7 +17,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://github.com/Cloving/Atlas-Github/blob/master/blog/notePicture/%E6%8A%93%E5%8F%96%E7%9F%A5%E4%B9%8E%E7%94%A8%E6%88%B7%E5%8A%A8%E6%80%81%E6%95%B0%E6%8D%AE/%E7%9F%A5%E4%B9%8E%E5%88%86%E6%9E%901.png?raw=true">
 <meta property="og:image" content="https://github.com/Cloving/Atlas-Github/blob/master/blog/notePicture/%E6%8A%93%E5%8F%96%E7%9F%A5%E4%B9%8E%E7%94%A8%E6%88%B7%E5%8A%A8%E6%80%81%E6%95%B0%E6%8D%AE/%E7%9F%A5%E4%B9%8Ejson.png?raw=true">
-<meta property="og:updated_time" content="2018-12-04T09:24:15.401Z">
+<meta property="og:updated_time" content="2018-12-04T12:31:40.961Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="抓取知乎用户动态数据">
 <meta name="twitter:description" content="一、简介打开知乎某个用户的主页可以看到该用户赞同回答、关注专栏、关注问题等行为数据。本文利用Python的requests库抓取知乎用户行为数据并存入MongoDB数据库中。 二、分析数据加载方式 打开网页后向下拉取可以观察到行为数据并不是一次加载完，而是随着用户的浏览进度逐步加载，考虑可能是ajax的形式。 之后打开Chrome控制台分析网络选项，查看XHR(XMLHttpRequest)类型">
@@ -154,7 +154,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    7 分钟 读完 (大约 1025 个字)
+                    7 分钟 读完 (大约 1085 个字)
                 </span>
                 
             </div>
@@ -187,7 +187,7 @@
 <h3 id="5、将解析出来的数据导入到数据库中"><a href="#5、将解析出来的数据导入到数据库中" class="headerlink" title="5、将解析出来的数据导入到数据库中"></a>5、将解析出来的数据导入到数据库中</h3><figure class="highlight Python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs Python"><span class="hljs-comment"># 导入到json数据库中</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">save_to_mongodb</span><span class="hljs-params">(self, result)</span>:</span><br>  <span class="hljs-keyword">if</span> self.collection.insert_one(result):<br>    print(<span class="hljs-string">"Successful save to Mongodb"</span>)<br></code></pre></td></tr></table></figure>
 <p><br></p>
 <h2 id="四、总结"><a href="#四、总结" class="headerlink" title="四、总结"></a>四、总结</h2><p>代码写的并不好，仅作为参考。完整代码: <a href="https://github.com/Cloving/zhihu-Spider/tree/master/%E7%9F%A5%E4%B9%8E%E7%94%A8%E6%88%B7%E5%8A%A8%E6%80%81" target="_blank" rel="noopener">点这里</a><br><br></p>
-<h2 id="念念不忘，必有回响"><a href="#念念不忘，必有回响" class="headerlink" title="念念不忘，必有回响"></a>念念不忘，必有回响</h2>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><h3 id="1、Authentication-Examples-—-PyMongo-3-7-2-documentation"><a href="#1、Authentication-Examples-—-PyMongo-3-7-2-documentation" class="headerlink" title="1、Authentication Examples — PyMongo 3.7.2 documentation"></a>1、<a href="http://api.mongodb.com/python/current/examples/authentication.html" target="_blank" rel="noopener">Authentication Examples — PyMongo 3.7.2 documentation</a></h3><h3 id="2、Ajax结果提取-—-Python3网络爬虫开发实战"><a href="#2、Ajax结果提取-—-Python3网络爬虫开发实战" class="headerlink" title="2、Ajax结果提取 — Python3网络爬虫开发实战"></a>2、<a href="https://germey.gitbooks.io/python3webspider/content/6.3-Ajax%E7%BB%93%E6%9E%9C%E6%8F%90%E5%8F%96.html" target="_blank" rel="noopener">Ajax结果提取 — Python3网络爬虫开发实战</a></h3><h3 id="3、知乎小管家-—-知乎"><a href="#3、知乎小管家-—-知乎" class="headerlink" title="3、知乎小管家 — 知乎"></a>3、<a href="https://www.zhihu.com/people/zhihuadmin/activities" target="_blank" rel="noopener">知乎小管家 — 知乎</a></h3>
             
         </div>
         
