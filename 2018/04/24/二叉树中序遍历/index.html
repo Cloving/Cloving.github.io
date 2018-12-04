@@ -2,19 +2,25 @@
 <html lang="zh">
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
-<title>分类 - Daito - 修行的路注定是孤独的</title>
+<title>二叉树的中序遍历 - Daito - 修行的路注定是孤独的</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-    <meta name="keywords" content="Vue,数据结构,C++,二叉树,图片压缩,CDN,Python,ajax,MongoDB">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Daito - 修行的路注定是孤独的">
-<meta property="og:url" content="http://yoursite.com/categories/index.html">
+    <meta name="description" content="方法一：递归方式123456789101112class Solution &amp;#123;public:  vector&amp;lt;int&amp;gt; res;  vector&amp;lt;int&amp;gt; inorderTraversal(TreeNode* root) &amp;#123;    if (root) &amp;#123;      inorderTraversal(root-&amp;gt;left);      r">
+<meta name="keywords" content="数据结构,C++,二叉树">
+<meta property="og:type" content="article">
+<meta property="og:title" content="二叉树的中序遍历">
+<meta property="og:url" content="http://yoursite.com/2018/04/24/二叉树中序遍历/index.html">
 <meta property="og:site_name" content="Daito - 修行的路注定是孤独的">
+<meta property="og:description" content="方法一：递归方式123456789101112class Solution &amp;#123;public:  vector&amp;lt;int&amp;gt; res;  vector&amp;lt;int&amp;gt; inorderTraversal(TreeNode* root) &amp;#123;    if (root) &amp;#123;      inorderTraversal(root-&amp;gt;left);      r">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://github.com/Cloving/Atlas-Github/blob/master/blog/notePicture/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E4%B8%AD%E5%BA%8F%E9%81%8D%E5%8E%86/%E4%BA%8C%E5%8F%89%E6%A0%91%E4%B8%AD%E5%BA%8F%E9%81%8D%E5%8E%86.png?raw=true">
+<meta property="og:updated_time" content="2018-12-04T09:20:49.280Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Daito - 修行的路注定是孤独的">
+<meta name="twitter:title" content="二叉树的中序遍历">
+<meta name="twitter:description" content="方法一：递归方式123456789101112class Solution &amp;#123;public:  vector&amp;lt;int&amp;gt; res;  vector&amp;lt;int&amp;gt; inorderTraversal(TreeNode* root) &amp;#123;    if (root) &amp;#123;      inorderTraversal(root-&amp;gt;left);      r">
+<meta name="twitter:image" content="https://github.com/Cloving/Atlas-Github/blob/master/blog/notePicture/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E4%B8%AD%E5%BA%8F%E9%81%8D%E5%8E%86/%E4%BA%8C%E5%8F%89%E6%A0%91%E4%B8%AD%E5%BA%8F%E9%81%8D%E5%8E%86.png?raw=true">
 
 
 
@@ -92,7 +98,7 @@
                 
                 <a class="navbar-item" href="/archives">归档</a>
                 
-                <a class="navbar-item is-active" href="/categories">分类</a>
+                <a class="navbar-item" href="/categories">分类</a>
                 
                 <a class="navbar-item" href="/tags">标签</a>
                 
@@ -125,91 +131,115 @@
     <section class="section">
         <div class="container">
             <div class="columns">
-                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main">
-<div class="card widget">
-    <div class="card-content">
-        <div class="menu">
-            <h3 class="menu-label">
-                分类
-            </h3>
-            <ul class="menu-list">
-            <li>
-        <a class="level is-marginless" href="/categories/Vue/">
-            <span class="level-start">
-                <span class="level-item">Vue</span>
-            </span>
-            <span class="level-end">
-                <span class="level-item tag">1</span>
-            </span>
-        </a><ul><li>
-        <a class="level is-marginless" href="/categories/Vue/基础原理类/">
-            <span class="level-start">
-                <span class="level-item">基础原理类</span>
-            </span>
-            <span class="level-end">
-                <span class="level-item tag">1</span>
-            </span>
-        </a></li></ul></li><li>
-        <a class="level is-marginless" href="/categories/建站实录/">
-            <span class="level-start">
-                <span class="level-item">建站实录</span>
-            </span>
-            <span class="level-end">
-                <span class="level-item tag">1</span>
-            </span>
-        </a><ul><li>
-        <a class="level is-marginless" href="/categories/建站实录/静态资源加速/">
-            <span class="level-start">
-                <span class="level-item">静态资源加速</span>
-            </span>
-            <span class="level-end">
-                <span class="level-item tag">1</span>
-            </span>
-        </a></li></ul></li><li>
-        <a class="level is-marginless" href="/categories/数据抓取/">
-            <span class="level-start">
-                <span class="level-item">数据抓取</span>
-            </span>
-            <span class="level-end">
-                <span class="level-item tag">1</span>
-            </span>
-        </a><ul><li>
-        <a class="level is-marginless" href="/categories/数据抓取/知乎/">
-            <span class="level-start">
-                <span class="level-item">知乎</span>
-            </span>
-            <span class="level-end">
-                <span class="level-item tag">1</span>
-            </span>
-        </a></li></ul></li><li>
-        <a class="level is-marginless" href="/categories/数据结构与算法/">
-            <span class="level-start">
-                <span class="level-item">数据结构与算法</span>
-            </span>
-            <span class="level-end">
-                <span class="level-item tag">3</span>
-            </span>
-        </a><ul><li>
-        <a class="level is-marginless" href="/categories/数据结构与算法/二分查找/">
-            <span class="level-start">
-                <span class="level-item">二分查找</span>
-            </span>
-            <span class="level-end">
-                <span class="level-item tag">1</span>
-            </span>
-        </a></li><li>
-        <a class="level is-marginless" href="/categories/数据结构与算法/二叉树/">
-            <span class="level-start">
-                <span class="level-item">二叉树</span>
-            </span>
-            <span class="level-end">
-                <span class="level-item tag">2</span>
-            </span>
-        </a></li></ul></li>
-            </ul>
-        </div>
+                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main"><div class="card card-item">
+    
+    <div class="card-image">
+        <span class="image is-7by1">
+            <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/CoverPicture/bg_2.jpeg?raw=true" alt="二叉树的中序遍历">
+        </span>
     </div>
-</div></div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2018-04-24T09:56:02.000Z">2018-04-24</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/数据结构与算法/">数据结构与算法</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/数据结构与算法/二叉树/">二叉树</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    3 分钟 读完 (大约 488 个字)
+                </span>
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                二叉树的中序遍历
+            
+        </h1>
+        <div class="content">
+            
+                <p><br></p>
+<h2 id="方法一：递归方式"><a href="#方法一：递归方式" class="headerlink" title="方法一：递归方式"></a>方法一：递归方式</h2><figure class="highlight C++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs C++"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span><br><span class="hljs-keyword">public</span>:<br>  <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; res;<br>  <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; inorderTraversal(TreeNode* root) &#123;<br>    <span class="hljs-keyword">if</span> (root) &#123;<br>      inorderTraversal(root-&gt;left);<br>      res.push_back(root-&gt;val);<br>      inorderTraversal(root-&gt;right);<br>    &#125;<br>    <span class="hljs-keyword">return</span> res;  <br>  &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<h2 id="方法二：非递归（栈1）"><a href="#方法二：非递归（栈1）" class="headerlink" title="方法二：非递归（栈1）"></a>方法二：非递归（栈1）</h2><p>该方式与前序遍历中<a href="">方法三</a>相似。只不过在逐步遍历左子节点的过程中并不记录遍历顺序，而是在栈中取出的时候记录。并将游标节点指向当前从栈中取出节点的右子节点。把他当成根节点继续遍历。<br><figure class="highlight C++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs C++"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span><br><span class="hljs-keyword">public</span>:<br>  <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; res;<br>  <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; inorderTraversal(TreeNode* root) &#123;<br>    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; res;<br>    <span class="hljs-keyword">if</span> (!root) &#123;<br>      <span class="hljs-keyword">return</span> res;<br>    &#125;<br>    <span class="hljs-built_in">stack</span>&lt;TreeNode*&gt; s;<br>    TreeNode* node = root;<br>    <span class="hljs-keyword">while</span>(!s.empty() || node) &#123;<br>      <span class="hljs-keyword">if</span> (node) &#123;<br>        s.push(node);<br>        node = node-&gt;left;<br>      &#125; <span class="hljs-keyword">else</span> &#123;<br>        TreeNode* temp = s.top();<br>        s.pop();<br>        res.push_back(temp-&gt;val);<br>        node = temp-&gt;right;<br>      &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> res;  <br>  &#125;<br>&#125;;<br></code></pre></td></tr></table></figure></p>
+<h2 id="方法三：非递归"><a href="#方法三：非递归" class="headerlink" title="方法三：非递归"></a>方法三：非递归</h2><p>方法三利用了一个游标节点和一个前驱节点。按照中序遍历的顺序，前驱节点是游标节点的上一个节点。<br>沿着左子树遍历，如果左子树不存在，则将当前游标节点导入列表。如果存在则将当前游标节点的左子树中序遍历的最后一个节点指向自身（假设还没有指向的情况下），见图中箭头。如果已经指向自身，那么将当前节点导入列表。并且游标指向当前节点的右子节点，继续循环直到游标节点指为空。</p>
+<p><img src="https://github.com/Cloving/Atlas-Github/blob/master/blog/notePicture/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E4%B8%AD%E5%BA%8F%E9%81%8D%E5%8E%86/%E4%BA%8C%E5%8F%89%E6%A0%91%E4%B8%AD%E5%BA%8F%E9%81%8D%E5%8E%86.png?raw=true" alt="方法三图示"></p>
+<figure class="highlight C++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs C++"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span><br><span class="hljs-keyword">public</span>:<br>  <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; inorderTraversal(TreeNode* root) &#123;<br>    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; res;<br>    <span class="hljs-keyword">if</span> (!root) &#123;<br>      <span class="hljs-keyword">return</span> res;<br>    &#125;<br>    TreeNode* pre;<br>    TreeNode* cur = root;<br>    <span class="hljs-keyword">while</span>(cur) &#123;<br>      <span class="hljs-keyword">if</span> (!cur-&gt;left) &#123;<br>        res.push_back(cur-&gt;val);<br>        cur = cur-&gt;right;<br>      &#125; <span class="hljs-keyword">else</span> &#123;<br>        pre = cur-&gt;left;<br>        <span class="hljs-keyword">while</span>(pre-&gt;right &amp;&amp; pre-&gt;right != cur) &#123;<br>          pre = pre-&gt;right;<br>        &#125;<br>        <span class="hljs-keyword">if</span> (!pre-&gt;right) &#123;<br>          pre-&gt;right = cur;<br>          cur = cur-&gt;left;<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>          pre-&gt;right = <span class="hljs-literal">NULL</span>;<br>          res.push_back(cur-&gt;val);<br>          cur = cur-&gt;right;<br>        &#125;<br>      &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> res;<br>  &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<p><br></p>
+
+            
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/C/">C++</a>, <a class="has-link-grey -link" href="/tags/二叉树/">二叉树</a>, <a class="has-link-grey -link" href="/tags/数据结构/">数据结构</a>
+                </div>
+            </div>
+        </div>
+        
+        <!--  -->
+        
+        <div class="social-share"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css">
+<script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script>
+        
+    </div>
+</div>
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2018/06/10/Vue 生命周期/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">Vue生命周期</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2018/04/15/二叉树前序遍历/">
+                <span class="level-item">二叉树的前序遍历</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">评论</h3>
+        
+<div id="valine-thread"></div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#valine-thread' ,
+        notify: false,
+        verify: false,
+        app_id: 'cnWuYXtAptT6FdU8rGmtCKXy-gzGzoHsz',
+        app_key: 'mxfKEzvpXpL0bnGXGrp129vf',
+        placeholder: '请在这里输入您想说的话'
+    });
+</script>
+
+    </div>
+</div>
+</div>
                 
 
 

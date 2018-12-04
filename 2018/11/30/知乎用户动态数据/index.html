@@ -2,19 +2,26 @@
 <html lang="zh">
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
-<title>分类 - Daito - 修行的路注定是孤独的</title>
+<title>抓取知乎用户动态数据 - Daito - 修行的路注定是孤独的</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-    <meta name="keywords" content="Vue,数据结构,C++,二叉树,图片压缩,CDN,Python,ajax,MongoDB">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Daito - 修行的路注定是孤独的">
-<meta property="og:url" content="http://yoursite.com/categories/index.html">
+    <meta name="description" content="一、简介打开知乎某个用户的主页可以看到该用户赞同回答、关注专栏、关注问题等行为数据。本文利用Python的requests库抓取知乎用户行为数据并存入MongoDB数据库中。 二、分析数据加载方式 打开网页后向下拉取可以观察到行为数据并不是一次加载完，而是随着用户的浏览进度逐步加载，考虑可能是ajax的形式。 之后打开Chrome控制台分析网络选项，查看XHR(XMLHttpRequest)类型">
+<meta name="keywords" content="Python,ajax,MongoDB">
+<meta property="og:type" content="article">
+<meta property="og:title" content="抓取知乎用户动态数据">
+<meta property="og:url" content="http://yoursite.com/2018/11/30/知乎用户动态数据/index.html">
 <meta property="og:site_name" content="Daito - 修行的路注定是孤独的">
+<meta property="og:description" content="一、简介打开知乎某个用户的主页可以看到该用户赞同回答、关注专栏、关注问题等行为数据。本文利用Python的requests库抓取知乎用户行为数据并存入MongoDB数据库中。 二、分析数据加载方式 打开网页后向下拉取可以观察到行为数据并不是一次加载完，而是随着用户的浏览进度逐步加载，考虑可能是ajax的形式。 之后打开Chrome控制台分析网络选项，查看XHR(XMLHttpRequest)类型">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://github.com/Cloving/Atlas-Github/blob/master/blog/notePicture/%E6%8A%93%E5%8F%96%E7%9F%A5%E4%B9%8E%E7%94%A8%E6%88%B7%E5%8A%A8%E6%80%81%E6%95%B0%E6%8D%AE/%E7%9F%A5%E4%B9%8E%E5%88%86%E6%9E%901.png?raw=true">
+<meta property="og:image" content="https://github.com/Cloving/Atlas-Github/blob/master/blog/notePicture/%E6%8A%93%E5%8F%96%E7%9F%A5%E4%B9%8E%E7%94%A8%E6%88%B7%E5%8A%A8%E6%80%81%E6%95%B0%E6%8D%AE/%E7%9F%A5%E4%B9%8Ejson.png?raw=true">
+<meta property="og:updated_time" content="2018-12-04T09:24:15.401Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Daito - 修行的路注定是孤独的">
+<meta name="twitter:title" content="抓取知乎用户动态数据">
+<meta name="twitter:description" content="一、简介打开知乎某个用户的主页可以看到该用户赞同回答、关注专栏、关注问题等行为数据。本文利用Python的requests库抓取知乎用户行为数据并存入MongoDB数据库中。 二、分析数据加载方式 打开网页后向下拉取可以观察到行为数据并不是一次加载完，而是随着用户的浏览进度逐步加载，考虑可能是ajax的形式。 之后打开Chrome控制台分析网络选项，查看XHR(XMLHttpRequest)类型">
+<meta name="twitter:image" content="https://github.com/Cloving/Atlas-Github/blob/master/blog/notePicture/%E6%8A%93%E5%8F%96%E7%9F%A5%E4%B9%8E%E7%94%A8%E6%88%B7%E5%8A%A8%E6%80%81%E6%95%B0%E6%8D%AE/%E7%9F%A5%E4%B9%8E%E5%88%86%E6%9E%901.png?raw=true">
 
 
 
@@ -92,7 +99,7 @@
                 
                 <a class="navbar-item" href="/archives">归档</a>
                 
-                <a class="navbar-item is-active" href="/categories">分类</a>
+                <a class="navbar-item" href="/categories">分类</a>
                 
                 <a class="navbar-item" href="/tags">标签</a>
                 
@@ -125,91 +132,121 @@
     <section class="section">
         <div class="container">
             <div class="columns">
-                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main">
-<div class="card widget">
-    <div class="card-content">
-        <div class="menu">
-            <h3 class="menu-label">
-                分类
-            </h3>
-            <ul class="menu-list">
-            <li>
-        <a class="level is-marginless" href="/categories/Vue/">
-            <span class="level-start">
-                <span class="level-item">Vue</span>
-            </span>
-            <span class="level-end">
-                <span class="level-item tag">1</span>
-            </span>
-        </a><ul><li>
-        <a class="level is-marginless" href="/categories/Vue/基础原理类/">
-            <span class="level-start">
-                <span class="level-item">基础原理类</span>
-            </span>
-            <span class="level-end">
-                <span class="level-item tag">1</span>
-            </span>
-        </a></li></ul></li><li>
-        <a class="level is-marginless" href="/categories/建站实录/">
-            <span class="level-start">
-                <span class="level-item">建站实录</span>
-            </span>
-            <span class="level-end">
-                <span class="level-item tag">1</span>
-            </span>
-        </a><ul><li>
-        <a class="level is-marginless" href="/categories/建站实录/静态资源加速/">
-            <span class="level-start">
-                <span class="level-item">静态资源加速</span>
-            </span>
-            <span class="level-end">
-                <span class="level-item tag">1</span>
-            </span>
-        </a></li></ul></li><li>
-        <a class="level is-marginless" href="/categories/数据抓取/">
-            <span class="level-start">
-                <span class="level-item">数据抓取</span>
-            </span>
-            <span class="level-end">
-                <span class="level-item tag">1</span>
-            </span>
-        </a><ul><li>
-        <a class="level is-marginless" href="/categories/数据抓取/知乎/">
-            <span class="level-start">
-                <span class="level-item">知乎</span>
-            </span>
-            <span class="level-end">
-                <span class="level-item tag">1</span>
-            </span>
-        </a></li></ul></li><li>
-        <a class="level is-marginless" href="/categories/数据结构与算法/">
-            <span class="level-start">
-                <span class="level-item">数据结构与算法</span>
-            </span>
-            <span class="level-end">
-                <span class="level-item tag">3</span>
-            </span>
-        </a><ul><li>
-        <a class="level is-marginless" href="/categories/数据结构与算法/二分查找/">
-            <span class="level-start">
-                <span class="level-item">二分查找</span>
-            </span>
-            <span class="level-end">
-                <span class="level-item tag">1</span>
-            </span>
-        </a></li><li>
-        <a class="level is-marginless" href="/categories/数据结构与算法/二叉树/">
-            <span class="level-start">
-                <span class="level-item">二叉树</span>
-            </span>
-            <span class="level-end">
-                <span class="level-item tag">2</span>
-            </span>
-        </a></li></ul></li>
-            </ul>
-        </div>
+                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main"><div class="card card-item">
+    
+    <div class="card-image">
+        <span class="image is-7by1">
+            <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/CoverPicture/bg_6.jpeg?raw=true" alt="抓取知乎用户动态数据">
+        </span>
     </div>
-</div></div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2018-11-30T11:58:07.000Z">2018-11-30</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/数据抓取/">数据抓取</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/数据抓取/知乎/">知乎</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    7 分钟 读完 (大约 1025 个字)
+                </span>
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                抓取知乎用户动态数据
+            
+        </h1>
+        <div class="content">
+            
+                <p><br></p>
+<h2 id="一、简介"><a href="#一、简介" class="headerlink" title="一、简介"></a>一、简介</h2><p>打开知乎某个用户的主页可以看到该用户赞同回答、关注专栏、关注问题等行为数据。本文利用Python的requests库抓取知乎用户行为数据并存入MongoDB数据库中。<br><br></p>
+<h2 id="二、分析数据加载方式"><a href="#二、分析数据加载方式" class="headerlink" title="二、分析数据加载方式"></a>二、分析数据加载方式</h2><ol>
+<li>打开网页后向下拉取可以观察到行为数据并不是一次加载完，而是随着用户的浏览进度逐步加载，考虑可能是ajax的形式。</li>
+<li>之后打开Chrome控制台分析网络选项，查看XHR(XMLHttpRequest)类型的文件可以观察出收到的响应是json数据，其中包含了用户行为数据的相关信息</li>
+</ol>
+<p><img src="https://github.com/Cloving/Atlas-Github/blob/master/blog/notePicture/%E6%8A%93%E5%8F%96%E7%9F%A5%E4%B9%8E%E7%94%A8%E6%88%B7%E5%8A%A8%E6%80%81%E6%95%B0%E6%8D%AE/%E7%9F%A5%E4%B9%8E%E5%88%86%E6%9E%901.png?raw=true" alt="图1"></p>
+<p>所以首先需要请求到网站返回的json数据，然后对数据进行解析，结构化处理，存入MongoDB中。<br><br></p>
+<h2 id="三、代码分析"><a href="#三、代码分析" class="headerlink" title="三、代码分析"></a>三、代码分析</h2><h3 id="1、初始化变量"><a href="#1、初始化变量" class="headerlink" title="1、初始化变量"></a>1、初始化变量</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self)</span>:</span><br>  self.user_name = <span class="hljs-string">"******"</span><br>  self.max_search_counts = **<br>  self.params = &#123;<br>    <span class="hljs-string">"limit"</span>: <span class="hljs-number">7</span>,<br>    <span class="hljs-string">"desktop"</span>: <span class="hljs-string">"True"</span><br>  &#125;<br>  self.base_url = <span class="hljs-string">"https://www.zhihu.com/api/v4/members/"</span><br>  self.url = self.base_url + <span class="hljs-string">'/'</span> + self.user_name + <span class="hljs-string">'/activities?'</span> + urlencode(self.params)<br><br>  self.headers = &#123;<br>    <span class="hljs-string">"User-Agent"</span>: <span class="hljs-string">"Mozilla/5.0 (X11; Linux x86_64)\<br>                  AppleWebKit/537.36 (KHTML, like Gecko)\<br>                  Chrome/70.0.3538.77 Safari/537.36"</span>,<br>    <span class="hljs-string">"Referer"</span>: <span class="hljs-string">"https://www.zhihu.com/"</span>,<br>    <span class="hljs-string">"x-requested-with"</span>: <span class="hljs-string">"fetch"</span><br>  &#125;<br>  self.client = MongoClient(<span class="hljs-string">'127.0.0.1'</span>,username=<span class="hljs-string">'admin'</span>,<br>                      password=<span class="hljs-string">'******'</span>,<br>                      authSource=<span class="hljs-string">'admin'</span>,<br>                      authMechanism=<span class="hljs-string">'SCRAM-SHA-1'</span>)<br>  self.db = self.client[<span class="hljs-string">"zhihu"</span>]<br>  self.collection = self.db[<span class="hljs-string">"zhihuDynamic"</span>]<br></code></pre></td></tr></table></figure>
+<p>1、<code>user_name</code>并不是用户的知乎ID，而是用户的个性化域名。比如知乎小管家的个性化域名为<code>zhihuadmin</code>，这可以通过观察用户主页的url获得<br>2、请求的url通过查看控制台中的Request URL得知<br><figure class="highlight html hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html">https://www.zhihu.com/api/v4/members/zhihuadmin/activities?limit=7&amp;after_id=1542365521&amp;desktop=True<br></code></pre></td></tr></table></figure></p>
+<p>分析组成可以看出<code>https://www.zhihu.com/api/v4/members/</code>为通用部分。<code>zhihuadmin</code>为用户的个性化域名。?之后是携带的参数<br>3、抓取知乎的数据必须携带用户代理。</p>
+<h3 id="2、开始抓取"><a href="#2、开始抓取" class="headerlink" title="2、开始抓取"></a>2、开始抓取</h3><figure class="highlight Python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs Python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">startSearch</span><span class="hljs-params">(self)</span>:</span><br>  <span class="hljs-keyword">for</span> search_times <span class="hljs-keyword">in</span> range(<span class="hljs-number">0</span>, self.max_search_counts):<br>    json = self.get_Page(self.url)<br>    <span class="hljs-keyword">try</span>:<br>      self.url = json.get(<span class="hljs-string">"paging"</span>).get(<span class="hljs-string">"next"</span>)<br>      print(self.url)<br>    <span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> e:<br>      print(<span class="hljs-string">"获取下一次请求的链接失败，失败原因："</span>, e)<br>    results = self.get_Parse(json)<br>    print(<span class="hljs-string">"======================================="</span>)<br>    <span class="hljs-keyword">for</span> result <span class="hljs-keyword">in</span> results:<br>      self.save_to_mongodb(result)<br></code></pre></td></tr></table></figure>
+<p><code>for</code>循环控制搜索次数，每次搜索会抓取7条数据即7次动态。之后提取出本次抓取到json数据中的用户动态信息，并更新下一次搜索的url，并将提取出的数据存入MongoDB中</p>
+<h3 id="3、抓取json数据"><a href="#3、抓取json数据" class="headerlink" title="3、抓取json数据"></a>3、抓取json数据</h3><figure class="highlight Python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs Python"><span class="hljs-comment"># 获取json数据</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_Page</span><span class="hljs-params">(self, url)</span>:</span><br>  <span class="hljs-keyword">try</span>:<br>    response = requests.get(url, headers=self.headers)<br>    <span class="hljs-keyword">if</span> response.status_code == <span class="hljs-number">200</span>:<br>      <span class="hljs-keyword">return</span> response.json()<br>  <span class="hljs-keyword">except</span> requests.ConnectionError <span class="hljs-keyword">as</span> e:<br>    print(<span class="hljs-string">"Error: "</span>, e.args)<br></code></pre></td></tr></table></figure>
+<p>传入页面的url,返回相应的json数据</p>
+<h3 id="4、解析json数据"><a href="#4、解析json数据" class="headerlink" title="4、解析json数据"></a>4、解析json数据</h3><p>根据传入json数据的格式，提取用户的各项动态<br><img src="https://github.com/Cloving/Atlas-Github/blob/master/blog/notePicture/%E6%8A%93%E5%8F%96%E7%9F%A5%E4%B9%8E%E7%94%A8%E6%88%B7%E5%8A%A8%E6%80%81%E6%95%B0%E6%8D%AE/%E7%9F%A5%E4%B9%8Ejson.png?raw=true" alt="json数据示意图"></p>
+<figure class="highlight Python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs Python"><span class="hljs-comment"># 解析json数据</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_Parse</span><span class="hljs-params">(self, json)</span>:</span><br>  <span class="hljs-keyword">if</span> json:<br>    items = json.get(<span class="hljs-string">'data'</span>)<br>    <span class="hljs-keyword">for</span> item <span class="hljs-keyword">in</span> items:<br>      zhihu = &#123;&#125;<br>      action_text = item.get(<span class="hljs-string">"action_text"</span>)<br>      created_time = item.get(<span class="hljs-string">"created_time"</span>)<br>      zhihu[<span class="hljs-string">"操作行为"</span>] = action_text<br>      zhihu[<span class="hljs-string">"时间"</span>] = time.strftime(<span class="hljs-string">"%Y-%m-%d %H:%M:%S"</span>, time.localtime(created_time))<br>      <span class="hljs-keyword">if</span> item.get(<span class="hljs-string">'verb'</span>) == <span class="hljs-string">"MEMBER_VOTEUP_ARTICLE"</span>:<br>        item_detail =  voteup_article(item.get(<span class="hljs-string">"target"</span>))<br>      <span class="hljs-keyword">elif</span> item.get(<span class="hljs-string">'verb'</span>) == <span class="hljs-string">"ANSWER_VOTE_UP"</span>:<br>        item_detail = answer_voteUp(item.get(<span class="hljs-string">"target"</span>))<br>      <span class="hljs-keyword">elif</span> item.get(<span class="hljs-string">'verb'</span>) == <span class="hljs-string">"MEMBER_CREATE_ARTICLE"</span>:<br>        item_detail =  create_article(item.get(<span class="hljs-string">"target"</span>))<br>      <span class="hljs-keyword">elif</span> item.get(<span class="hljs-string">'verb'</span>) == <span class="hljs-string">"MEMBER_FOLLOW_COLUMN"</span>:<br>        item_detail =  follow_column(item.get(<span class="hljs-string">'target'</span>))<br>      <span class="hljs-keyword">elif</span> item.get(<span class="hljs-string">'verb'</span>) == <span class="hljs-string">"ANSWER_CREATE"</span>:<br>        item_detail = answer_create(item.get(<span class="hljs-string">'target'</span>))<br>      <span class="hljs-keyword">elif</span> item.get(<span class="hljs-string">'verb'</span>) == <span class="hljs-string">"QUESTION_FOLLOW"</span>:<br>        item_detail = question_follow(item.get(<span class="hljs-string">'target'</span>))<br>      <span class="hljs-keyword">yield</span> dict(zhihu, **item_detail)<br></code></pre></td></tr></table></figure>
+<h3 id="5、将解析出来的数据导入到数据库中"><a href="#5、将解析出来的数据导入到数据库中" class="headerlink" title="5、将解析出来的数据导入到数据库中"></a>5、将解析出来的数据导入到数据库中</h3><figure class="highlight Python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs Python"><span class="hljs-comment"># 导入到json数据库中</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">save_to_mongodb</span><span class="hljs-params">(self, result)</span>:</span><br>  <span class="hljs-keyword">if</span> self.collection.insert_one(result):<br>    print(<span class="hljs-string">"Successful save to Mongodb"</span>)<br></code></pre></td></tr></table></figure>
+<p><br></p>
+<h2 id="四、总结"><a href="#四、总结" class="headerlink" title="四、总结"></a>四、总结</h2><p>代码写的并不好，仅作为参考。完整代码: <a href="https://github.com/Cloving/zhihu-Spider/tree/master/%E7%9F%A5%E4%B9%8E%E7%94%A8%E6%88%B7%E5%8A%A8%E6%80%81" target="_blank" rel="noopener">点这里</a><br><br></p>
+<h2 id="念念不忘，必有回响"><a href="#念念不忘，必有回响" class="headerlink" title="念念不忘，必有回响"></a>念念不忘，必有回响</h2>
+            
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/MongoDB/">MongoDB</a>, <a class="has-link-grey -link" href="/tags/Python/">Python</a>, <a class="has-link-grey -link" href="/tags/ajax/">ajax</a>
+                </div>
+            </div>
+        </div>
+        
+        <!--  -->
+        
+        <div class="social-share"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css">
+<script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script>
+        
+    </div>
+</div>
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2018/09/17/静态资源加速/">
+                <span class="level-item">静态资源加速</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">评论</h3>
+        
+<div id="valine-thread"></div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#valine-thread' ,
+        notify: false,
+        verify: false,
+        app_id: 'cnWuYXtAptT6FdU8rGmtCKXy-gzGzoHsz',
+        app_key: 'mxfKEzvpXpL0bnGXGrp129vf',
+        placeholder: '请在这里输入您想说的话'
+    });
+</script>
+
+    </div>
+</div>
+</div>
                 
 
 

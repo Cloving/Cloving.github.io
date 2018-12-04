@@ -2,23 +2,23 @@
 <html lang="zh">
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
-<title>二分搜索算法 - Daito - 修行的路注定是孤独的</title>
+<title>二叉树的前序遍历 - Daito - 修行的路注定是孤独的</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-    <meta name="description" content="1.1 基本的二分搜索(递归)1234567891011121314// 普通二分：递归int BSearch1(vector&amp;lt;int&amp;gt; ve, int target) &amp;#123;  int left = 0, right = ve.size()-1;  if (left &amp;gt; right) &amp;#123;    return -1;  &amp;#125;  int mid = left">
-<meta name="keywords" content="数据结构,C++">
+    <meta name="description" content="方法一：递归方式123456789101112class Solution &amp;#123;public:  vector&amp;lt;int&amp;gt; res;  vector&amp;lt;int&amp;gt; preorderTraversal(TreeNode* root) &amp;#123;    if (root) &amp;#123;      res.push_back(root-&amp;gt;val);      preo">
+<meta name="keywords" content="数据结构,C++,二叉树">
 <meta property="og:type" content="article">
-<meta property="og:title" content="二分搜索算法">
-<meta property="og:url" content="http://yoursite.com/2018/10/20/二分搜索算法/index.html">
+<meta property="og:title" content="二叉树的前序遍历">
+<meta property="og:url" content="http://yoursite.com/2018/04/15/二叉树前序遍历/index.html">
 <meta property="og:site_name" content="Daito - 修行的路注定是孤独的">
-<meta property="og:description" content="1.1 基本的二分搜索(递归)1234567891011121314// 普通二分：递归int BSearch1(vector&amp;lt;int&amp;gt; ve, int target) &amp;#123;  int left = 0, right = ve.size()-1;  if (left &amp;gt; right) &amp;#123;    return -1;  &amp;#125;  int mid = left">
+<meta property="og:description" content="方法一：递归方式123456789101112class Solution &amp;#123;public:  vector&amp;lt;int&amp;gt; res;  vector&amp;lt;int&amp;gt; preorderTraversal(TreeNode* root) &amp;#123;    if (root) &amp;#123;      res.push_back(root-&amp;gt;val);      preo">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-11-30T08:25:38.074Z">
+<meta property="og:updated_time" content="2018-12-04T09:20:44.087Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="二分搜索算法">
-<meta name="twitter:description" content="1.1 基本的二分搜索(递归)1234567891011121314// 普通二分：递归int BSearch1(vector&amp;lt;int&amp;gt; ve, int target) &amp;#123;  int left = 0, right = ve.size()-1;  if (left &amp;gt; right) &amp;#123;    return -1;  &amp;#125;  int mid = left">
+<meta name="twitter:title" content="二叉树的前序遍历">
+<meta name="twitter:description" content="方法一：递归方式123456789101112class Solution &amp;#123;public:  vector&amp;lt;int&amp;gt; res;  vector&amp;lt;int&amp;gt; preorderTraversal(TreeNode* root) &amp;#123;    if (root) &amp;#123;      res.push_back(root-&amp;gt;val);      preo">
 
 
 
@@ -133,7 +133,7 @@
     
     <div class="card-image">
         <span class="image is-7by1">
-            <img class="thumbnail" src="/images/bg_2.jpeg" alt="二分搜索算法">
+            <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/CoverPicture/bg_1.jpeg?raw=true" alt="二叉树的前序遍历">
         </span>
     </div>
     
@@ -141,17 +141,17 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2018-10-20T11:52:07.000Z">2018-10-20</time>
+                <time class="level-item has-text-grey" datetime="2018-04-15T06:29:40.000Z">2018-04-15</time>
                 
                 <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/数据结构与算法/">数据结构与算法</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/数据结构与算法/二分查找/">二分查找</a>
+                <a class="has-link-grey -link" href="/categories/数据结构与算法/">数据结构与算法</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/数据结构与算法/二叉树/">二叉树</a>
                 </div>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    3 分钟 读完 (大约 445 个字)
+                    3 分钟 读完 (大约 426 个字)
                 </span>
                 
             </div>
@@ -159,20 +159,22 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                二分搜索算法
+                二叉树的前序遍历
             
         </h1>
         <div class="content">
             
-                <h2 id="1-1-基本的二分搜索-递归"><a href="#1-1-基本的二分搜索-递归" class="headerlink" title="1.1 基本的二分搜索(递归)"></a>1.1 基本的二分搜索(递归)</h2><figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">// 普通二分：递归</span><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">BSearch1</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; ve, <span class="hljs-keyword">int</span> target)</span> </span>&#123;<br>  <span class="hljs-keyword">int</span> left = <span class="hljs-number">0</span>, right = ve.size()<span class="hljs-number">-1</span>;<br>  <span class="hljs-keyword">if</span> (left &gt; right) &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;<br>  &#125;<br>  <span class="hljs-keyword">int</span> mid = left + (right - left) / <span class="hljs-number">2</span>;<br>  <span class="hljs-keyword">if</span> (ve[mid] &gt; target) &#123;<br>    <span class="hljs-keyword">return</span> BSearch1(ve, target);<br>  &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (ve[mid] &lt; target) &#123;<br>    <span class="hljs-keyword">return</span> BSearch1(ve, target);<br>  &#125;<br>  <span class="hljs-keyword">return</span> ve[mid];<br>&#125;<br></code></pre></td></tr></table></figure>
-<h2 id="1-2-基本的二分搜索（循环）"><a href="#1-2-基本的二分搜索（循环）" class="headerlink" title="1.2 基本的二分搜索（循环）"></a>1.2 基本的二分搜索（循环）</h2><figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">// 普通二分：循环</span><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">BSearch2</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; ve, <span class="hljs-keyword">int</span> target)</span> </span>&#123;<br>  <span class="hljs-keyword">int</span> left = <span class="hljs-number">0</span>, right = ve.size()<span class="hljs-number">-1</span>;<br>  <span class="hljs-keyword">while</span> (left &lt;= right) &#123;<br>    <span class="hljs-keyword">int</span> mid = left + (right - left) / <span class="hljs-number">2</span>;<br>    <span class="hljs-keyword">if</span> (ve[mid] &gt; target) &#123;<br>      right = mid - <span class="hljs-number">1</span>;<br>    &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (ve[mid] &lt; target) &#123;<br>      left = mid + <span class="hljs-number">1</span>;<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>      <span class="hljs-keyword">return</span> ve[mid];<br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-<h2 id="2-1-查找第一个与target相等的元素的索引"><a href="#2-1-查找第一个与target相等的元素的索引" class="headerlink" title="2.1 查找第一个与target相等的元素的索引"></a>2.1 查找第一个与target相等的元素的索引</h2><figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">BSearch3</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; ve, <span class="hljs-keyword">int</span> target)</span> </span>&#123;<br>  <span class="hljs-keyword">int</span> left = <span class="hljs-number">0</span>, right = ve.size()<span class="hljs-number">-1</span>;<br>  <span class="hljs-keyword">while</span> (left &lt;= right) &#123;<br>    <span class="hljs-keyword">int</span> mid = left + (right - left) / <span class="hljs-number">2</span>;<br>    <span class="hljs-keyword">if</span> (ve[mid] &gt;= target) &#123;<br>      right = mid - <span class="hljs-number">1</span>;<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>      left = mid + <span class="hljs-number">1</span>;<br>    &#125;<br>  &#125;<br>  <span class="hljs-keyword">return</span> ve[left] == target ? left : <span class="hljs-number">-1</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-<h2 id="2-2-查找最后一个与target相等的元素的索引"><a href="#2-2-查找最后一个与target相等的元素的索引" class="headerlink" title="2.2 查找最后一个与target相等的元素的索引"></a>2.2 查找最后一个与target相等的元素的索引</h2><figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">BSearch4</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; ve, <span class="hljs-keyword">int</span> target)</span> </span>&#123;<br>  <span class="hljs-keyword">int</span> left = <span class="hljs-number">0</span>, right = ve.size()<span class="hljs-number">-1</span>;<br>  <span class="hljs-keyword">while</span> (left &lt;= right) &#123;<br>    <span class="hljs-keyword">int</span> mid = left + (right - left) / <span class="hljs-number">2</span>;<br>    <span class="hljs-keyword">if</span> (ve[mid] &lt;= target) &#123;<br>      left = mid + <span class="hljs-number">1</span>;<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>      right = mid - <span class="hljs-number">1</span>;<br>    &#125;<br>  &#125;<br>  <span class="hljs-keyword">return</span> ve[right] == target ? right : <span class="hljs-number">-1</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-<h2 id="2-3-查找最后一个小于target的元素索引"><a href="#2-3-查找最后一个小于target的元素索引" class="headerlink" title="2.3 查找最后一个小于target的元素索引"></a>2.3 查找最后一个小于target的元素索引</h2><figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">BSearch5</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; ve, <span class="hljs-keyword">int</span> target)</span> </span>&#123;<br>  <span class="hljs-keyword">int</span> left = <span class="hljs-number">0</span>, right = ve.size()<span class="hljs-number">-1</span>;<br>  <span class="hljs-keyword">while</span> (left &lt;= right) &#123;<br>    <span class="hljs-keyword">int</span> mid = left + (right - left) / <span class="hljs-number">2</span>;<br>    <span class="hljs-keyword">if</span> (ve[mid] &lt; target) &#123;<br>      left = mid + <span class="hljs-number">1</span>;<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>      right = mid - <span class="hljs-number">1</span>;<br>    &#125;<br>  &#125;<br>  <span class="hljs-keyword">return</span> right;<br>&#125;<br></code></pre></td></tr></table></figure>
-<h2 id="2-4-查找第一个大于target的元素索引"><a href="#2-4-查找第一个大于target的元素索引" class="headerlink" title="2.4 查找第一个大于target的元素索引"></a>2.4 查找第一个大于target的元素索引</h2><figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">BSearch6</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; ve, <span class="hljs-keyword">int</span> target)</span> </span>&#123;<br>  <span class="hljs-keyword">int</span> left = <span class="hljs-number">0</span>, right = ve.size()<span class="hljs-number">-1</span>;<br>  <span class="hljs-keyword">while</span> (left &lt;= right) &#123;<br>    <span class="hljs-keyword">int</span> mid = left + (right - left) / <span class="hljs-number">2</span>;<br>    <span class="hljs-keyword">if</span> (ve[mid] &gt; target) &#123;<br>      right = mid - <span class="hljs-number">1</span>;<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>      left = mid + <span class="hljs-number">1</span>;<br>    &#125;<br>  &#125;<br>  <span class="hljs-keyword">return</span> left;<br>&#125;<br></code></pre></td></tr></table></figure>
-<h2 id="2-5-查找最后一个小于等于target的元素的索引"><a href="#2-5-查找最后一个小于等于target的元素的索引" class="headerlink" title="2.5 查找最后一个小于等于target的元素的索引"></a>2.5 查找最后一个小于等于target的元素的索引</h2><figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">BSearch7</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; ve, <span class="hljs-keyword">int</span> target)</span> </span>&#123;<br>  <span class="hljs-keyword">int</span> left = <span class="hljs-number">0</span>, right = ve.size()<span class="hljs-number">-1</span>;<br>  <span class="hljs-keyword">while</span> (left &lt;= right) &#123;<br>    <span class="hljs-keyword">int</span> mid = left + (right - left) / <span class="hljs-number">2</span>;<br>    <span class="hljs-keyword">if</span> (ve[mid] &lt;= target) &#123;<br>      left = mid + <span class="hljs-number">1</span>;<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>      right = mid - <span class="hljs-number">1</span>;<br>    &#125;<br>  &#125;<br>  <span class="hljs-keyword">return</span> right;<br>&#125;<br></code></pre></td></tr></table></figure>
-<h2 id="2-6-查找第一个大于等于target的元素的索引"><a href="#2-6-查找第一个大于等于target的元素的索引" class="headerlink" title="2.6 查找第一个大于等于target的元素的索引"></a>2.6 查找第一个大于等于target的元素的索引</h2><figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">BSearch8</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; ve, <span class="hljs-keyword">int</span> target)</span> </span>&#123;<br>  <span class="hljs-keyword">int</span> left = <span class="hljs-number">0</span>, right = ve.size()<span class="hljs-number">-1</span>;<br>  <span class="hljs-keyword">while</span> (left &lt;= right) &#123;<br>    <span class="hljs-keyword">int</span> mid = left + (right - left) / <span class="hljs-number">2</span>;<br>    <span class="hljs-keyword">if</span> (ve[mid] &gt;= target) &#123;<br>      right = mid - <span class="hljs-number">1</span>;<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>      left = mid + <span class="hljs-number">1</span>;<br>    &#125;<br>  &#125;<br>  <span class="hljs-keyword">return</span> left;<br>&#125;<br></code></pre></td></tr></table></figure>
-<h2 id="2-7-查找target所处范围"><a href="#2-7-查找target所处范围" class="headerlink" title="2.7 查找target所处范围"></a>2.7 查找target所处范围</h2><figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">// 查找target所处范围，没有返回-1</span><br><span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; BSearch9(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; vex, <span class="hljs-keyword">int</span> target) &#123;<br>  <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; res;<br>  <span class="hljs-keyword">int</span> leftIndex = BSearch3(vex, target);<br>  <span class="hljs-keyword">int</span> rightIndex = BSearch4(vex, target);<br>  res.push_back(leftIndex &lt; <span class="hljs-number">0</span> ? <span class="hljs-number">-1</span> : leftIndex);<br>  res.push_back(rightIndex &lt; <span class="hljs-number">0</span> ? <span class="hljs-number">-1</span> : rightIndex);<br>  <span class="hljs-keyword">return</span> res;<br>&#125;<br></code></pre></td></tr></table></figure>
+                <p><br></p>
+<h2 id="方法一：递归方式"><a href="#方法一：递归方式" class="headerlink" title="方法一：递归方式"></a>方法一：递归方式</h2><figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span><br><span class="hljs-keyword">public</span>:<br>  <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; res;<br>  <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; preorderTraversal(TreeNode* root) &#123;<br>    <span class="hljs-keyword">if</span> (root) &#123;<br>      res.push_back(root-&gt;val);<br>      preorderTraversal(root-&gt;left); <br>      preorderTraversal(root-&gt;right);<br>    &#125;<br>    <span class="hljs-keyword">return</span> res;<br>  &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<h2 id="方法二：非递归（栈1）"><a href="#方法二：非递归（栈1）" class="headerlink" title="方法二：非递归（栈1）"></a>方法二：非递归（栈1）</h2><p>首先将根节点入栈。然后循环遍历，取出根节点，考虑到栈的<strong>后进先出</strong>原则，首先入栈右边节点，之后入栈左边节点。再次取出栈顶节点直到栈为空。</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span><br><span class="hljs-keyword">public</span>:<br>  <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; preorderTraversal(TreeNode* root) &#123;<br>    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; res;<br>    <span class="hljs-keyword">if</span> (!root) &#123;<br>      <span class="hljs-keyword">return</span> res;<br>    &#125;<br>    <span class="hljs-built_in">stack</span>&lt;TreeNode* &gt; s&#123;&#123;root&#125;&#125;;<br>    <span class="hljs-keyword">while</span>(!s.empty()) &#123;<br>      TreeNode* node = s.top();<br>      res.push_back(node-&gt;val);<br>      s.pop();<br>      <span class="hljs-keyword">if</span> (node-&gt;right) &#123;<br>        s.push(node-&gt;right);<br>      &#125;<br>      <span class="hljs-keyword">if</span> (node-&gt;left) &#123;<br>        s.push(node-&gt;left);<br>      &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> res;<br>  &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<h2 id="方法三：非递归（栈2）"><a href="#方法三：非递归（栈2）" class="headerlink" title="方法三：非递归（栈2）"></a>方法三：非递归（栈2）</h2><p>1、新建栈并且设置一个游标节点，游标节点走过的路径就是二叉树的前序遍历顺序。</p>
+<p>2、首先循环条件是栈不为空且游标节点存在。游标节点首先为根节点。</p>
+<p>3、游标节点沿着自身左子树遍历，将遍历顺序存到列表当中，并将遍历到的节点逐个入栈，直到左子节点不存在。</p>
+<p>4、取出栈顶元素的右子节点作为游标节点，因为栈顶元素在初始入栈的过程中已经被记录，不必重复记录。（之后做的实际上是将此时的游标节点当做根节点再次执行以上操作）。</p>
+<p>5、直到栈为空且游标节点不存在。</p>
+<figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;</span><br><span class="hljs-keyword">public</span>:<br>  <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; preorderTraversal(TreeNode* root) &#123;<br>    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; res; <br>    <span class="hljs-keyword">if</span> (!root) &#123;<br>      <span class="hljs-keyword">return</span> res;<br>    &#125;<br>    <span class="hljs-built_in">stack</span>&lt;TreeNode*&gt; s;<br>    TreeNode* node = root;<br>    <span class="hljs-keyword">while</span> (!s.empty() || node) &#123;<br>      <span class="hljs-keyword">if</span> (node) &#123;<br>        res.push_back(node-&gt;val);<br>        s.push(node);<br>        node = node-&gt;left;<br>      &#125; <span class="hljs-keyword">else</span> &#123;<br>        TreeNode* t = s.top();<br>        s.pop();<br>        node = t-&gt;right;<br>      &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> res;<br>  &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<p><br></p>
 
             
         </div>
@@ -181,7 +183,7 @@
             <div class="level-start">
                 <div class="level-item">
                     <span class="is-size-6 has-text-grey has-mr-7">#</span>
-                    <a class="has-link-grey -link" href="/tags/C/">C++</a>, <a class="has-link-grey -link" href="/tags/数据结构/">数据结构</a>
+                    <a class="has-link-grey -link" href="/tags/C/">C++</a>, <a class="has-link-grey -link" href="/tags/二叉树/">二叉树</a>, <a class="has-link-grey -link" href="/tags/数据结构/">数据结构</a>
                 </div>
             </div>
         </div>
@@ -200,19 +202,12 @@
     <div class="level post-navigation is-flex-wrap is-mobile">
         
         <div class="level-start">
-            <a class="level level-item has-link-grey  article-nav-prev" href="/2018/11/17/静态资源加速/">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2018/04/24/二叉树中序遍历/">
                 <i class="level-item fas fa-chevron-left"></i>
-                <span class="level-item">静态资源加速</span>
+                <span class="level-item">二叉树的中序遍历</span>
             </a>
         </div>
         
-        
-        <div class="level-end">
-            <a class="level level-item has-link-grey  article-nav-next" href="/2018/09/10/Vue 生命周期/">
-                <span class="level-item">Vue生命周期</span>
-                <i class="level-item fas fa-chevron-right"></i>
-            </a>
-        </div>
         
     </div>
 </div>
@@ -280,7 +275,7 @@
                         文章
                     </p>
                     <p class="title has-text-weight-normal">
-                        3
+                        6
                     </p>
                 </div>
             </div>
@@ -290,7 +285,7 @@
                         分类
                     </p>
                     <p class="title has-text-weight-normal">
-                        6
+                        9
                     </p>
                 </div>
             </div>
@@ -300,7 +295,7 @@
                         标签
                     </p>
                     <p class="title has-text-weight-normal">
-                        5
+                        9
                     </p>
                 </div>
             </div>
@@ -419,12 +414,28 @@
                 <span class="level-item tag">1</span>
             </span>
         </a></li></ul></li><li>
+        <a class="level is-marginless" href="/categories/数据抓取/">
+            <span class="level-start">
+                <span class="level-item">数据抓取</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/数据抓取/知乎/">
+            <span class="level-start">
+                <span class="level-item">知乎</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li></ul></li><li>
         <a class="level is-marginless" href="/categories/数据结构与算法/">
             <span class="level-start">
                 <span class="level-item">数据结构与算法</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">1</span>
+                <span class="level-item tag">3</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/数据结构与算法/二分查找/">
@@ -433,6 +444,14 @@
             </span>
             <span class="level-end">
                 <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/数据结构与算法/二叉树/">
+            <span class="level-start">
+                <span class="level-item">二叉树</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
             </span>
         </a></li></ul></li>
             </ul>
@@ -446,7 +465,7 @@
         <h3 class="menu-label">
             标签云
         </h3>
-        <a href="/tags/C/" style="font-size: 10px;">C++</a> <a href="/tags/CDN/" style="font-size: 10px;">CDN</a> <a href="/tags/Vue/" style="font-size: 10px;">Vue</a> <a href="/tags/图片压缩/" style="font-size: 10px;">图片压缩</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a>
+        <a href="/tags/C/" style="font-size: 20px;">C++</a> <a href="/tags/CDN/" style="font-size: 10px;">CDN</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/Vue/" style="font-size: 10px;">Vue</a> <a href="/tags/ajax/" style="font-size: 10px;">ajax</a> <a href="/tags/二叉树/" style="font-size: 15px;">二叉树</a> <a href="/tags/图片压缩/" style="font-size: 10px;">图片压缩</a> <a href="/tags/数据结构/" style="font-size: 20px;">数据结构</a>
     </div>
 </div>
 
@@ -463,16 +482,35 @@
         
         <article class="media">
             
-            <a href="/2018/11/17/静态资源加速/" class="media-left">
+            <a href="/2018/11/30/知乎用户动态数据/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/bg_3.jpeg" alt="静态资源加速">
+                    <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/CoverPicture/bg_6.jpeg?raw=true" alt="抓取知乎用户动态数据">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-11-17T13:32:56.000Z">2018-11-17</time></div>
-                    <a href="/2018/11/17/静态资源加速/" class="has-link-black-ter is-size-6">静态资源加速</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-11-30T11:58:07.000Z">2018-11-30</time></div>
+                    <a href="/2018/11/30/知乎用户动态数据/" class="has-link-black-ter is-size-6">抓取知乎用户动态数据</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/数据抓取/">数据抓取</a> / <a class="has-link-grey -link" href="/categories/数据抓取/知乎/">知乎</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2018/09/17/静态资源加速/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/CoverPicture/bg_5.jpg?raw=true" alt="静态资源加速">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-09-17T13:32:56.000Z">2018-09-17</time></div>
+                    <a href="/2018/09/17/静态资源加速/" class="has-link-black-ter is-size-6">静态资源加速</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/建站实录/">建站实录</a> / <a class="has-link-grey -link" href="/categories/建站实录/静态资源加速/">静态资源加速</a>
                     </p>
@@ -482,16 +520,16 @@
         
         <article class="media">
             
-            <a href="/2018/10/20/二分搜索算法/" class="media-left">
+            <a href="/2018/07/20/二分搜索算法/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/bg_2.jpeg" alt="二分搜索算法">
+                    <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/CoverPicture/bg_4.jpeg?raw=true" alt="二分搜索算法">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-10-20T11:52:07.000Z">2018-10-20</time></div>
-                    <a href="/2018/10/20/二分搜索算法/" class="has-link-black-ter is-size-6">二分搜索算法</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-07-20T11:52:07.000Z">2018-07-20</time></div>
+                    <a href="/2018/07/20/二分搜索算法/" class="has-link-black-ter is-size-6">二分搜索算法</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/数据结构与算法/">数据结构与算法</a> / <a class="has-link-grey -link" href="/categories/数据结构与算法/二分查找/">二分查找</a>
                     </p>
@@ -501,18 +539,37 @@
         
         <article class="media">
             
-            <a href="/2018/09/10/Vue 生命周期/" class="media-left">
+            <a href="/2018/06/10/Vue 生命周期/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/bg_1.jpeg" alt="Vue生命周期">
+                    <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/CoverPicture/bg_3.jpeg?raw=true" alt="Vue生命周期">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-09-10T10:44:07.000Z">2018-09-10</time></div>
-                    <a href="/2018/09/10/Vue 生命周期/" class="has-link-black-ter is-size-6">Vue生命周期</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-06-10T10:44:07.000Z">2018-06-10</time></div>
+                    <a href="/2018/06/10/Vue 生命周期/" class="has-link-black-ter is-size-6">Vue生命周期</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/Vue/">Vue</a> / <a class="has-link-grey -link" href="/categories/Vue/基础原理类/">基础原理类</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2018/04/24/二叉树中序遍历/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/CoverPicture/bg_2.jpeg?raw=true" alt="二叉树的中序遍历">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-04-24T09:56:02.000Z">2018-04-24</time></div>
+                    <a href="/2018/04/24/二叉树中序遍历/" class="has-link-black-ter is-size-6">二叉树的中序遍历</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/数据结构与算法/">数据结构与算法</a> / <a class="has-link-grey -link" href="/categories/数据结构与算法/二叉树/">二叉树</a>
                     </p>
                 </div>
             </div>
@@ -542,9 +599,9 @@
         </li>
         
         <li>
-            <a class="level is-marginless" href="/archives/2018/10/">
+            <a class="level is-marginless" href="/archives/2018/09/">
                 <span class="level-start">
-                    <span class="level-item">十月 2018</span>
+                    <span class="level-item">九月 2018</span>
                 </span>
                 <span class="level-end">
                     <span class="level-item tag">1</span>
@@ -553,12 +610,34 @@
         </li>
         
         <li>
-            <a class="level is-marginless" href="/archives/2018/09/">
+            <a class="level is-marginless" href="/archives/2018/07/">
                 <span class="level-start">
-                    <span class="level-item">九月 2018</span>
+                    <span class="level-item">七月 2018</span>
                 </span>
                 <span class="level-end">
                     <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/06/">
+                <span class="level-start">
+                    <span class="level-item">六月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/04/">
+                <span class="level-start">
+                    <span class="level-item">四月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
                 </span>
             </a>
         </li>
@@ -582,7 +661,7 @@
                             <span class="level-item">C++</span>
                         </span>
                         <span class="level-end">
-                            <span class="level-item tag">1</span>
+                            <span class="level-item tag">3</span>
                         </span>
                     </a>
                 </li>
@@ -599,12 +678,56 @@
                 </li>
                 
                 <li>
+                    <a class="level is-marginless" href="/tags/MongoDB/">
+                        <span class="level-start">
+                            <span class="level-item">MongoDB</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/Python/">
+                        <span class="level-start">
+                            <span class="level-item">Python</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
                     <a class="level is-marginless" href="/tags/Vue/">
                         <span class="level-start">
                             <span class="level-item">Vue</span>
                         </span>
                         <span class="level-end">
                             <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/ajax/">
+                        <span class="level-start">
+                            <span class="level-item">ajax</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/二叉树/">
+                        <span class="level-start">
+                            <span class="level-item">二叉树</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">2</span>
                         </span>
                     </a>
                 </li>
@@ -626,7 +749,7 @@
                             <span class="level-item">数据结构</span>
                         </span>
                         <span class="level-end">
-                            <span class="level-item tag">1</span>
+                            <span class="level-item tag">3</span>
                         </span>
                     </a>
                 </li>
@@ -656,16 +779,35 @@
         
         <article class="media">
             
-            <a href="/2018/11/17/静态资源加速/" class="media-left">
+            <a href="/2018/11/30/知乎用户动态数据/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/bg_3.jpeg" alt="静态资源加速">
+                    <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/CoverPicture/bg_6.jpeg?raw=true" alt="抓取知乎用户动态数据">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-11-17T13:32:56.000Z">2018-11-17</time></div>
-                    <a href="/2018/11/17/静态资源加速/" class="has-link-black-ter is-size-6">静态资源加速</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-11-30T11:58:07.000Z">2018-11-30</time></div>
+                    <a href="/2018/11/30/知乎用户动态数据/" class="has-link-black-ter is-size-6">抓取知乎用户动态数据</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/数据抓取/">数据抓取</a> / <a class="has-link-grey -link" href="/categories/数据抓取/知乎/">知乎</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2018/09/17/静态资源加速/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/CoverPicture/bg_5.jpg?raw=true" alt="静态资源加速">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-09-17T13:32:56.000Z">2018-09-17</time></div>
+                    <a href="/2018/09/17/静态资源加速/" class="has-link-black-ter is-size-6">静态资源加速</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/建站实录/">建站实录</a> / <a class="has-link-grey -link" href="/categories/建站实录/静态资源加速/">静态资源加速</a>
                     </p>
@@ -675,16 +817,16 @@
         
         <article class="media">
             
-            <a href="/2018/10/20/二分搜索算法/" class="media-left">
+            <a href="/2018/07/20/二分搜索算法/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/bg_2.jpeg" alt="二分搜索算法">
+                    <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/CoverPicture/bg_4.jpeg?raw=true" alt="二分搜索算法">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-10-20T11:52:07.000Z">2018-10-20</time></div>
-                    <a href="/2018/10/20/二分搜索算法/" class="has-link-black-ter is-size-6">二分搜索算法</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-07-20T11:52:07.000Z">2018-07-20</time></div>
+                    <a href="/2018/07/20/二分搜索算法/" class="has-link-black-ter is-size-6">二分搜索算法</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/数据结构与算法/">数据结构与算法</a> / <a class="has-link-grey -link" href="/categories/数据结构与算法/二分查找/">二分查找</a>
                     </p>
@@ -694,18 +836,37 @@
         
         <article class="media">
             
-            <a href="/2018/09/10/Vue 生命周期/" class="media-left">
+            <a href="/2018/06/10/Vue 生命周期/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="/images/bg_1.jpeg" alt="Vue生命周期">
+                    <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/CoverPicture/bg_3.jpeg?raw=true" alt="Vue生命周期">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-09-10T10:44:07.000Z">2018-09-10</time></div>
-                    <a href="/2018/09/10/Vue 生命周期/" class="has-link-black-ter is-size-6">Vue生命周期</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-06-10T10:44:07.000Z">2018-06-10</time></div>
+                    <a href="/2018/06/10/Vue 生命周期/" class="has-link-black-ter is-size-6">Vue生命周期</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/Vue/">Vue</a> / <a class="has-link-grey -link" href="/categories/Vue/基础原理类/">基础原理类</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2018/04/24/二叉树中序遍历/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/CoverPicture/bg_2.jpeg?raw=true" alt="二叉树的中序遍历">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-04-24T09:56:02.000Z">2018-04-24</time></div>
+                    <a href="/2018/04/24/二叉树中序遍历/" class="has-link-black-ter is-size-6">二叉树的中序遍历</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/数据结构与算法/">数据结构与算法</a> / <a class="has-link-grey -link" href="/categories/数据结构与算法/二叉树/">二叉树</a>
                     </p>
                 </div>
             </div>
@@ -735,9 +896,9 @@
         </li>
         
         <li>
-            <a class="level is-marginless" href="/archives/2018/10/">
+            <a class="level is-marginless" href="/archives/2018/09/">
                 <span class="level-start">
-                    <span class="level-item">十月 2018</span>
+                    <span class="level-item">九月 2018</span>
                 </span>
                 <span class="level-end">
                     <span class="level-item tag">1</span>
@@ -746,12 +907,34 @@
         </li>
         
         <li>
-            <a class="level is-marginless" href="/archives/2018/09/">
+            <a class="level is-marginless" href="/archives/2018/07/">
                 <span class="level-start">
-                    <span class="level-item">九月 2018</span>
+                    <span class="level-item">七月 2018</span>
                 </span>
                 <span class="level-end">
                     <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/06/">
+                <span class="level-start">
+                    <span class="level-item">六月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/04/">
+                <span class="level-start">
+                    <span class="level-item">四月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
                 </span>
             </a>
         </li>
@@ -775,7 +958,7 @@
                             <span class="level-item">C++</span>
                         </span>
                         <span class="level-end">
-                            <span class="level-item tag">1</span>
+                            <span class="level-item tag">3</span>
                         </span>
                     </a>
                 </li>
@@ -792,12 +975,56 @@
                 </li>
                 
                 <li>
+                    <a class="level is-marginless" href="/tags/MongoDB/">
+                        <span class="level-start">
+                            <span class="level-item">MongoDB</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/Python/">
+                        <span class="level-start">
+                            <span class="level-item">Python</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
                     <a class="level is-marginless" href="/tags/Vue/">
                         <span class="level-start">
                             <span class="level-item">Vue</span>
                         </span>
                         <span class="level-end">
                             <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/ajax/">
+                        <span class="level-start">
+                            <span class="level-item">ajax</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/二叉树/">
+                        <span class="level-start">
+                            <span class="level-item">二叉树</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">2</span>
                         </span>
                     </a>
                 </li>
@@ -819,7 +1046,7 @@
                             <span class="level-item">数据结构</span>
                         </span>
                         <span class="level-end">
-                            <span class="level-item tag">1</span>
+                            <span class="level-item tag">3</span>
                         </span>
                     </a>
                 </li>
@@ -846,8 +1073,8 @@
                 </a>
                 <p class="is-size-7">
                     &copy; 2018 Daito&nbsp;
-                    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> &  Theme by 
-                    <a href="http://github.com/ppoffice/hexo-theme-icarus">Icarus</a> & Theme modified by
+                    开发商 <a href="http://hexo.io/" target="_blank">Hexo</a> &  装修师 
+                    <a href="http://github.com/ppoffice/hexo-theme-icarus">Icarus</a> & 改造家
                     <a href="http://yaodongsheng.com/about">Daito</a>
                 </p>
             </div>

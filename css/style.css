@@ -5,7 +5,7 @@ html {
   font-size: 14px;
 }
 body {
-  background: #e7e7e7 no-repeat fixed url("/images/bgImage.webp");
+  background: #e7e7e7 no-repeat fixed url("https://github.com/Cloving/Atlas-Github/raw/master/blog/bgImage.webp");
 }
 body,
 button,
