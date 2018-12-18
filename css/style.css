@@ -205,6 +205,15 @@ img.thumbnail {
   font-size: 1.15rem;
   position: relative;
 }
+.post-copyright {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 2px dashed #d7d7d7;
+}
+.post-copyright .copyright-item {
+  font-size: 1.2rem;
+  line-height: 2rem;
+}
 .rtl {
   direction: rtl;
 }
