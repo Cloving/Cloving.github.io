@@ -2,18 +2,23 @@
 <html lang="zh">
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
-<title>标签: 二叉树 - Daito - 修行的路注定是孤独的</title>
+<title>二分搜索算法 - Daito - 修行的路注定是孤独的</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-    <meta property="og:type" content="website">
-<meta property="og:title" content="Daito - 修行的路注定是孤独的">
-<meta property="og:url" content="http://yoursite.com/tags/二叉树/index.html">
+    <meta name="description" content="1.1 基本的二分搜索(递归)1234567891011121314// 普通二分：递归int BSearch1(vector&amp;lt;int&amp;gt; ve, int target) &amp;#123;  int left = 0, right = ve.size()-1;  if (left &amp;gt; right) &amp;#123;    return -1;  &amp;#125;  int mid = left">
+<meta name="keywords" content="数据结构,C++">
+<meta property="og:type" content="article">
+<meta property="og:title" content="二分搜索算法">
+<meta property="og:url" content="http://yoursite.com/2018/06/13/二分搜索算法/index.html">
 <meta property="og:site_name" content="Daito - 修行的路注定是孤独的">
+<meta property="og:description" content="1.1 基本的二分搜索(递归)1234567891011121314// 普通二分：递归int BSearch1(vector&amp;lt;int&amp;gt; ve, int target) &amp;#123;  int left = 0, right = ve.size()-1;  if (left &amp;gt; right) &amp;#123;    return -1;  &amp;#125;  int mid = left">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-12-19T01:42:53.430Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Daito - 修行的路注定是孤独的">
+<meta name="twitter:title" content="二分搜索算法">
+<meta name="twitter:description" content="1.1 基本的二分搜索(递归)1234567891011121314// 普通二分：递归int BSearch1(vector&amp;lt;int&amp;gt; ve, int target) &amp;#123;  int left = 0, right = ve.size()-1;  if (left &amp;gt; right) &amp;#123;    return -1;  &amp;#125;  int mid = left">
 
 
 
@@ -115,115 +120,135 @@
     <section class="section">
         <div class="container">
             <div class="columns">
-                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main"><div class="card">
+                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main"><div class="card card-item">
+    
+    <div class="card-image">
+        <span class="image is-7by1">
+            <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/CoverPicture/bg_4.jpeg?raw=true" alt="二分搜索算法">
+        </span>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2018-06-13T11:52:07.000Z">2018-06-13</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/数据结构与算法/">数据结构与算法</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/数据结构与算法/二分查找/">二分查找</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    3 分钟 读完 (大约 445 个字)
+                </span>
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                二分搜索算法
+            
+        </h1>
+        <div class="content">
+            
+                <h2 id="1-1-基本的二分搜索-递归"><a href="#1-1-基本的二分搜索-递归" class="headerlink" title="1.1 基本的二分搜索(递归)"></a>1.1 基本的二分搜索(递归)</h2><figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">// 普通二分：递归</span><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">BSearch1</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; ve, <span class="hljs-keyword">int</span> target)</span> </span>&#123;<br>  <span class="hljs-keyword">int</span> left = <span class="hljs-number">0</span>, right = ve.size()<span class="hljs-number">-1</span>;<br>  <span class="hljs-keyword">if</span> (left &gt; right) &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;<br>  &#125;<br>  <span class="hljs-keyword">int</span> mid = left + (right - left) / <span class="hljs-number">2</span>;<br>  <span class="hljs-keyword">if</span> (ve[mid] &gt; target) &#123;<br>    <span class="hljs-keyword">return</span> BSearch1(ve, target);<br>  &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (ve[mid] &lt; target) &#123;<br>    <span class="hljs-keyword">return</span> BSearch1(ve, target);<br>  &#125;<br>  <span class="hljs-keyword">return</span> ve[mid];<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="1-2-基本的二分搜索（循环）"><a href="#1-2-基本的二分搜索（循环）" class="headerlink" title="1.2 基本的二分搜索（循环）"></a>1.2 基本的二分搜索（循环）</h2><figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">// 普通二分：循环</span><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">BSearch2</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; ve, <span class="hljs-keyword">int</span> target)</span> </span>&#123;<br>  <span class="hljs-keyword">int</span> left = <span class="hljs-number">0</span>, right = ve.size()<span class="hljs-number">-1</span>;<br>  <span class="hljs-keyword">while</span> (left &lt;= right) &#123;<br>    <span class="hljs-keyword">int</span> mid = left + (right - left) / <span class="hljs-number">2</span>;<br>    <span class="hljs-keyword">if</span> (ve[mid] &gt; target) &#123;<br>      right = mid - <span class="hljs-number">1</span>;<br>    &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (ve[mid] &lt; target) &#123;<br>      left = mid + <span class="hljs-number">1</span>;<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>      <span class="hljs-keyword">return</span> ve[mid];<br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="2-1-查找第一个与target相等的元素的索引"><a href="#2-1-查找第一个与target相等的元素的索引" class="headerlink" title="2.1 查找第一个与target相等的元素的索引"></a>2.1 查找第一个与target相等的元素的索引</h2><figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">BSearch3</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; ve, <span class="hljs-keyword">int</span> target)</span> </span>&#123;<br>  <span class="hljs-keyword">int</span> left = <span class="hljs-number">0</span>, right = ve.size()<span class="hljs-number">-1</span>;<br>  <span class="hljs-keyword">while</span> (left &lt;= right) &#123;<br>    <span class="hljs-keyword">int</span> mid = left + (right - left) / <span class="hljs-number">2</span>;<br>    <span class="hljs-keyword">if</span> (ve[mid] &gt;= target) &#123;<br>      right = mid - <span class="hljs-number">1</span>;<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>      left = mid + <span class="hljs-number">1</span>;<br>    &#125;<br>  &#125;<br>  <span class="hljs-keyword">return</span> ve[left] == target ? left : <span class="hljs-number">-1</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="2-2-查找最后一个与target相等的元素的索引"><a href="#2-2-查找最后一个与target相等的元素的索引" class="headerlink" title="2.2 查找最后一个与target相等的元素的索引"></a>2.2 查找最后一个与target相等的元素的索引</h2><figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">BSearch4</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; ve, <span class="hljs-keyword">int</span> target)</span> </span>&#123;<br>  <span class="hljs-keyword">int</span> left = <span class="hljs-number">0</span>, right = ve.size()<span class="hljs-number">-1</span>;<br>  <span class="hljs-keyword">while</span> (left &lt;= right) &#123;<br>    <span class="hljs-keyword">int</span> mid = left + (right - left) / <span class="hljs-number">2</span>;<br>    <span class="hljs-keyword">if</span> (ve[mid] &lt;= target) &#123;<br>      left = mid + <span class="hljs-number">1</span>;<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>      right = mid - <span class="hljs-number">1</span>;<br>    &#125;<br>  &#125;<br>  <span class="hljs-keyword">return</span> ve[right] == target ? right : <span class="hljs-number">-1</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="2-3-查找最后一个小于target的元素索引"><a href="#2-3-查找最后一个小于target的元素索引" class="headerlink" title="2.3 查找最后一个小于target的元素索引"></a>2.3 查找最后一个小于target的元素索引</h2><figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">BSearch5</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; ve, <span class="hljs-keyword">int</span> target)</span> </span>&#123;<br>  <span class="hljs-keyword">int</span> left = <span class="hljs-number">0</span>, right = ve.size()<span class="hljs-number">-1</span>;<br>  <span class="hljs-keyword">while</span> (left &lt;= right) &#123;<br>    <span class="hljs-keyword">int</span> mid = left + (right - left) / <span class="hljs-number">2</span>;<br>    <span class="hljs-keyword">if</span> (ve[mid] &lt; target) &#123;<br>      left = mid + <span class="hljs-number">1</span>;<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>      right = mid - <span class="hljs-number">1</span>;<br>    &#125;<br>  &#125;<br>  <span class="hljs-keyword">return</span> right;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="2-4-查找第一个大于target的元素索引"><a href="#2-4-查找第一个大于target的元素索引" class="headerlink" title="2.4 查找第一个大于target的元素索引"></a>2.4 查找第一个大于target的元素索引</h2><figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">BSearch6</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; ve, <span class="hljs-keyword">int</span> target)</span> </span>&#123;<br>  <span class="hljs-keyword">int</span> left = <span class="hljs-number">0</span>, right = ve.size()<span class="hljs-number">-1</span>;<br>  <span class="hljs-keyword">while</span> (left &lt;= right) &#123;<br>    <span class="hljs-keyword">int</span> mid = left + (right - left) / <span class="hljs-number">2</span>;<br>    <span class="hljs-keyword">if</span> (ve[mid] &gt; target) &#123;<br>      right = mid - <span class="hljs-number">1</span>;<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>      left = mid + <span class="hljs-number">1</span>;<br>    &#125;<br>  &#125;<br>  <span class="hljs-keyword">return</span> left;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="2-5-查找最后一个小于等于target的元素的索引"><a href="#2-5-查找最后一个小于等于target的元素的索引" class="headerlink" title="2.5 查找最后一个小于等于target的元素的索引"></a>2.5 查找最后一个小于等于target的元素的索引</h2><figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">BSearch7</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; ve, <span class="hljs-keyword">int</span> target)</span> </span>&#123;<br>  <span class="hljs-keyword">int</span> left = <span class="hljs-number">0</span>, right = ve.size()<span class="hljs-number">-1</span>;<br>  <span class="hljs-keyword">while</span> (left &lt;= right) &#123;<br>    <span class="hljs-keyword">int</span> mid = left + (right - left) / <span class="hljs-number">2</span>;<br>    <span class="hljs-keyword">if</span> (ve[mid] &lt;= target) &#123;<br>      left = mid + <span class="hljs-number">1</span>;<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>      right = mid - <span class="hljs-number">1</span>;<br>    &#125;<br>  &#125;<br>  <span class="hljs-keyword">return</span> right;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="2-6-查找第一个大于等于target的元素的索引"><a href="#2-6-查找第一个大于等于target的元素的索引" class="headerlink" title="2.6 查找第一个大于等于target的元素的索引"></a>2.6 查找第一个大于等于target的元素的索引</h2><figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">BSearch8</span><span class="hljs-params">(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; ve, <span class="hljs-keyword">int</span> target)</span> </span>&#123;<br>  <span class="hljs-keyword">int</span> left = <span class="hljs-number">0</span>, right = ve.size()<span class="hljs-number">-1</span>;<br>  <span class="hljs-keyword">while</span> (left &lt;= right) &#123;<br>    <span class="hljs-keyword">int</span> mid = left + (right - left) / <span class="hljs-number">2</span>;<br>    <span class="hljs-keyword">if</span> (ve[mid] &gt;= target) &#123;<br>      right = mid - <span class="hljs-number">1</span>;<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>      left = mid + <span class="hljs-number">1</span>;<br>    &#125;<br>  &#125;<br>  <span class="hljs-keyword">return</span> left;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="2-7-查找target所处范围"><a href="#2-7-查找target所处范围" class="headerlink" title="2.7 查找target所处范围"></a>2.7 查找target所处范围</h2><figure class="highlight c++ hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">// 查找target所处范围，没有返回-1</span><br><span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; BSearch9(<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; vex, <span class="hljs-keyword">int</span> target) &#123;<br>  <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; res;<br>  <span class="hljs-keyword">int</span> leftIndex = BSearch3(vex, target);<br>  <span class="hljs-keyword">int</span> rightIndex = BSearch4(vex, target);<br>  res.push_back(leftIndex &lt; <span class="hljs-number">0</span> ? <span class="hljs-number">-1</span> : leftIndex);<br>  res.push_back(rightIndex &lt; <span class="hljs-number">0</span> ? <span class="hljs-number">-1</span> : rightIndex);<br>  <span class="hljs-keyword">return</span> res;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+            
+        </div>
+        <div class="content">
+            
+                <div class="post-copyright">
+  <div class="copyright-item">
+      <span>原文作者: </span>
+      <a href="http://yaodongsheng.com">Daito</a>
+  </div>
+  <div class="copyright-item">
+      <span>原文链接: </span>
+      <a href="#">二分搜索算法</a>
+  </div>
+  <div class="copyright-item">
+      <span>许可协议: </span>
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>
+  </div>
+</div>
+
+            
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/C/">C++</a>, <a class="has-link-grey -link" href="/tags/数据结构/">数据结构</a>
+                </div>
+            </div>
+        </div>
+        
+        <!--  -->
+        
+        <div class="social-share"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css">
+<script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script>
+        
+    </div>
+</div>
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2018/09/21/三寸气在千般用，一旦无常万事休/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">三寸气在千般用，一旦无常万事休</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2018/06/10/Vue生命周期解析/">
+                <span class="level-item">Vue生命周期解析</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
     <div class="card-content">
-        <nav class="breadcrumb" aria-label="breadcrumbs">
-        <ul>
-            <li><a href="/tags">标签</a></li>
-            <li class="is-active"><a href="#" aria-current="page">二叉树</a></li>
-        </ul>
-        </nav>
+        <h3 class="title is-5 has-text-weight-normal">评论</h3>
+        
+<div id="valine-thread"></div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#valine-thread' ,
+        notify: false,
+        verify: false,
+        app_id: 'cnWuYXtAptT6FdU8rGmtCKXy-gzGzoHsz',
+        app_key: 'mxfKEzvpXpL0bnGXGrp129vf',
+        placeholder: '请在这里输入您想说的话'
+    });
+</script>
+
     </div>
 </div>
-
-    <div class="card card-item">
-    
-    <div class="card-image">
-        <a href="/2018/04/24/二叉树中序遍历/" class="image is-7by1">
-            <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/CoverPicture/bg_2.jpeg?raw=true" alt="二叉树的中序遍历">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2018-04-24T09:56:02.000Z">2018-04-24</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/数据结构与算法/">数据结构与算法</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/数据结构与算法/二叉树/">二叉树</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    3 分钟 读完 (大约 488 个字)
-                </span>
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2018/04/24/二叉树中序遍历/">二叉树的中序遍历</a>
-            
-        </h1>
-        <div class="content">
-            
-        </div>
-        <div class="content">
-            
-        </div>
-        
-        <!--  -->
-        
-    </div>
-</div>
-
-
-
-
-
-    <div class="card card-item">
-    
-    <div class="card-image">
-        <a href="/2018/04/15/二叉树前序遍历/" class="image is-7by1">
-            <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/CoverPicture/bg_1.jpeg?raw=true" alt="二叉树的前序遍历">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2018-04-15T06:29:40.000Z">2018-04-15</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/数据结构与算法/">数据结构与算法</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/数据结构与算法/二叉树/">二叉树</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    3 分钟 读完 (大约 426 个字)
-                </span>
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/2018/04/15/二叉树前序遍历/">二叉树的前序遍历</a>
-            
-        </h1>
-        <div class="content">
-            
-        </div>
-        <div class="content">
-            
-        </div>
-        
-        <!--  -->
-        
-    </div>
-</div>
-
-
-
-
-
 </div>
                 
 

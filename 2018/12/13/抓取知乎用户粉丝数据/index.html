@@ -2,23 +2,29 @@
 <html lang="zh">
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
-<title>三寸气在千般用，一旦无常万事休 - Daito - 修行的路注定是孤独的</title>
+<title>抓取知乎用户粉丝数据 - Daito - 修行的路注定是孤独的</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-    <meta name="description" content="其实人生很长，选择一个自己真正想要从事的领域，沉淀下去，把自己变得更厉害一点。因为对于人来说不怕有缺点，就怕没特点。但不要想着一定要比谁谁更好，因为不论你多努力，总有人比你厉害，也总有人永远不如你。和别人比较大概是生而为人最可悲的事。总而言之，不应当有太多的欲望，不要做了一件事就必须要得到什么。但行好事，莫问前程。 其实人生也很短，生命是脆弱的，一次看似普通的熬夜也许就榨干了你全部的精力，一">
-<meta name="keywords" content="念念不忘，必有回响">
+    <meta name="description" content="摘要本文抓取并分析了知乎用户的粉丝数据，包括粉丝名、粉丝标题、粉丝男女比例、粉丝回答问题比例、粉丝被关注数等数据。之后利用pyecharts库对这些数据进行可视化显示。 抓取数据1、请求的url与代理与之前一篇文章抓取知乎用户动态数据类似，这里请求的url也是返回json数据，所以同样在控制台network选项下找到请求的url，通过观察多个请求的url将其分为通用部分与扩展部分，如下形式：123">
+<meta name="keywords" content="Echarts,Python,词云,代理">
 <meta property="og:type" content="article">
-<meta property="og:title" content="三寸气在千般用，一旦无常万事休">
-<meta property="og:url" content="http://yoursite.com/2018/12/05/三寸气在千般用，一旦无常万事休/index.html">
+<meta property="og:title" content="抓取知乎用户粉丝数据">
+<meta property="og:url" content="http://yoursite.com/2018/12/13/抓取知乎用户粉丝数据/index.html">
 <meta property="og:site_name" content="Daito - 修行的路注定是孤独的">
-<meta property="og:description" content="其实人生很长，选择一个自己真正想要从事的领域，沉淀下去，把自己变得更厉害一点。因为对于人来说不怕有缺点，就怕没特点。但不要想着一定要比谁谁更好，因为不论你多努力，总有人比你厉害，也总有人永远不如你。和别人比较大概是生而为人最可悲的事。总而言之，不应当有太多的欲望，不要做了一件事就必须要得到什么。但行好事，莫问前程。 其实人生也很短，生命是脆弱的，一次看似普通的熬夜也许就榨干了你全部的精力，一">
+<meta property="og:description" content="摘要本文抓取并分析了知乎用户的粉丝数据，包括粉丝名、粉丝标题、粉丝男女比例、粉丝回答问题比例、粉丝被关注数等数据。之后利用pyecharts库对这些数据进行可视化显示。 抓取数据1、请求的url与代理与之前一篇文章抓取知乎用户动态数据类似，这里请求的url也是返回json数据，所以同样在控制台network选项下找到请求的url，通过观察多个请求的url将其分为通用部分与扩展部分，如下形式：123">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-12-18T13:15:51.251Z">
+<meta property="og:image" content="https://github.com/Cloving/Atlas-Github/blob/master/blog/notePicture/%E6%8A%93%E5%8F%96%E7%9F%A5%E4%B9%8E%E7%94%A8%E6%88%B7%E7%B2%89%E4%B8%9D%E6%95%B0%E6%8D%AE/%E6%A0%87%E9%A2%98%E8%AF%8D%E4%BA%91%E5%9B%BE.png?raw=true">
+<meta property="og:image" content="https://github.com/Cloving/Atlas-Github/blob/master/blog/notePicture/%E6%8A%93%E5%8F%96%E7%9F%A5%E4%B9%8E%E7%94%A8%E6%88%B7%E7%B2%89%E4%B8%9D%E6%95%B0%E6%8D%AE/%E7%94%A8%E6%88%B7%E5%90%8D%E8%AF%8D%E4%BA%91%E5%9B%BE.png?raw=true">
+<meta property="og:image" content="https://github.com/Cloving/Atlas-Github/blob/master/blog/notePicture/%E6%8A%93%E5%8F%96%E7%9F%A5%E4%B9%8E%E7%94%A8%E6%88%B7%E7%B2%89%E4%B8%9D%E6%95%B0%E6%8D%AE/%E7%B2%89%E4%B8%9D%E8%A2%AB%E5%85%B3%E6%B3%A8%E6%95%B0%E9%87%8F%E7%9B%B4%E6%96%B9%E5%9B%BE.png?raw=true">
+<meta property="og:image" content="https://github.com/Cloving/Atlas-Github/blob/master/blog/notePicture/%E6%8A%93%E5%8F%96%E7%9F%A5%E4%B9%8E%E7%94%A8%E6%88%B7%E7%B2%89%E4%B8%9D%E6%95%B0%E6%8D%AE/%E7%B2%89%E4%B8%9D%E5%9B%9E%E7%AD%94%E6%95%B0%E9%87%8F%E7%9B%B4%E6%96%B9%E5%9B%BE.png?raw=true">
+<meta property="og:image" content="https://github.com/Cloving/Atlas-Github/blob/master/blog/notePicture/%E6%8A%93%E5%8F%96%E7%9F%A5%E4%B9%8E%E7%94%A8%E6%88%B7%E7%B2%89%E4%B8%9D%E6%95%B0%E6%8D%AE/%E7%B2%89%E4%B8%9D%E7%94%B7%E5%A5%B3%E6%AF%94%E4%BE%8B%E9%A5%BC%E5%9B%BE.png?raw=true">
+<meta property="og:updated_time" content="2018-12-19T07:53:06.599Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="三寸气在千般用，一旦无常万事休">
-<meta name="twitter:description" content="其实人生很长，选择一个自己真正想要从事的领域，沉淀下去，把自己变得更厉害一点。因为对于人来说不怕有缺点，就怕没特点。但不要想着一定要比谁谁更好，因为不论你多努力，总有人比你厉害，也总有人永远不如你。和别人比较大概是生而为人最可悲的事。总而言之，不应当有太多的欲望，不要做了一件事就必须要得到什么。但行好事，莫问前程。 其实人生也很短，生命是脆弱的，一次看似普通的熬夜也许就榨干了你全部的精力，一">
+<meta name="twitter:title" content="抓取知乎用户粉丝数据">
+<meta name="twitter:description" content="摘要本文抓取并分析了知乎用户的粉丝数据，包括粉丝名、粉丝标题、粉丝男女比例、粉丝回答问题比例、粉丝被关注数等数据。之后利用pyecharts库对这些数据进行可视化显示。 抓取数据1、请求的url与代理与之前一篇文章抓取知乎用户动态数据类似，这里请求的url也是返回json数据，所以同样在控制台network选项下找到请求的url，通过观察多个请求的url将其分为通用部分与扩展部分，如下形式：123">
+<meta name="twitter:image" content="https://github.com/Cloving/Atlas-Github/blob/master/blog/notePicture/%E6%8A%93%E5%8F%96%E7%9F%A5%E4%B9%8E%E7%94%A8%E6%88%B7%E7%B2%89%E4%B8%9D%E6%95%B0%E6%8D%AE/%E6%A0%87%E9%A2%98%E8%AF%8D%E4%BA%91%E5%9B%BE.png?raw=true">
 
 
 
@@ -124,7 +130,7 @@
     
     <div class="card-image">
         <span class="image is-7by1">
-            <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/CoverPicture/bg_7.jpeg?raw=true" alt="三寸气在千般用，一旦无常万事休">
+            <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/CoverPicture/bg_10.jpeg?raw=true" alt="抓取知乎用户粉丝数据">
         </span>
     </div>
     
@@ -132,17 +138,17 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2018-12-04T16:15:10.000Z">2018-12-05</time>
+                <time class="level-item has-text-grey" datetime="2018-12-13T00:44:41.000Z">2018-12-13</time>
                 
                 <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/念念不忘，必有回响/">念念不忘，必有回响</a>
+                <a class="has-link-grey -link" href="/categories/数据抓取/">数据抓取</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/数据抓取/知乎/">知乎</a>
                 </div>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    2 分钟 读完 (大约 244 个字)
+                    11 分钟 读完 (大约 1652 个字)
                 </span>
                 
             </div>
@@ -150,16 +156,30 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                三寸气在千般用，一旦无常万事休
+                抓取知乎用户粉丝数据
             
         </h1>
         <div class="content">
             
-                <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src="//music.163.com/outchain/player?type=2&id=574919767&auto=1&height=66"></iframe>
-
+                <h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>本文抓取并分析了知乎用户的粉丝数据，包括粉丝名、粉丝标题、粉丝男女比例、粉丝回答问题比例、粉丝被关注数等数据。之后利用<code>pyecharts</code>库对这些数据进行可视化显示。<br><br></p>
+<h2 id="抓取数据"><a href="#抓取数据" class="headerlink" title="抓取数据"></a>抓取数据</h2><h3 id="1、请求的url与代理"><a href="#1、请求的url与代理" class="headerlink" title="1、请求的url与代理"></a>1、请求的url与代理</h3><p>与之前一篇文章<a href="http://yaodongsheng.com/2018/11/20/抓取知乎用户动态数据/" target="_blank" rel="noopener">抓取知乎用户动态数据</a>类似，这里请求的url也是返回json数据，所以同样在控制台network选项下找到请求的url，通过观察多个请求的url将其分为通用部分与扩展部分，如下形式：<br><figure class="highlight Python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs Python">self.base_url = <span class="hljs-string">"https://www.zhihu.com/api/v4/members/&#123;user&#125;/followers?&#123;include&#125;"</span><br>self.include = <span class="hljs-string">'include=data%5B*%5D.answer_count%2Carticles_count%2C\<br>  gender%2Cfollower_count%2Cis_followed%2Cis_following%2C\<br>  badge%5B%3F(type%3Dbest_answerer)%5D.topics&amp;offset=&#123;offset&#125;&amp;limit=20'</span><br></code></pre></td></tr></table></figure></p>
+<p>其中<code>user</code>为用户的个性化域名，<code>include</code>为扩展部分的url，<code>offset</code>为偏移量，即从第<code>offset</code>条数据开始。<br>代理使用<a href="https://pypi.org/project/fake-useragent/" target="_blank" rel="noopener">fake-useragent</a>库，每次请求都随机生成，保证每次请求的<code>header</code>都不一样。<br><br></p>
+<h3 id="2、设置循环抓取"><a href="#2、设置循环抓取" class="headerlink" title="2、设置循环抓取"></a>2、设置循环抓取</h3><p>首先根据url请求<code>json</code>数据，之后处理请求到的数据，得到一部分粉丝的信息，如果粉丝信息没有抓取完，则对抓取的<code>url</code>进行更新，直到数据抓取完成，结束的标志会在请求的<code>json</code>数据中获取到。最后对提取到的所有数据进行保存。代码如下：<br><figure class="highlight Python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs Python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">start</span><span class="hljs-params">(self, username, savepath, savename)</span>:</span><br>  index = <span class="hljs-number">0</span><br>  flag = <span class="hljs-keyword">True</span><br>  <span class="hljs-keyword">while</span> flag:<br>    offset=index*<span class="hljs-number">20</span><br>    include = self.include.format(offset=offset)<br>    url = self.base_url.format(user=username, include=include)<br>    <span class="hljs-comment"># 请求json数据</span><br>    print(<span class="hljs-string">"正在进行第&#123;&#125;次请求"</span>.format(index+<span class="hljs-number">1</span>))<br>    jsonData = self.requests_source(url)<br>    <span class="hljs-comment"># 提取需要的数据</span><br>    self.process_data(jsonData)<br>    <span class="hljs-comment"># 如果仍然存在数据，处理下一次请求</span><br>    <span class="hljs-keyword">if</span> jsonData.get(<span class="hljs-string">'paging'</span>).get(<span class="hljs-string">'is_end'</span>) <span class="hljs-keyword">is</span> <span class="hljs-keyword">False</span>:<br>      index = index + <span class="hljs-number">1</span><br>      self.header[<span class="hljs-string">'user-agent'</span>] = self.agent.random<br>    <span class="hljs-keyword">else</span>:<br>      flag = <span class="hljs-keyword">False</span><br>      print(<span class="hljs-string">"完成请求"</span>)<br>  <span class="hljs-comment"># 保存数据</span><br>  self.save_data(self.data, savepath, savename)<br></code></pre></td></tr></table></figure></p>
 <p><br></p>
-<h2 id="其实人生很长，"><a href="#其实人生很长，" class="headerlink" title="其实人生很长，"></a>其实人生很长，</h2><h3 id="选择一个自己真正想要从事的领域，沉淀下去，把自己变得更厉害一点。"><a href="#选择一个自己真正想要从事的领域，沉淀下去，把自己变得更厉害一点。" class="headerlink" title="选择一个自己真正想要从事的领域，沉淀下去，把自己变得更厉害一点。"></a>选择一个自己真正想要从事的领域，沉淀下去，把自己变得更厉害一点。</h3><h3 id="因为对于人来说不怕有缺点，就怕没特点。"><a href="#因为对于人来说不怕有缺点，就怕没特点。" class="headerlink" title="因为对于人来说不怕有缺点，就怕没特点。"></a>因为对于人来说不怕有缺点，就怕没特点。</h3><h3 id="但不要想着一定要比谁谁更好，因为不论你多努力，总有人比你厉害，也总有人永远不如你。"><a href="#但不要想着一定要比谁谁更好，因为不论你多努力，总有人比你厉害，也总有人永远不如你。" class="headerlink" title="但不要想着一定要比谁谁更好，因为不论你多努力，总有人比你厉害，也总有人永远不如你。"></a>但不要想着一定要比谁谁更好，因为不论你多努力，总有人比你厉害，也总有人永远不如你。</h3><h3 id="和别人比较大概是生而为人最可悲的事。"><a href="#和别人比较大概是生而为人最可悲的事。" class="headerlink" title="和别人比较大概是生而为人最可悲的事。"></a>和别人比较大概是生而为人最可悲的事。</h3><h3 id="总而言之，不应当有太多的欲望，不要做了一件事就必须要得到什么。但行好事，莫问前程。"><a href="#总而言之，不应当有太多的欲望，不要做了一件事就必须要得到什么。但行好事，莫问前程。" class="headerlink" title="总而言之，不应当有太多的欲望，不要做了一件事就必须要得到什么。但行好事，莫问前程。"></a>总而言之，不应当有太多的欲望，不要做了一件事就必须要得到什么。但行好事，莫问前程。</h3><p><br></p>
-<h2 id="其实人生也很短，"><a href="#其实人生也很短，" class="headerlink" title="其实人生也很短，"></a>其实人生也很短，</h2><h3 id="生命是脆弱的，一次看似普通的熬夜也许就榨干了你全部的精力，"><a href="#生命是脆弱的，一次看似普通的熬夜也许就榨干了你全部的精力，" class="headerlink" title="生命是脆弱的，一次看似普通的熬夜也许就榨干了你全部的精力，"></a>生命是脆弱的，一次看似普通的熬夜也许就榨干了你全部的精力，</h3><h3 id="一次看似普通的疾病也许会换来了一张薄薄的病危通知书。"><a href="#一次看似普通的疾病也许会换来了一张薄薄的病危通知书。" class="headerlink" title="一次看似普通的疾病也许会换来了一张薄薄的病危通知书。"></a>一次看似普通的疾病也许会换来了一张薄薄的病危通知书。</h3><h3 id="珍视自己，珍视珍视你的人，不做让自己后悔的事。"><a href="#珍视自己，珍视珍视你的人，不做让自己后悔的事。" class="headerlink" title="珍视自己，珍视珍视你的人，不做让自己后悔的事。"></a>珍视自己，珍视珍视你的人，不做让自己后悔的事。</h3><p><br><br><br></p>
+<h3 id="3、请求、处理数据"><a href="#3、请求、处理数据" class="headerlink" title="3、请求、处理数据"></a>3、请求、处理数据</h3><p>请求处理的过程并不复杂，根据返回的状态码判断是否成功拿到<code>json</code>，之后会根据<code>json</code>的具体形式解析数据。<br><figure class="highlight Python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs Python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">requests_source</span><span class="hljs-params">(self, url)</span>:</span><br>  <span class="hljs-keyword">try</span>:<br>    response = requests.get(url, headers=self.header, timeout=(<span class="hljs-number">5</span>,<span class="hljs-number">30</span>))<br>    <span class="hljs-keyword">if</span> response.status_code == <span class="hljs-number">200</span>:<br>      <span class="hljs-keyword">return</span> response.json()<br>  <span class="hljs-keyword">except</span> requests.ConnectionError <span class="hljs-keyword">as</span> e:<br>    print(<span class="hljs-string">"获取请求失败，失败原因："</span>, e)<br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">process_data</span><span class="hljs-params">(self, jsonData)</span>:</span><br>  followers = jsonData.get(<span class="hljs-string">'data'</span>)<br>  <span class="hljs-keyword">for</span> follow <span class="hljs-keyword">in</span> followers:<br>    name = self.read_data_from_jsonData(follow, <span class="hljs-string">'name'</span>)<br>    headline = self.read_data_from_jsonData(follow, <span class="hljs-string">'headline'</span>)<br>    gender = self.read_data_from_jsonData(follow, <span class="hljs-string">'gender'</span>)<br>    follower_count = self.read_data_from_jsonData(follow, <span class="hljs-string">'follower_count'</span>)<br>    answer_count = self.read_data_from_jsonData(follow, <span class="hljs-string">'answer_count'</span>)<br>    self.data[name] = [headline, gender, follower_count, answer_count]<br>    print(name, self.data[name])<br>  print(<span class="hljs-string">'\n'</span>)<br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">read_data_from_jsonData</span><span class="hljs-params">(self, json, key)</span>:</span><br>  value = json.get(key)<br>  <span class="hljs-keyword">return</span> value <span class="hljs-keyword">if</span> value <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-string">''</span> <span class="hljs-keyword">else</span> <span class="hljs-string">'Empty'</span><br></code></pre></td></tr></table></figure></p>
+<p><br></p>
+<h3 id="4、保存数据"><a href="#4、保存数据" class="headerlink" title="4、保存数据"></a>4、保存数据</h3><p>这里将所有信息保存到<code>pkl</code>文件当中<br><figure class="highlight Python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs Python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">save_data</span><span class="hljs-params">(self, follower_data, savepath, savename)</span>:</span><br>  <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> os.path.exists(savepath):<br>    os.mkdir(savepath)<br>  <span class="hljs-keyword">with</span> open(os.path.join(savepath, savename), <span class="hljs-string">'wb'</span>) <span class="hljs-keyword">as</span> f:<br>    pickle.dump(follower_data, f)<br>  f.close()<br>  print(<span class="hljs-string">"完成存储"</span>)<br></code></pre></td></tr></table></figure></p>
+<p>完成所有信息的抓取、处理及保存之后下一步就是解析可视化这些数据。<br><br></p>
+<h2 id="可视化数据"><a href="#可视化数据" class="headerlink" title="可视化数据"></a>可视化数据</h2><p>可视化数据利用了<a href="http://pyecharts.org/" target="_blank" rel="noopener">pyecharts</a>库与<a href="https://pypi.org/project/jieba/" target="_blank" rel="noopener">jieba</a>库，前者用于可视化各类图表，后者是Python的中文分词组件。<br><br></p>
+<h3 id="1、打开pkl文件"><a href="#1、打开pkl文件" class="headerlink" title="1、打开pkl文件"></a>1、打开<code>pkl</code>文件</h3><p>保存<code>pkl</code>文件的名称可以自行指定，每次抓取如果文件名称改变那么分析数据的时候需要修改代码，所以使用了正则匹配，这样无需关心pkl文件的名称就可以直接运行。代码如下：<br><figure class="highlight Python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs Python"><span class="hljs-keyword">for</span> root, dirs, files <span class="hljs-keyword">in</span> os.walk(os.path.join(os.path.dirname(__file__),<span class="hljs-string">'result'</span>)):<br>  <span class="hljs-comment"># print(root)  # 当前目录路径</span><br>  <span class="hljs-comment"># print(dirs)  # 当前路径下所有子目录</span><br>  <span class="hljs-comment"># print(files)  # 当前路径下所有非目录子文件</span><br>  <span class="hljs-keyword">for</span> file <span class="hljs-keyword">in</span> files:<br>    <span class="hljs-keyword">try</span>:<br>      file_name = re.search(<span class="hljs-string">'(.*?).pkl'</span>, file).group()<br>      <span class="hljs-keyword">break</span><br>    <span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> e:<br>      <span class="hljs-keyword">continue</span><br><span class="hljs-keyword">with</span> open(<span class="hljs-string">'./result/'</span>+file_name, <span class="hljs-string">'rb'</span>) <span class="hljs-keyword">as</span> f:<br>  followers_data = pickle.load(f)<br></code></pre></td></tr></table></figure></p>
+<p><br></p>
+<h3 id="2、提取数据"><a href="#2、提取数据" class="headerlink" title="2、提取数据"></a>2、提取数据</h3><p>为了便于分析、可视化数据，所以会将所有数据提取成<code>[(元组1), (元组2),...,(元组3)]</code>的形式，例如性别数据的形式为<br><figure class="highlight Python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs Python">[(<span class="hljs-string">'男性'</span>: <span class="hljs-number">32</span>),(<span class="hljs-string">'女性'</span>: <span class="hljs-number">42</span>),(<span class="hljs-string">'保密'</span>: <span class="hljs-number">52</span>)]<br></code></pre></td></tr></table></figure></p>
+<p>生成<code>headline</code>与<code>用户名</code>的词云图时使用<code>jieba</code>库分词，其中在处理<code>headline</code>时需要删除掉一些符号字符之后再统计词频<br><figure class="highlight Python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs Python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">statistic_word_frequency</span><span class="hljs-params">(self, texts, stopwords)</span>:</span><br>  <span class="hljs-comment"># 统计词频</span><br>  statistic_dict = &#123;&#125;<br>  <span class="hljs-keyword">for</span> text <span class="hljs-keyword">in</span> texts:<br>    temp = jieba.cut(text, cut_all=<span class="hljs-keyword">False</span>)<br>    <span class="hljs-keyword">for</span> t <span class="hljs-keyword">in</span> temp:<br>      <span class="hljs-keyword">if</span> t <span class="hljs-keyword">in</span> stopwords <span class="hljs-keyword">or</span> t == <span class="hljs-string">'Empty'</span>:<br>        <span class="hljs-keyword">continue</span>;<br>      <span class="hljs-keyword">if</span> t <span class="hljs-keyword">in</span> statistic_dict.keys():<br>        statistic_dict[t] += <span class="hljs-number">1</span><br>      <span class="hljs-keyword">else</span>:<br>        statistic_dict[t] = <span class="hljs-number">1</span><br>  <span class="hljs-keyword">return</span> list(statistic_dict.items())<br></code></pre></td></tr></table></figure></p>
+<p>stopwords用来存储需要删除掉的一些字符。<br><br></p>
+<h3 id="3、示例图"><a href="#3、示例图" class="headerlink" title="3、示例图"></a>3、示例图</h3><p>示例图是随机寻找的一位知乎用户进行分析的结果<br><img src="https://github.com/Cloving/Atlas-Github/blob/master/blog/notePicture/%E6%8A%93%E5%8F%96%E7%9F%A5%E4%B9%8E%E7%94%A8%E6%88%B7%E7%B2%89%E4%B8%9D%E6%95%B0%E6%8D%AE/%E6%A0%87%E9%A2%98%E8%AF%8D%E4%BA%91%E5%9B%BE.png?raw=true" alt="标题词云图"><br><img src="https://github.com/Cloving/Atlas-Github/blob/master/blog/notePicture/%E6%8A%93%E5%8F%96%E7%9F%A5%E4%B9%8E%E7%94%A8%E6%88%B7%E7%B2%89%E4%B8%9D%E6%95%B0%E6%8D%AE/%E7%94%A8%E6%88%B7%E5%90%8D%E8%AF%8D%E4%BA%91%E5%9B%BE.png?raw=true" alt="用户名词云图"><br><img src="https://github.com/Cloving/Atlas-Github/blob/master/blog/notePicture/%E6%8A%93%E5%8F%96%E7%9F%A5%E4%B9%8E%E7%94%A8%E6%88%B7%E7%B2%89%E4%B8%9D%E6%95%B0%E6%8D%AE/%E7%B2%89%E4%B8%9D%E8%A2%AB%E5%85%B3%E6%B3%A8%E6%95%B0%E9%87%8F%E7%9B%B4%E6%96%B9%E5%9B%BE.png?raw=true" alt="粉丝被关注数量直方图"><br><img src="https://github.com/Cloving/Atlas-Github/blob/master/blog/notePicture/%E6%8A%93%E5%8F%96%E7%9F%A5%E4%B9%8E%E7%94%A8%E6%88%B7%E7%B2%89%E4%B8%9D%E6%95%B0%E6%8D%AE/%E7%B2%89%E4%B8%9D%E5%9B%9E%E7%AD%94%E6%95%B0%E9%87%8F%E7%9B%B4%E6%96%B9%E5%9B%BE.png?raw=true" alt="粉丝回答数量直方图"><br><img src="https://github.com/Cloving/Atlas-Github/blob/master/blog/notePicture/%E6%8A%93%E5%8F%96%E7%9F%A5%E4%B9%8E%E7%94%A8%E6%88%B7%E7%B2%89%E4%B8%9D%E6%95%B0%E6%8D%AE/%E7%B2%89%E4%B8%9D%E7%94%B7%E5%A5%B3%E6%AF%94%E4%BE%8B%E9%A5%BC%E5%9B%BE.png?raw=true" alt="粉丝男女比例饼图"></p>
+<p><br></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本文的思路参考了知乎用户<a href="https://www.zhihu.com/people/charles_pikachu/activities" target="_blank" rel="noopener">Charles</a>的爬虫项目。最终完成的代码：<a href="https://github.com/Cloving/zhihu-Spider/tree/master/%E7%9F%A5%E4%B9%8E%E7%94%A8%E6%88%B7%E7%B2%89%E4%B8%9D" target="_blank" rel="noopener">知乎用户粉丝</a></p>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p>1、<a href="https://mp.weixin.qq.com/s/hWUvMFIAMBrgR2Is9P5QXw" target="_blank" rel="noopener">Charles的皮卡丘</a><br>2、<a href="http://pyecharts.org/#/zh-cn/charts_base" target="_blank" rel="noopener">pyecharts - A Python Echarts Plotting Library</a><br>3、<a href="https://github.com/fxsjy/jieba" target="_blank" rel="noopener">fxsjy/jieba: 结巴中文分词</a></p>
 
             
         </div>
@@ -172,7 +192,7 @@
   </div>
   <div class="copyright-item">
       <span>原文链接: </span>
-      <a href="#">三寸气在千般用，一旦无常万事休</a>
+      <a href="#">抓取知乎用户粉丝数据</a>
   </div>
   <div class="copyright-item">
       <span>许可协议: </span>
@@ -187,7 +207,7 @@
             <div class="level-start">
                 <div class="level-item">
                     <span class="is-size-6 has-text-grey has-mr-7">#</span>
-                    <a class="has-link-grey -link" href="/tags/念念不忘，必有回响/">念念不忘，必有回响</a>
+                    <a class="has-link-grey -link" href="/tags/Echarts/">Echarts</a>, <a class="has-link-grey -link" href="/tags/Python/">Python</a>, <a class="has-link-grey -link" href="/tags/代理/">代理</a>, <a class="has-link-grey -link" href="/tags/词云/">词云</a>
                 </div>
             </div>
         </div>
@@ -205,17 +225,10 @@
 <div class="card card-transparent">
     <div class="level post-navigation is-flex-wrap is-mobile">
         
-        <div class="level-start">
-            <a class="level level-item has-link-grey  article-nav-prev" href="/2018/12/09/Python模拟豆瓣登录（一）/">
-                <i class="level-item fas fa-chevron-left"></i>
-                <span class="level-item">Python模拟豆瓣登录（一）</span>
-            </a>
-        </div>
-        
         
         <div class="level-end">
-            <a class="level level-item has-link-grey  article-nav-next" href="/2018/11/30/抓取知乎用户动态数据/">
-                <span class="level-item">抓取知乎用户动态数据</span>
+            <a class="level level-item has-link-grey  article-nav-next" href="/2018/12/08/Echarts足迹图/">
+                <span class="level-item">Echarts足迹图</span>
                 <i class="level-item fas fa-chevron-right"></i>
             </a>
         </div>
@@ -286,7 +299,7 @@
                         文章
                     </p>
                     <p class="title has-text-weight-normal">
-                        9
+                        10
                     </p>
                 </div>
             </div>
@@ -306,7 +319,7 @@
                         标签
                     </p>
                     <p class="title has-text-weight-normal">
-                        15
+                        16
                     </p>
                 </div>
             </div>
@@ -446,7 +459,7 @@
                 <span class="level-item">数据抓取</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">2</span>
+                <span class="level-item tag">3</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/数据抓取/模拟登录/">
@@ -462,7 +475,7 @@
                 <span class="level-item">知乎</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">1</span>
+                <span class="level-item tag">2</span>
             </span>
         </a></li></ul></li><li>
         <a class="level is-marginless" href="/categories/数据结构与算法/">
@@ -500,7 +513,7 @@
         <h3 class="menu-label">
             标签云
         </h3>
-        <a href="/tags/C/" style="font-size: 20px;">C++</a> <a href="/tags/CDN/" style="font-size: 10px;">CDN</a> <a href="/tags/Echarts/" style="font-size: 10px;">Echarts</a> <a href="/tags/Javascript/" style="font-size: 10px;">Javascript</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/Vue/" style="font-size: 10px;">Vue</a> <a href="/tags/ajax/" style="font-size: 10px;">ajax</a> <a href="/tags/cookies/" style="font-size: 10px;">cookies</a> <a href="/tags/selenium/" style="font-size: 10px;">selenium</a> <a href="/tags/二叉树/" style="font-size: 15px;">二叉树</a> <a href="/tags/图片压缩/" style="font-size: 10px;">图片压缩</a> <a href="/tags/念念不忘，必有回响/" style="font-size: 10px;">念念不忘，必有回响</a> <a href="/tags/数据结构/" style="font-size: 20px;">数据结构</a> <a href="/tags/验证码/" style="font-size: 10px;">验证码</a>
+        <a href="/tags/C/" style="font-size: 20px;">C++</a> <a href="/tags/CDN/" style="font-size: 10px;">CDN</a> <a href="/tags/Echarts/" style="font-size: 15px;">Echarts</a> <a href="/tags/Javascript/" style="font-size: 10px;">Javascript</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/Vue/" style="font-size: 10px;">Vue</a> <a href="/tags/ajax/" style="font-size: 10px;">ajax</a> <a href="/tags/cookies/" style="font-size: 10px;">cookies</a> <a href="/tags/二叉树/" style="font-size: 15px;">二叉树</a> <a href="/tags/代理/" style="font-size: 10px;">代理</a> <a href="/tags/图片压缩/" style="font-size: 10px;">图片压缩</a> <a href="/tags/念念不忘，必有回响/" style="font-size: 10px;">念念不忘，必有回响</a> <a href="/tags/数据结构/" style="font-size: 20px;">数据结构</a> <a href="/tags/词云/" style="font-size: 10px;">词云</a> <a href="/tags/验证码/" style="font-size: 10px;">验证码</a>
     </div>
 </div>
 
@@ -517,73 +530,16 @@
         
         <article class="media">
             
-            <a href="/2018/12/13/Echarts足迹图/" class="media-left">
+            <a href="/2018/12/13/抓取知乎用户粉丝数据/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/CoverPicture/bg_9.png?raw=true" alt="Echarts足迹图">
+                    <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/CoverPicture/bg_10.jpeg?raw=true" alt="抓取知乎用户粉丝数据">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-12-13T09:31:53.000Z">2018-12-13</time></div>
-                    <a href="/2018/12/13/Echarts足迹图/" class="has-link-black-ter is-size-6">Echarts足迹图</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/建站实录/">建站实录</a> / <a class="has-link-grey -link" href="/categories/建站实录/足迹图/">足迹图</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/2018/12/09/Python模拟豆瓣登录（一）/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/CoverPicture/bg_8.png?raw=true" alt="Python模拟豆瓣登录（一）">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-12-09T02:29:08.000Z">2018-12-09</time></div>
-                    <a href="/2018/12/09/Python模拟豆瓣登录（一）/" class="has-link-black-ter is-size-6">Python模拟豆瓣登录（一）</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/数据抓取/">数据抓取</a> / <a class="has-link-grey -link" href="/categories/数据抓取/模拟登录/">模拟登录</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/2018/12/05/三寸气在千般用，一旦无常万事休/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/CoverPicture/bg_7.jpeg?raw=true" alt="三寸气在千般用，一旦无常万事休">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-12-04T16:15:10.000Z">2018-12-05</time></div>
-                    <a href="/2018/12/05/三寸气在千般用，一旦无常万事休/" class="has-link-black-ter is-size-6">三寸气在千般用，一旦无常万事休</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/念念不忘，必有回响/">念念不忘，必有回响</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/2018/11/30/抓取知乎用户动态数据/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/CoverPicture/bg_6.jpeg?raw=true" alt="抓取知乎用户动态数据">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-11-30T11:58:07.000Z">2018-11-30</time></div>
-                    <a href="/2018/11/30/抓取知乎用户动态数据/" class="has-link-black-ter is-size-6">抓取知乎用户动态数据</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-12-13T00:44:41.000Z">2018-12-13</time></div>
+                    <a href="/2018/12/13/抓取知乎用户粉丝数据/" class="has-link-black-ter is-size-6">抓取知乎用户粉丝数据</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/数据抓取/">数据抓取</a> / <a class="has-link-grey -link" href="/categories/数据抓取/知乎/">知乎</a>
                     </p>
@@ -593,18 +549,75 @@
         
         <article class="media">
             
-            <a href="/2018/09/17/静态资源加速/" class="media-left">
+            <a href="/2018/12/08/Echarts足迹图/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/CoverPicture/bg_5.jpg?raw=true" alt="静态资源加速">
+                    <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/CoverPicture/bg_9.png?raw=true" alt="Echarts足迹图">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-09-17T13:32:56.000Z">2018-09-17</time></div>
-                    <a href="/2018/09/17/静态资源加速/" class="has-link-black-ter is-size-6">静态资源加速</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-12-08T09:31:53.000Z">2018-12-08</time></div>
+                    <a href="/2018/12/08/Echarts足迹图/" class="has-link-black-ter is-size-6">Echarts足迹图</a>
                     <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/建站实录/">建站实录</a> / <a class="has-link-grey -link" href="/categories/建站实录/静态资源加速/">静态资源加速</a>
+                        <a class="has-link-grey -link" href="/categories/建站实录/">建站实录</a> / <a class="has-link-grey -link" href="/categories/建站实录/足迹图/">足迹图</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2018/11/30/Python模拟豆瓣登录（一）/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/CoverPicture/bg_8.png?raw=true" alt="Python模拟豆瓣登录（一）">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-11-30T02:29:08.000Z">2018-11-30</time></div>
+                    <a href="/2018/11/30/Python模拟豆瓣登录（一）/" class="has-link-black-ter is-size-6">Python模拟豆瓣登录（一）</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/数据抓取/">数据抓取</a> / <a class="has-link-grey -link" href="/categories/数据抓取/模拟登录/">模拟登录</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2018/11/20/抓取知乎用户动态数据/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/CoverPicture/bg_6.jpeg?raw=true" alt="抓取知乎用户动态数据">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-11-20T11:58:07.000Z">2018-11-20</time></div>
+                    <a href="/2018/11/20/抓取知乎用户动态数据/" class="has-link-black-ter is-size-6">抓取知乎用户动态数据</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/数据抓取/">数据抓取</a> / <a class="has-link-grey -link" href="/categories/数据抓取/知乎/">知乎</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2018/09/21/三寸气在千般用，一旦无常万事休/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/CoverPicture/bg_7.jpeg?raw=true" alt="三寸气在千般用，一旦无常万事休">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-09-20T16:15:10.000Z">2018-09-21</time></div>
+                    <a href="/2018/09/21/三寸气在千般用，一旦无常万事休/" class="has-link-black-ter is-size-6">三寸气在千般用，一旦无常万事休</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/念念不忘，必有回响/">念念不忘，必有回响</a>
                     </p>
                 </div>
             </div>
@@ -628,7 +641,7 @@
                     <span class="level-item">十二月 2018</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">3</span>
+                    <span class="level-item tag">2</span>
                 </span>
             </a>
         </li>
@@ -639,7 +652,7 @@
                     <span class="level-item">十一月 2018</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">1</span>
+                    <span class="level-item tag">2</span>
                 </span>
             </a>
         </li>
@@ -656,20 +669,20 @@
         </li>
         
         <li>
-            <a class="level is-marginless" href="/archives/2018/07/">
+            <a class="level is-marginless" href="/archives/2018/06/">
                 <span class="level-start">
-                    <span class="level-item">七月 2018</span>
+                    <span class="level-item">六月 2018</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">1</span>
+                    <span class="level-item tag">2</span>
                 </span>
             </a>
         </li>
         
         <li>
-            <a class="level is-marginless" href="/archives/2018/06/">
+            <a class="level is-marginless" href="/archives/2018/05/">
                 <span class="level-start">
-                    <span class="level-item">六月 2018</span>
+                    <span class="level-item">五月 2018</span>
                 </span>
                 <span class="level-end">
                     <span class="level-item tag">1</span>
@@ -729,7 +742,7 @@
                             <span class="level-item">Echarts</span>
                         </span>
                         <span class="level-end">
-                            <span class="level-item tag">1</span>
+                            <span class="level-item tag">2</span>
                         </span>
                     </a>
                 </li>
@@ -762,7 +775,7 @@
                             <span class="level-item">Python</span>
                         </span>
                         <span class="level-end">
-                            <span class="level-item tag">2</span>
+                            <span class="level-item tag">3</span>
                         </span>
                     </a>
                 </li>
@@ -801,23 +814,23 @@
                 </li>
                 
                 <li>
-                    <a class="level is-marginless" href="/tags/selenium/">
-                        <span class="level-start">
-                            <span class="level-item">selenium</span>
-                        </span>
-                        <span class="level-end">
-                            <span class="level-item tag">1</span>
-                        </span>
-                    </a>
-                </li>
-                
-                <li>
                     <a class="level is-marginless" href="/tags/二叉树/">
                         <span class="level-start">
                             <span class="level-item">二叉树</span>
                         </span>
                         <span class="level-end">
                             <span class="level-item tag">2</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/代理/">
+                        <span class="level-start">
+                            <span class="level-item">代理</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
                         </span>
                     </a>
                 </li>
@@ -851,6 +864,17 @@
                         </span>
                         <span class="level-end">
                             <span class="level-item tag">3</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/词云/">
+                        <span class="level-start">
+                            <span class="level-item">词云</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
                         </span>
                     </a>
                 </li>
@@ -891,73 +915,16 @@
         
         <article class="media">
             
-            <a href="/2018/12/13/Echarts足迹图/" class="media-left">
+            <a href="/2018/12/13/抓取知乎用户粉丝数据/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/CoverPicture/bg_9.png?raw=true" alt="Echarts足迹图">
+                    <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/CoverPicture/bg_10.jpeg?raw=true" alt="抓取知乎用户粉丝数据">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-12-13T09:31:53.000Z">2018-12-13</time></div>
-                    <a href="/2018/12/13/Echarts足迹图/" class="has-link-black-ter is-size-6">Echarts足迹图</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/建站实录/">建站实录</a> / <a class="has-link-grey -link" href="/categories/建站实录/足迹图/">足迹图</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/2018/12/09/Python模拟豆瓣登录（一）/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/CoverPicture/bg_8.png?raw=true" alt="Python模拟豆瓣登录（一）">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-12-09T02:29:08.000Z">2018-12-09</time></div>
-                    <a href="/2018/12/09/Python模拟豆瓣登录（一）/" class="has-link-black-ter is-size-6">Python模拟豆瓣登录（一）</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/数据抓取/">数据抓取</a> / <a class="has-link-grey -link" href="/categories/数据抓取/模拟登录/">模拟登录</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/2018/12/05/三寸气在千般用，一旦无常万事休/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/CoverPicture/bg_7.jpeg?raw=true" alt="三寸气在千般用，一旦无常万事休">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-12-04T16:15:10.000Z">2018-12-05</time></div>
-                    <a href="/2018/12/05/三寸气在千般用，一旦无常万事休/" class="has-link-black-ter is-size-6">三寸气在千般用，一旦无常万事休</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/念念不忘，必有回响/">念念不忘，必有回响</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/2018/11/30/抓取知乎用户动态数据/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/CoverPicture/bg_6.jpeg?raw=true" alt="抓取知乎用户动态数据">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-11-30T11:58:07.000Z">2018-11-30</time></div>
-                    <a href="/2018/11/30/抓取知乎用户动态数据/" class="has-link-black-ter is-size-6">抓取知乎用户动态数据</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-12-13T00:44:41.000Z">2018-12-13</time></div>
+                    <a href="/2018/12/13/抓取知乎用户粉丝数据/" class="has-link-black-ter is-size-6">抓取知乎用户粉丝数据</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/数据抓取/">数据抓取</a> / <a class="has-link-grey -link" href="/categories/数据抓取/知乎/">知乎</a>
                     </p>
@@ -967,18 +934,75 @@
         
         <article class="media">
             
-            <a href="/2018/09/17/静态资源加速/" class="media-left">
+            <a href="/2018/12/08/Echarts足迹图/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/CoverPicture/bg_5.jpg?raw=true" alt="静态资源加速">
+                    <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/CoverPicture/bg_9.png?raw=true" alt="Echarts足迹图">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-09-17T13:32:56.000Z">2018-09-17</time></div>
-                    <a href="/2018/09/17/静态资源加速/" class="has-link-black-ter is-size-6">静态资源加速</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-12-08T09:31:53.000Z">2018-12-08</time></div>
+                    <a href="/2018/12/08/Echarts足迹图/" class="has-link-black-ter is-size-6">Echarts足迹图</a>
                     <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/建站实录/">建站实录</a> / <a class="has-link-grey -link" href="/categories/建站实录/静态资源加速/">静态资源加速</a>
+                        <a class="has-link-grey -link" href="/categories/建站实录/">建站实录</a> / <a class="has-link-grey -link" href="/categories/建站实录/足迹图/">足迹图</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2018/11/30/Python模拟豆瓣登录（一）/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/CoverPicture/bg_8.png?raw=true" alt="Python模拟豆瓣登录（一）">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-11-30T02:29:08.000Z">2018-11-30</time></div>
+                    <a href="/2018/11/30/Python模拟豆瓣登录（一）/" class="has-link-black-ter is-size-6">Python模拟豆瓣登录（一）</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/数据抓取/">数据抓取</a> / <a class="has-link-grey -link" href="/categories/数据抓取/模拟登录/">模拟登录</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2018/11/20/抓取知乎用户动态数据/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/CoverPicture/bg_6.jpeg?raw=true" alt="抓取知乎用户动态数据">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-11-20T11:58:07.000Z">2018-11-20</time></div>
+                    <a href="/2018/11/20/抓取知乎用户动态数据/" class="has-link-black-ter is-size-6">抓取知乎用户动态数据</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/数据抓取/">数据抓取</a> / <a class="has-link-grey -link" href="/categories/数据抓取/知乎/">知乎</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2018/09/21/三寸气在千般用，一旦无常万事休/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/CoverPicture/bg_7.jpeg?raw=true" alt="三寸气在千般用，一旦无常万事休">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-09-20T16:15:10.000Z">2018-09-21</time></div>
+                    <a href="/2018/09/21/三寸气在千般用，一旦无常万事休/" class="has-link-black-ter is-size-6">三寸气在千般用，一旦无常万事休</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/念念不忘，必有回响/">念念不忘，必有回响</a>
                     </p>
                 </div>
             </div>
@@ -1002,7 +1026,7 @@
                     <span class="level-item">十二月 2018</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">3</span>
+                    <span class="level-item tag">2</span>
                 </span>
             </a>
         </li>
@@ -1013,7 +1037,7 @@
                     <span class="level-item">十一月 2018</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">1</span>
+                    <span class="level-item tag">2</span>
                 </span>
             </a>
         </li>
@@ -1030,20 +1054,20 @@
         </li>
         
         <li>
-            <a class="level is-marginless" href="/archives/2018/07/">
+            <a class="level is-marginless" href="/archives/2018/06/">
                 <span class="level-start">
-                    <span class="level-item">七月 2018</span>
+                    <span class="level-item">六月 2018</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">1</span>
+                    <span class="level-item tag">2</span>
                 </span>
             </a>
         </li>
         
         <li>
-            <a class="level is-marginless" href="/archives/2018/06/">
+            <a class="level is-marginless" href="/archives/2018/05/">
                 <span class="level-start">
-                    <span class="level-item">六月 2018</span>
+                    <span class="level-item">五月 2018</span>
                 </span>
                 <span class="level-end">
                     <span class="level-item tag">1</span>
@@ -1103,7 +1127,7 @@
                             <span class="level-item">Echarts</span>
                         </span>
                         <span class="level-end">
-                            <span class="level-item tag">1</span>
+                            <span class="level-item tag">2</span>
                         </span>
                     </a>
                 </li>
@@ -1136,7 +1160,7 @@
                             <span class="level-item">Python</span>
                         </span>
                         <span class="level-end">
-                            <span class="level-item tag">2</span>
+                            <span class="level-item tag">3</span>
                         </span>
                     </a>
                 </li>
@@ -1175,23 +1199,23 @@
                 </li>
                 
                 <li>
-                    <a class="level is-marginless" href="/tags/selenium/">
-                        <span class="level-start">
-                            <span class="level-item">selenium</span>
-                        </span>
-                        <span class="level-end">
-                            <span class="level-item tag">1</span>
-                        </span>
-                    </a>
-                </li>
-                
-                <li>
                     <a class="level is-marginless" href="/tags/二叉树/">
                         <span class="level-start">
                             <span class="level-item">二叉树</span>
                         </span>
                         <span class="level-end">
                             <span class="level-item tag">2</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/代理/">
+                        <span class="level-start">
+                            <span class="level-item">代理</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
                         </span>
                     </a>
                 </li>
@@ -1225,6 +1249,17 @@
                         </span>
                         <span class="level-end">
                             <span class="level-item tag">3</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/词云/">
+                        <span class="level-start">
+                            <span class="level-item">词云</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
                         </span>
                     </a>
                 </li>

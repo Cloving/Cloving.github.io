@@ -2,26 +2,26 @@
 <html lang="zh">
 <head><meta name="generator" content="Hexo 3.8.0">
     <meta charset="utf-8">
-<title>Python模拟豆瓣登录（一） - Daito - 修行的路注定是孤独的</title>
+<title>抓取知乎用户动态数据 - Daito - 修行的路注定是孤独的</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
-    <meta name="description" content="摘要抓取数据的过程中有时候需要完成模拟登录的操作，本文使用requests库完成豆瓣的模拟登录，并保存已登录的Cookie，方便下次直接登录。之后通过访问个人主页验证当前状态是否为已登录状态。   requests请求分析过程首先需要研究豆瓣的登录机制，在豆瓣的登录界面查看登录请求提交的表单项，如图所示：  图中的Login请求为post类型，Form Data表示post到服务器的数据，可以看">
-<meta name="keywords" content="Python,验证码,selenium,cookies">
+    <meta name="description" content="一、简介打开知乎某个用户的主页可以看到该用户赞同回答、关注专栏、关注问题等行为数据。本文利用Python的requests库抓取知乎用户行为数据并存入MongoDB数据库中。 二、分析数据加载方式 打开网页后向下拉取可以观察到行为数据并不是一次加载完，而是随着用户的浏览进度逐步加载，考虑可能是ajax的形式。 之后打开Chrome控制台分析网络选项，查看XHR(XMLHttpRequest)类型">
+<meta name="keywords" content="Python,ajax,MongoDB">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Python模拟豆瓣登录（一）">
-<meta property="og:url" content="http://yoursite.com/2018/12/09/Python模拟豆瓣登录（一）/index.html">
+<meta property="og:title" content="抓取知乎用户动态数据">
+<meta property="og:url" content="http://yoursite.com/2018/11/20/抓取知乎用户动态数据/index.html">
 <meta property="og:site_name" content="Daito - 修行的路注定是孤独的">
-<meta property="og:description" content="摘要抓取数据的过程中有时候需要完成模拟登录的操作，本文使用requests库完成豆瓣的模拟登录，并保存已登录的Cookie，方便下次直接登录。之后通过访问个人主页验证当前状态是否为已登录状态。   requests请求分析过程首先需要研究豆瓣的登录机制，在豆瓣的登录界面查看登录请求提交的表单项，如图所示：  图中的Login请求为post类型，Form Data表示post到服务器的数据，可以看">
+<meta property="og:description" content="一、简介打开知乎某个用户的主页可以看到该用户赞同回答、关注专栏、关注问题等行为数据。本文利用Python的requests库抓取知乎用户行为数据并存入MongoDB数据库中。 二、分析数据加载方式 打开网页后向下拉取可以观察到行为数据并不是一次加载完，而是随着用户的浏览进度逐步加载，考虑可能是ajax的形式。 之后打开Chrome控制台分析网络选项，查看XHR(XMLHttpRequest)类型">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://github.com/Cloving/Atlas-Github/blob/master/blog/notePicture/%E8%B1%86%E7%93%A3%E7%99%BB%E5%BD%95%EF%BC%88%E4%B8%80%EF%BC%89/%E7%99%BB%E5%BD%95%E9%A1%B5%E9%9D%A2.png?raw=true">
-<meta property="og:image" content="https://github.com/Cloving/Atlas-Github/blob/master/blog/notePicture/%E8%B1%86%E7%93%A3%E7%99%BB%E5%BD%95%EF%BC%88%E4%B8%80%EF%BC%89/%E7%99%BB%E5%BD%95%E8%A1%A8%E5%8D%95.png?raw=true">
-<meta property="og:updated_time" content="2018-12-18T12:04:36.175Z">
+<meta property="og:image" content="https://github.com/Cloving/Atlas-Github/blob/master/blog/notePicture/%E6%8A%93%E5%8F%96%E7%9F%A5%E4%B9%8E%E7%94%A8%E6%88%B7%E5%8A%A8%E6%80%81%E6%95%B0%E6%8D%AE/%E7%9F%A5%E4%B9%8E%E5%88%86%E6%9E%901.png?raw=true">
+<meta property="og:image" content="https://github.com/Cloving/Atlas-Github/blob/master/blog/notePicture/%E6%8A%93%E5%8F%96%E7%9F%A5%E4%B9%8E%E7%94%A8%E6%88%B7%E5%8A%A8%E6%80%81%E6%95%B0%E6%8D%AE/%E7%9F%A5%E4%B9%8Ejson.png?raw=true">
+<meta property="og:updated_time" content="2018-12-19T03:09:41.995Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Python模拟豆瓣登录（一）">
-<meta name="twitter:description" content="摘要抓取数据的过程中有时候需要完成模拟登录的操作，本文使用requests库完成豆瓣的模拟登录，并保存已登录的Cookie，方便下次直接登录。之后通过访问个人主页验证当前状态是否为已登录状态。   requests请求分析过程首先需要研究豆瓣的登录机制，在豆瓣的登录界面查看登录请求提交的表单项，如图所示：  图中的Login请求为post类型，Form Data表示post到服务器的数据，可以看">
-<meta name="twitter:image" content="https://github.com/Cloving/Atlas-Github/blob/master/blog/notePicture/%E8%B1%86%E7%93%A3%E7%99%BB%E5%BD%95%EF%BC%88%E4%B8%80%EF%BC%89/%E7%99%BB%E5%BD%95%E9%A1%B5%E9%9D%A2.png?raw=true">
+<meta name="twitter:title" content="抓取知乎用户动态数据">
+<meta name="twitter:description" content="一、简介打开知乎某个用户的主页可以看到该用户赞同回答、关注专栏、关注问题等行为数据。本文利用Python的requests库抓取知乎用户行为数据并存入MongoDB数据库中。 二、分析数据加载方式 打开网页后向下拉取可以观察到行为数据并不是一次加载完，而是随着用户的浏览进度逐步加载，考虑可能是ajax的形式。 之后打开Chrome控制台分析网络选项，查看XHR(XMLHttpRequest)类型">
+<meta name="twitter:image" content="https://github.com/Cloving/Atlas-Github/blob/master/blog/notePicture/%E6%8A%93%E5%8F%96%E7%9F%A5%E4%B9%8E%E7%94%A8%E6%88%B7%E5%8A%A8%E6%80%81%E6%95%B0%E6%8D%AE/%E7%9F%A5%E4%B9%8E%E5%88%86%E6%9E%901.png?raw=true">
 
 
 
@@ -127,7 +127,7 @@
     
     <div class="card-image">
         <span class="image is-7by1">
-            <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/CoverPicture/bg_8.png?raw=true" alt="Python模拟豆瓣登录（一）">
+            <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/CoverPicture/bg_6.jpeg?raw=true" alt="抓取知乎用户动态数据">
         </span>
     </div>
     
@@ -135,17 +135,17 @@
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2018-12-09T02:29:08.000Z">2018-12-09</time>
+                <time class="level-item has-text-grey" datetime="2018-11-20T11:58:07.000Z">2018-11-20</time>
                 
                 <div class="level-item">
-                <a class="has-link-grey -link" href="/categories/数据抓取/">数据抓取</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/数据抓取/模拟登录/">模拟登录</a>
+                <a class="has-link-grey -link" href="/categories/数据抓取/">数据抓取</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/数据抓取/知乎/">知乎</a>
                 </div>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    7 分钟 读完 (大约 1053 个字)
+                    7 分钟 读完 (大约 1107 个字)
                 </span>
                 
             </div>
@@ -153,28 +153,32 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                Python模拟豆瓣登录（一）
+                抓取知乎用户动态数据
             
         </h1>
         <div class="content">
             
                 <p><br></p>
-<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>抓取数据的过程中有时候需要完成模拟登录的操作，本文使用<code>requests</code>库完成豆瓣的模拟登录，并保存已登录的Cookie，方便下次直接登录。之后通过访问个人主页验证当前状态是否为已登录状态。</p>
-<p><img src="https://github.com/Cloving/Atlas-Github/blob/master/blog/notePicture/%E8%B1%86%E7%93%A3%E7%99%BB%E5%BD%95%EF%BC%88%E4%B8%80%EF%BC%89/%E7%99%BB%E5%BD%95%E9%A1%B5%E9%9D%A2.png?raw=true" alt="登录页面"></p>
+<h2 id="一、简介"><a href="#一、简介" class="headerlink" title="一、简介"></a>一、简介</h2><p>打开知乎某个用户的主页可以看到该用户赞同回答、关注专栏、关注问题等行为数据。本文利用Python的requests库抓取知乎用户行为数据并存入MongoDB数据库中。<br><br></p>
+<h2 id="二、分析数据加载方式"><a href="#二、分析数据加载方式" class="headerlink" title="二、分析数据加载方式"></a>二、分析数据加载方式</h2><ol>
+<li>打开网页后向下拉取可以观察到行为数据并不是一次加载完，而是随着用户的浏览进度逐步加载，考虑可能是ajax的形式。</li>
+<li>之后打开Chrome控制台分析网络选项，查看XHR(XMLHttpRequest)类型的文件可以观察出收到的响应是json数据，其中包含了用户行为数据的相关信息</li>
+</ol>
+<p><img src="https://github.com/Cloving/Atlas-Github/blob/master/blog/notePicture/%E6%8A%93%E5%8F%96%E7%9F%A5%E4%B9%8E%E7%94%A8%E6%88%B7%E5%8A%A8%E6%80%81%E6%95%B0%E6%8D%AE/%E7%9F%A5%E4%B9%8E%E5%88%86%E6%9E%901.png?raw=true" alt="图1"></p>
+<p>所以首先需要请求到网站返回的json数据，然后对数据进行解析，结构化处理，存入MongoDB中。<br><br></p>
+<h2 id="三、代码分析"><a href="#三、代码分析" class="headerlink" title="三、代码分析"></a>三、代码分析</h2><h3 id="1、初始化变量"><a href="#1、初始化变量" class="headerlink" title="1、初始化变量"></a>1、初始化变量</h3><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self)</span>:</span><br>  self.user_name = <span class="hljs-string">"******"</span><br>  self.max_search_counts = **<br>  self.params = &#123;<br>    <span class="hljs-string">"limit"</span>: <span class="hljs-number">7</span>,<br>    <span class="hljs-string">"desktop"</span>: <span class="hljs-string">"True"</span><br>  &#125;<br>  self.base_url = <span class="hljs-string">"https://www.zhihu.com/api/v4/members/"</span><br>  self.url = self.base_url + <span class="hljs-string">'/'</span> + self.user_name + <span class="hljs-string">'/activities?'</span> + urlencode(self.params)<br><br>  self.headers = &#123;<br>    <span class="hljs-string">"User-Agent"</span>: <span class="hljs-string">"Mozilla/5.0 (X11; Linux x86_64)\<br>                  AppleWebKit/537.36 (KHTML, like Gecko)\<br>                  Chrome/70.0.3538.77 Safari/537.36"</span>,<br>    <span class="hljs-string">"Referer"</span>: <span class="hljs-string">"https://www.zhihu.com/"</span>,<br>    <span class="hljs-string">"x-requested-with"</span>: <span class="hljs-string">"fetch"</span><br>  &#125;<br>  self.client = MongoClient(<span class="hljs-string">'127.0.0.1'</span>,username=<span class="hljs-string">'admin'</span>,<br>                      password=<span class="hljs-string">'******'</span>,<br>                      authSource=<span class="hljs-string">'admin'</span>,<br>                      authMechanism=<span class="hljs-string">'SCRAM-SHA-1'</span>)<br>  self.db = self.client[<span class="hljs-string">"zhihu"</span>]<br>  self.collection = self.db[<span class="hljs-string">"zhihuDynamic"</span>]<br></code></pre></td></tr></table></figure>
+<p>1、<code>user_name</code>并不是用户的知乎ID，而是用户的个性化域名。比如知乎小管家的个性化域名为<code>zhihuadmin</code>，这可以通过观察用户主页的url获得<br>2、请求的url就是返回json数据，在控制台的<code>Network</code>选项中观察到返回<code>json</code>数据的<code>url</code>类似于以下形式：<br><figure class="highlight html hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html">https://www.zhihu.com/api/v4/members/zhihuadmin/activities?limit=7&amp;after_id=1542365521&amp;desktop=True<br></code></pre></td></tr></table></figure></p>
+<p>分析组成可以看出<code>https://www.zhihu.com/api/v4/members/</code>为通用部分。<code>zhihuadmin</code>为用户的个性化域名。?之后是携带的参数<br>3、抓取知乎的数据必须携带用户代理。</p>
+<h3 id="2、开始抓取"><a href="#2、开始抓取" class="headerlink" title="2、开始抓取"></a>2、开始抓取</h3><figure class="highlight Python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs Python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">startSearch</span><span class="hljs-params">(self)</span>:</span><br>  <span class="hljs-keyword">for</span> search_times <span class="hljs-keyword">in</span> range(<span class="hljs-number">0</span>, self.max_search_counts):<br>    json = self.get_Page(self.url)<br>    <span class="hljs-keyword">try</span>:<br>      self.url = json.get(<span class="hljs-string">"paging"</span>).get(<span class="hljs-string">"next"</span>)<br>      print(self.url)<br>    <span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> e:<br>      print(<span class="hljs-string">"获取下一次请求的链接失败，失败原因："</span>, e)<br>    results = self.get_Parse(json)<br>    print(<span class="hljs-string">"======================================="</span>)<br>    <span class="hljs-keyword">for</span> result <span class="hljs-keyword">in</span> results:<br>      self.save_to_mongodb(result)<br></code></pre></td></tr></table></figure>
+<p><code>for</code>循环控制搜索次数，每次搜索会抓取7条数据即7次动态。之后提取出本次抓取到json数据中的用户动态信息，并更新下一次搜索的url，并将提取出的数据存入MongoDB中</p>
+<h3 id="3、抓取json数据"><a href="#3、抓取json数据" class="headerlink" title="3、抓取json数据"></a>3、抓取json数据</h3><figure class="highlight Python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs Python"><span class="hljs-comment"># 获取json数据</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_Page</span><span class="hljs-params">(self, url)</span>:</span><br>  <span class="hljs-keyword">try</span>:<br>    response = requests.get(url, headers=self.headers)<br>    <span class="hljs-keyword">if</span> response.status_code == <span class="hljs-number">200</span>:<br>      <span class="hljs-keyword">return</span> response.json()<br>  <span class="hljs-keyword">except</span> requests.ConnectionError <span class="hljs-keyword">as</span> e:<br>    print(<span class="hljs-string">"Error: "</span>, e.args)<br></code></pre></td></tr></table></figure>
+<p>传入页面的url,返回相应的json数据</p>
+<h3 id="4、解析json数据"><a href="#4、解析json数据" class="headerlink" title="4、解析json数据"></a>4、解析json数据</h3><p>根据传入json数据的格式，提取用户的各项动态<br><img src="https://github.com/Cloving/Atlas-Github/blob/master/blog/notePicture/%E6%8A%93%E5%8F%96%E7%9F%A5%E4%B9%8E%E7%94%A8%E6%88%B7%E5%8A%A8%E6%80%81%E6%95%B0%E6%8D%AE/%E7%9F%A5%E4%B9%8Ejson.png?raw=true" alt="json数据示意图"></p>
+<figure class="highlight Python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs Python"><span class="hljs-comment"># 解析json数据</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_Parse</span><span class="hljs-params">(self, json)</span>:</span><br>  <span class="hljs-keyword">if</span> json:<br>    items = json.get(<span class="hljs-string">'data'</span>)<br>    <span class="hljs-keyword">for</span> item <span class="hljs-keyword">in</span> items:<br>      zhihu = &#123;&#125;<br>      action_text = item.get(<span class="hljs-string">"action_text"</span>)<br>      created_time = item.get(<span class="hljs-string">"created_time"</span>)<br>      zhihu[<span class="hljs-string">"操作行为"</span>] = action_text<br>      zhihu[<span class="hljs-string">"时间"</span>] = time.strftime(<span class="hljs-string">"%Y-%m-%d %H:%M:%S"</span>, time.localtime(created_time))<br>      <span class="hljs-keyword">if</span> item.get(<span class="hljs-string">'verb'</span>) == <span class="hljs-string">"MEMBER_VOTEUP_ARTICLE"</span>:<br>        item_detail =  voteup_article(item.get(<span class="hljs-string">"target"</span>))<br>      <span class="hljs-keyword">elif</span> item.get(<span class="hljs-string">'verb'</span>) == <span class="hljs-string">"ANSWER_VOTE_UP"</span>:<br>        item_detail = answer_voteUp(item.get(<span class="hljs-string">"target"</span>))<br>      <span class="hljs-keyword">elif</span> item.get(<span class="hljs-string">'verb'</span>) == <span class="hljs-string">"MEMBER_CREATE_ARTICLE"</span>:<br>        item_detail =  create_article(item.get(<span class="hljs-string">"target"</span>))<br>      <span class="hljs-keyword">elif</span> item.get(<span class="hljs-string">'verb'</span>) == <span class="hljs-string">"MEMBER_FOLLOW_COLUMN"</span>:<br>        item_detail =  follow_column(item.get(<span class="hljs-string">'target'</span>))<br>      <span class="hljs-keyword">elif</span> item.get(<span class="hljs-string">'verb'</span>) == <span class="hljs-string">"ANSWER_CREATE"</span>:<br>        item_detail = answer_create(item.get(<span class="hljs-string">'target'</span>))<br>      <span class="hljs-keyword">elif</span> item.get(<span class="hljs-string">'verb'</span>) == <span class="hljs-string">"QUESTION_FOLLOW"</span>:<br>        item_detail = question_follow(item.get(<span class="hljs-string">'target'</span>))<br>      <span class="hljs-keyword">yield</span> dict(zhihu, **item_detail)<br></code></pre></td></tr></table></figure>
+<h3 id="5、将解析出来的数据导入到数据库中"><a href="#5、将解析出来的数据导入到数据库中" class="headerlink" title="5、将解析出来的数据导入到数据库中"></a>5、将解析出来的数据导入到数据库中</h3><figure class="highlight Python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs Python"><span class="hljs-comment"># 导入到json数据库中</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">save_to_mongodb</span><span class="hljs-params">(self, result)</span>:</span><br>  <span class="hljs-keyword">if</span> self.collection.insert_one(result):<br>    print(<span class="hljs-string">"Successful save to Mongodb"</span>)<br></code></pre></td></tr></table></figure>
 <p><br></p>
-<h1 id="requests请求"><a href="#requests请求" class="headerlink" title="requests请求"></a>requests请求</h1><h2 id="分析过程"><a href="#分析过程" class="headerlink" title="分析过程"></a>分析过程</h2><p>首先需要研究豆瓣的登录机制，在豆瓣的登录界面查看登录请求提交的表单项，如图所示：</p>
-<p><img src="https://github.com/Cloving/Atlas-Github/blob/master/blog/notePicture/%E8%B1%86%E7%93%A3%E7%99%BB%E5%BD%95%EF%BC%88%E4%B8%80%EF%BC%89/%E7%99%BB%E5%BD%95%E8%A1%A8%E5%8D%95.png?raw=true" alt="登录表单"></p>
-<p>图中的<code>Login</code>请求为post类型，<code>Form Data</code>表示post到服务器的数据，可以看出数据并未加密。</p>
-<p>1、<code>source</code>表示该登录页面是由豆瓣读书跳转过来<br>2、<code>redir</code>表示登录后跳转到的url<br>3、<code>form_email</code>和<code>form_password</code>分别表示用户名和密码<br>4、<code>captcha-solution</code>则是验证码<br>5、<code>captcha-id</code>验证码的id该字段可从登录页面的HTML中获取</p>
-<h2 id="编码过程"><a href="#编码过程" class="headerlink" title="编码过程"></a>编码过程</h2><h3 id="1、初始化变量："><a href="#1、初始化变量：" class="headerlink" title="1、初始化变量："></a>1、初始化变量：</h3><figure class="highlight Python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs Python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self)</span>:</span><br>  self.session = requests.Session()  <br>  self.session.cookies = cookielib.LWPCookieJar(filename=<span class="hljs-string">"cookies.txt"</span>)  <br>  self.url = <span class="hljs-string">'https://accounts.douban.com/login'</span>  <span class="hljs-comment"># 登录url</span><br>  self.redirurl = <span class="hljs-string">'https://book.douban.com/mine'</span>  <span class="hljs-comment"># 重定向url</span><br>  self.email = <span class="hljs-string">'******'</span>             <br>  self.password = <span class="hljs-string">'******'</span><br>  <span class="hljs-comment"># 构造post数据</span><br>  self.data = &#123;<br>    <span class="hljs-string">'redir'</span>: self.redirurl,<br>    <span class="hljs-string">'form_email'</span>: self.email,<br>    <span class="hljs-string">'form_password'</span>: self.password,<br>    <span class="hljs-string">'login'</span>: <span class="hljs-string">'登录'</span><br>  &#125;<br>  <span class="hljs-comment"># 构造用户代理</span><br>  self.headers = &#123;<br>    <span class="hljs-string">'User-Agent'</span>: <span class="hljs-string">'Mozilla/5.0 '</span><br>    <span class="hljs-string">'(Windows NT 10.0; Win64; x64) '</span><br>    <span class="hljs-string">'AppleWebKit/537.36 (KHTML, like Gecko) '</span><br>    <span class="hljs-string">'Chrome/55.0.2883.87 Safari/537.36'</span><br>  &#125;<br></code></pre></td></tr></table></figure>
-<h3 id="2、发送请求"><a href="#2、发送请求" class="headerlink" title="2、发送请求"></a>2、发送请求</h3><p>我们模拟登录需要的是登录之后的页面，所以利用<code>Session</code>来维持一种会话状态，并且保存登录后的<code>Cookie</code>。下次登录时直接携带<code>Cookie</code>发送请求，无需再使用账号密码。判断登录时是否需要验证码先使用<code>BeautifulSoup</code>库来获取登录页面的<code>HTML</code>代码，之后利用正则表达式判断其中是否有显示验证码的<code>img</code>标签，如果有处理验证码，如果没有那么就将已有的信息post到服务器，并保存登录后的Cookie。</p>
-<figure class="highlight Python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs Python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">login</span><span class="hljs-params">(self)</span>:</span><br>  page = self.session.post(self.url, headers=self.headers)<br>  soup = BeautifulSoup(page.text, <span class="hljs-string">"html.parser"</span>)<br>  captcha = soup.find(<span class="hljs-string">'img'</span>, id=<span class="hljs-string">'captcha_image'</span>)<br>  <span class="hljs-keyword">if</span> captcha <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-keyword">None</span>:<br>    self.process_captcha(page, captcha)<br>    afterLogin_page = self.session.post(self.url, data=self.data, headers=self.headers)<br>  <span class="hljs-keyword">else</span>:<br>    afterLogin_page = self.session.post(self.url, data=self.data, headers=self.headers)<br>  <span class="hljs-comment"># print(self.session.cookies)</span><br>  self.session.cookies.save(ignore_discard=<span class="hljs-keyword">True</span>, ignore_expires=<span class="hljs-keyword">True</span>)<br>  print(afterLogin_page.text)<br>  soup = BeautifulSoup(afterLogin_page.text, <span class="hljs-string">"html.parser"</span>)<br></code></pre></td></tr></table></figure>
-<h4 id="关于Cookie与Session"><a href="#关于Cookie与Session" class="headerlink" title="关于Cookie与Session"></a>关于Cookie与Session</h4><p>Http是一种无状态的协议，因此并不能追踪用户的状态，所以常采用<code>Session</code>与<code>Cookie</code>结合的方式跟踪用户的状态。<code>Session</code>位于服务器端只保存对话信息但是不能够识别出具体的用户，<code>Cookie</code>位于客户端用于存放用户信息。<code>Cookie</code>在登录网站时会由服务器产生传递给客户端，当客户端再次登录时会携带<code>Cookie</code>，之后服务器便根据<code>Cookie</code>中的<code>Session ID</code>跟踪到会话。如果会话有效，那么会判断用户已处于登录状态，否则可能会判断用户没有访问权限进而跳转到登录页面。<br>同时Cookie是有过期时间的，超过该时间Cookie失效，需要重新获取。这同时也是为了避免Cookie被他人获取并长期使用。</p>
-<h3 id="3、处理验证码"><a href="#3、处理验证码" class="headerlink" title="3、处理验证码"></a>3、处理验证码</h3><p>这里先使用手动输入验证码的方式，首先拿到验证码图片的地址（这个地址是临时的，一段时间后会失效，但对于手动输入并不影响），然后利用正则表达式拿到<code>captcha-id</code>，因为它需要与验证码一同post到服务器。具体代码如下：</p>
-<figure class="highlight Python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs Python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">process_captcha</span><span class="hljs-params">(self, page, captcha)</span>:</span><br>  <span class="hljs-comment"># 获得验证码图片地址</span><br>  captcha_url = captcha[<span class="hljs-string">'src'</span>]<br>  <span class="hljs-comment"># 利用正则表达式获得验证码ID</span><br>  pattern = re.compile(<span class="hljs-string">'&lt;input type="hidden" name="captcha-id" value="(.*?)"/'</span>)<br>  captcha_id = re.search(pattern, page.text).group(<span class="hljs-number">1</span>)<br>  <span class="hljs-comment"># 将验证码图片保存到本地</span><br>  urllib.request.urlretrieve(captcha_url, <span class="hljs-string">"captcha.png"</span>)<br>  captcha = input(<span class="hljs-string">'please input the captcha:'</span>)<br>  self.data[<span class="hljs-string">'captcha-solution'</span>] = captcha<br>  self.data[<span class="hljs-string">'captcha-id'</span>] = captcha_id<br></code></pre></td></tr></table></figure>
-<h3 id="4、利用Cookie登录"><a href="#4、利用Cookie登录" class="headerlink" title="4、利用Cookie登录"></a>4、利用Cookie登录</h3><p>载入本地Cookie之后再发送get请求到url，之后将请求到的<code>HTML</code>文本写入文件。<br><strong>注意：</strong>以二进制的类型写入需要bytes对象，所以使用<code>utf8</code>编码<br><figure class="highlight Python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs Python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_index</span><span class="hljs-params">(self)</span>:</span><br>  <span class="hljs-comment"># 根据本地cookies登录</span><br>  <span class="hljs-keyword">try</span>:<br>    self.session.cookies.load(ignore_discard=<span class="hljs-keyword">True</span>)<br>  <span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> e:<br>    print(<span class="hljs-string">"cookie未能加载, 原因: "</span>, e)<br>  response = self.session.get(self.redirurl, headers=self.headers)<br>  <span class="hljs-keyword">with</span> open(<span class="hljs-string">"index.html"</span>, <span class="hljs-string">'wb'</span>) <span class="hljs-keyword">as</span> f:<br>    f.write(response.text.encode(<span class="hljs-string">'utf8'</span>))<br>  print(<span class="hljs-string">"已载入本地Cookie"</span>)<br></code></pre></td></tr></table></figure></p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>过程比较简单，编码过程也不复杂，验证码的处理暂时使用手动的方式。关于自动识别豆瓣验证码的方式正在研究中，目前效果还不理想。<br>完整代码：<a href="https://github.com/Cloving/Douban-Spider/blob/master/%E8%B1%86%E7%93%A3%E7%99%BB%E5%BD%95/douban_login_1.py" target="_blank" rel="noopener">douban_login_1.py</a></p>
-<h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h1><p>1、<a href="https://my.oschina.net/sukai/blog/662046" target="_blank" rel="noopener">python 爬虫 cookie 的保存和加载 - 盖娅 - 开源中国</a><br>2、<a href="https://zhuanlan.zhihu.com/p/38191385" target="_blank" rel="noopener">Python爬虫基础练习(十一)简单模拟豆瓣登录 - 知乎</a><br><br></p>
+<h2 id="四、总结"><a href="#四、总结" class="headerlink" title="四、总结"></a>四、总结</h2><p>代码写的并不好，仅作为参考。完整代码: <a href="https://github.com/Cloving/zhihu-Spider/tree/master/%E7%9F%A5%E4%B9%8E%E7%94%A8%E6%88%B7%E5%8A%A8%E6%80%81" target="_blank" rel="noopener">点这里</a><br><br></p>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><h3 id="1、Authentication-Examples-—-PyMongo-3-7-2-documentation"><a href="#1、Authentication-Examples-—-PyMongo-3-7-2-documentation" class="headerlink" title="1、Authentication Examples — PyMongo 3.7.2 documentation"></a>1、<a href="http://api.mongodb.com/python/current/examples/authentication.html" target="_blank" rel="noopener">Authentication Examples — PyMongo 3.7.2 documentation</a></h3><h3 id="2、Ajax结果提取-—-Python3网络爬虫开发实战"><a href="#2、Ajax结果提取-—-Python3网络爬虫开发实战" class="headerlink" title="2、Ajax结果提取 — Python3网络爬虫开发实战"></a>2、<a href="https://germey.gitbooks.io/python3webspider/content/6.3-Ajax%E7%BB%93%E6%9E%9C%E6%8F%90%E5%8F%96.html" target="_blank" rel="noopener">Ajax结果提取 — Python3网络爬虫开发实战</a></h3><h3 id="3、知乎小管家-—-知乎"><a href="#3、知乎小管家-—-知乎" class="headerlink" title="3、知乎小管家 — 知乎"></a>3、<a href="https://www.zhihu.com/people/zhihuadmin/activities" target="_blank" rel="noopener">知乎小管家 — 知乎</a></h3><p><br></p>
 
             
         </div>
@@ -187,7 +191,7 @@
   </div>
   <div class="copyright-item">
       <span>原文链接: </span>
-      <a href="#">Python模拟豆瓣登录（一）</a>
+      <a href="#">抓取知乎用户动态数据</a>
   </div>
   <div class="copyright-item">
       <span>许可协议: </span>
@@ -202,7 +206,7 @@
             <div class="level-start">
                 <div class="level-item">
                     <span class="is-size-6 has-text-grey has-mr-7">#</span>
-                    <a class="has-link-grey -link" href="/tags/Python/">Python</a>, <a class="has-link-grey -link" href="/tags/cookies/">cookies</a>, <a class="has-link-grey -link" href="/tags/selenium/">selenium</a>, <a class="has-link-grey -link" href="/tags/验证码/">验证码</a>
+                    <a class="has-link-grey -link" href="/tags/MongoDB/">MongoDB</a>, <a class="has-link-grey -link" href="/tags/Python/">Python</a>, <a class="has-link-grey -link" href="/tags/ajax/">ajax</a>
                 </div>
             </div>
         </div>
@@ -221,15 +225,15 @@
     <div class="level post-navigation is-flex-wrap is-mobile">
         
         <div class="level-start">
-            <a class="level level-item has-link-grey  article-nav-prev" href="/2018/12/13/Echarts足迹图/">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/2018/11/30/Python模拟豆瓣登录（一）/">
                 <i class="level-item fas fa-chevron-left"></i>
-                <span class="level-item">Echarts足迹图</span>
+                <span class="level-item">Python模拟豆瓣登录（一）</span>
             </a>
         </div>
         
         
         <div class="level-end">
-            <a class="level level-item has-link-grey  article-nav-next" href="/2018/12/05/三寸气在千般用，一旦无常万事休/">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2018/09/21/三寸气在千般用，一旦无常万事休/">
                 <span class="level-item">三寸气在千般用，一旦无常万事休</span>
                 <i class="level-item fas fa-chevron-right"></i>
             </a>
@@ -301,7 +305,7 @@
                         文章
                     </p>
                     <p class="title has-text-weight-normal">
-                        9
+                        10
                     </p>
                 </div>
             </div>
@@ -321,7 +325,7 @@
                         标签
                     </p>
                     <p class="title has-text-weight-normal">
-                        15
+                        16
                     </p>
                 </div>
             </div>
@@ -461,7 +465,7 @@
                 <span class="level-item">数据抓取</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">2</span>
+                <span class="level-item tag">3</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/categories/数据抓取/模拟登录/">
@@ -477,7 +481,7 @@
                 <span class="level-item">知乎</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">1</span>
+                <span class="level-item tag">2</span>
             </span>
         </a></li></ul></li><li>
         <a class="level is-marginless" href="/categories/数据结构与算法/">
@@ -515,7 +519,7 @@
         <h3 class="menu-label">
             标签云
         </h3>
-        <a href="/tags/C/" style="font-size: 20px;">C++</a> <a href="/tags/CDN/" style="font-size: 10px;">CDN</a> <a href="/tags/Echarts/" style="font-size: 10px;">Echarts</a> <a href="/tags/Javascript/" style="font-size: 10px;">Javascript</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/Python/" style="font-size: 15px;">Python</a> <a href="/tags/Vue/" style="font-size: 10px;">Vue</a> <a href="/tags/ajax/" style="font-size: 10px;">ajax</a> <a href="/tags/cookies/" style="font-size: 10px;">cookies</a> <a href="/tags/selenium/" style="font-size: 10px;">selenium</a> <a href="/tags/二叉树/" style="font-size: 15px;">二叉树</a> <a href="/tags/图片压缩/" style="font-size: 10px;">图片压缩</a> <a href="/tags/念念不忘，必有回响/" style="font-size: 10px;">念念不忘，必有回响</a> <a href="/tags/数据结构/" style="font-size: 20px;">数据结构</a> <a href="/tags/验证码/" style="font-size: 10px;">验证码</a>
+        <a href="/tags/C/" style="font-size: 20px;">C++</a> <a href="/tags/CDN/" style="font-size: 10px;">CDN</a> <a href="/tags/Echarts/" style="font-size: 15px;">Echarts</a> <a href="/tags/Javascript/" style="font-size: 10px;">Javascript</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/Vue/" style="font-size: 10px;">Vue</a> <a href="/tags/ajax/" style="font-size: 10px;">ajax</a> <a href="/tags/cookies/" style="font-size: 10px;">cookies</a> <a href="/tags/二叉树/" style="font-size: 15px;">二叉树</a> <a href="/tags/代理/" style="font-size: 10px;">代理</a> <a href="/tags/图片压缩/" style="font-size: 10px;">图片压缩</a> <a href="/tags/念念不忘，必有回响/" style="font-size: 10px;">念念不忘，必有回响</a> <a href="/tags/数据结构/" style="font-size: 20px;">数据结构</a> <a href="/tags/词云/" style="font-size: 10px;">词云</a> <a href="/tags/验证码/" style="font-size: 10px;">验证码</a>
     </div>
 </div>
 
@@ -532,73 +536,16 @@
         
         <article class="media">
             
-            <a href="/2018/12/13/Echarts足迹图/" class="media-left">
+            <a href="/2018/12/13/抓取知乎用户粉丝数据/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/CoverPicture/bg_9.png?raw=true" alt="Echarts足迹图">
+                    <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/CoverPicture/bg_10.jpeg?raw=true" alt="抓取知乎用户粉丝数据">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-12-13T09:31:53.000Z">2018-12-13</time></div>
-                    <a href="/2018/12/13/Echarts足迹图/" class="has-link-black-ter is-size-6">Echarts足迹图</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/建站实录/">建站实录</a> / <a class="has-link-grey -link" href="/categories/建站实录/足迹图/">足迹图</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/2018/12/09/Python模拟豆瓣登录（一）/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/CoverPicture/bg_8.png?raw=true" alt="Python模拟豆瓣登录（一）">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-12-09T02:29:08.000Z">2018-12-09</time></div>
-                    <a href="/2018/12/09/Python模拟豆瓣登录（一）/" class="has-link-black-ter is-size-6">Python模拟豆瓣登录（一）</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/数据抓取/">数据抓取</a> / <a class="has-link-grey -link" href="/categories/数据抓取/模拟登录/">模拟登录</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/2018/12/05/三寸气在千般用，一旦无常万事休/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/CoverPicture/bg_7.jpeg?raw=true" alt="三寸气在千般用，一旦无常万事休">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-12-04T16:15:10.000Z">2018-12-05</time></div>
-                    <a href="/2018/12/05/三寸气在千般用，一旦无常万事休/" class="has-link-black-ter is-size-6">三寸气在千般用，一旦无常万事休</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/念念不忘，必有回响/">念念不忘，必有回响</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/2018/11/30/抓取知乎用户动态数据/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/CoverPicture/bg_6.jpeg?raw=true" alt="抓取知乎用户动态数据">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-11-30T11:58:07.000Z">2018-11-30</time></div>
-                    <a href="/2018/11/30/抓取知乎用户动态数据/" class="has-link-black-ter is-size-6">抓取知乎用户动态数据</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-12-13T00:44:41.000Z">2018-12-13</time></div>
+                    <a href="/2018/12/13/抓取知乎用户粉丝数据/" class="has-link-black-ter is-size-6">抓取知乎用户粉丝数据</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/数据抓取/">数据抓取</a> / <a class="has-link-grey -link" href="/categories/数据抓取/知乎/">知乎</a>
                     </p>
@@ -608,18 +555,75 @@
         
         <article class="media">
             
-            <a href="/2018/09/17/静态资源加速/" class="media-left">
+            <a href="/2018/12/08/Echarts足迹图/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/CoverPicture/bg_5.jpg?raw=true" alt="静态资源加速">
+                    <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/CoverPicture/bg_9.png?raw=true" alt="Echarts足迹图">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-09-17T13:32:56.000Z">2018-09-17</time></div>
-                    <a href="/2018/09/17/静态资源加速/" class="has-link-black-ter is-size-6">静态资源加速</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-12-08T09:31:53.000Z">2018-12-08</time></div>
+                    <a href="/2018/12/08/Echarts足迹图/" class="has-link-black-ter is-size-6">Echarts足迹图</a>
                     <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/建站实录/">建站实录</a> / <a class="has-link-grey -link" href="/categories/建站实录/静态资源加速/">静态资源加速</a>
+                        <a class="has-link-grey -link" href="/categories/建站实录/">建站实录</a> / <a class="has-link-grey -link" href="/categories/建站实录/足迹图/">足迹图</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2018/11/30/Python模拟豆瓣登录（一）/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/CoverPicture/bg_8.png?raw=true" alt="Python模拟豆瓣登录（一）">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-11-30T02:29:08.000Z">2018-11-30</time></div>
+                    <a href="/2018/11/30/Python模拟豆瓣登录（一）/" class="has-link-black-ter is-size-6">Python模拟豆瓣登录（一）</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/数据抓取/">数据抓取</a> / <a class="has-link-grey -link" href="/categories/数据抓取/模拟登录/">模拟登录</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2018/11/20/抓取知乎用户动态数据/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/CoverPicture/bg_6.jpeg?raw=true" alt="抓取知乎用户动态数据">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-11-20T11:58:07.000Z">2018-11-20</time></div>
+                    <a href="/2018/11/20/抓取知乎用户动态数据/" class="has-link-black-ter is-size-6">抓取知乎用户动态数据</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/数据抓取/">数据抓取</a> / <a class="has-link-grey -link" href="/categories/数据抓取/知乎/">知乎</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2018/09/21/三寸气在千般用，一旦无常万事休/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/CoverPicture/bg_7.jpeg?raw=true" alt="三寸气在千般用，一旦无常万事休">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-09-20T16:15:10.000Z">2018-09-21</time></div>
+                    <a href="/2018/09/21/三寸气在千般用，一旦无常万事休/" class="has-link-black-ter is-size-6">三寸气在千般用，一旦无常万事休</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/念念不忘，必有回响/">念念不忘，必有回响</a>
                     </p>
                 </div>
             </div>
@@ -643,7 +647,7 @@
                     <span class="level-item">十二月 2018</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">3</span>
+                    <span class="level-item tag">2</span>
                 </span>
             </a>
         </li>
@@ -654,7 +658,7 @@
                     <span class="level-item">十一月 2018</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">1</span>
+                    <span class="level-item tag">2</span>
                 </span>
             </a>
         </li>
@@ -671,20 +675,20 @@
         </li>
         
         <li>
-            <a class="level is-marginless" href="/archives/2018/07/">
+            <a class="level is-marginless" href="/archives/2018/06/">
                 <span class="level-start">
-                    <span class="level-item">七月 2018</span>
+                    <span class="level-item">六月 2018</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">1</span>
+                    <span class="level-item tag">2</span>
                 </span>
             </a>
         </li>
         
         <li>
-            <a class="level is-marginless" href="/archives/2018/06/">
+            <a class="level is-marginless" href="/archives/2018/05/">
                 <span class="level-start">
-                    <span class="level-item">六月 2018</span>
+                    <span class="level-item">五月 2018</span>
                 </span>
                 <span class="level-end">
                     <span class="level-item tag">1</span>
@@ -744,7 +748,7 @@
                             <span class="level-item">Echarts</span>
                         </span>
                         <span class="level-end">
-                            <span class="level-item tag">1</span>
+                            <span class="level-item tag">2</span>
                         </span>
                     </a>
                 </li>
@@ -777,7 +781,7 @@
                             <span class="level-item">Python</span>
                         </span>
                         <span class="level-end">
-                            <span class="level-item tag">2</span>
+                            <span class="level-item tag">3</span>
                         </span>
                     </a>
                 </li>
@@ -816,23 +820,23 @@
                 </li>
                 
                 <li>
-                    <a class="level is-marginless" href="/tags/selenium/">
-                        <span class="level-start">
-                            <span class="level-item">selenium</span>
-                        </span>
-                        <span class="level-end">
-                            <span class="level-item tag">1</span>
-                        </span>
-                    </a>
-                </li>
-                
-                <li>
                     <a class="level is-marginless" href="/tags/二叉树/">
                         <span class="level-start">
                             <span class="level-item">二叉树</span>
                         </span>
                         <span class="level-end">
                             <span class="level-item tag">2</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/代理/">
+                        <span class="level-start">
+                            <span class="level-item">代理</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
                         </span>
                     </a>
                 </li>
@@ -866,6 +870,17 @@
                         </span>
                         <span class="level-end">
                             <span class="level-item tag">3</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/词云/">
+                        <span class="level-start">
+                            <span class="level-item">词云</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
                         </span>
                     </a>
                 </li>
@@ -906,73 +921,16 @@
         
         <article class="media">
             
-            <a href="/2018/12/13/Echarts足迹图/" class="media-left">
+            <a href="/2018/12/13/抓取知乎用户粉丝数据/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/CoverPicture/bg_9.png?raw=true" alt="Echarts足迹图">
+                    <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/CoverPicture/bg_10.jpeg?raw=true" alt="抓取知乎用户粉丝数据">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-12-13T09:31:53.000Z">2018-12-13</time></div>
-                    <a href="/2018/12/13/Echarts足迹图/" class="has-link-black-ter is-size-6">Echarts足迹图</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/建站实录/">建站实录</a> / <a class="has-link-grey -link" href="/categories/建站实录/足迹图/">足迹图</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/2018/12/09/Python模拟豆瓣登录（一）/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/CoverPicture/bg_8.png?raw=true" alt="Python模拟豆瓣登录（一）">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-12-09T02:29:08.000Z">2018-12-09</time></div>
-                    <a href="/2018/12/09/Python模拟豆瓣登录（一）/" class="has-link-black-ter is-size-6">Python模拟豆瓣登录（一）</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/数据抓取/">数据抓取</a> / <a class="has-link-grey -link" href="/categories/数据抓取/模拟登录/">模拟登录</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/2018/12/05/三寸气在千般用，一旦无常万事休/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/CoverPicture/bg_7.jpeg?raw=true" alt="三寸气在千般用，一旦无常万事休">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-12-04T16:15:10.000Z">2018-12-05</time></div>
-                    <a href="/2018/12/05/三寸气在千般用，一旦无常万事休/" class="has-link-black-ter is-size-6">三寸气在千般用，一旦无常万事休</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/念念不忘，必有回响/">念念不忘，必有回响</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/2018/11/30/抓取知乎用户动态数据/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/CoverPicture/bg_6.jpeg?raw=true" alt="抓取知乎用户动态数据">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-11-30T11:58:07.000Z">2018-11-30</time></div>
-                    <a href="/2018/11/30/抓取知乎用户动态数据/" class="has-link-black-ter is-size-6">抓取知乎用户动态数据</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-12-13T00:44:41.000Z">2018-12-13</time></div>
+                    <a href="/2018/12/13/抓取知乎用户粉丝数据/" class="has-link-black-ter is-size-6">抓取知乎用户粉丝数据</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/categories/数据抓取/">数据抓取</a> / <a class="has-link-grey -link" href="/categories/数据抓取/知乎/">知乎</a>
                     </p>
@@ -982,18 +940,75 @@
         
         <article class="media">
             
-            <a href="/2018/09/17/静态资源加速/" class="media-left">
+            <a href="/2018/12/08/Echarts足迹图/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/CoverPicture/bg_5.jpg?raw=true" alt="静态资源加速">
+                    <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/CoverPicture/bg_9.png?raw=true" alt="Echarts足迹图">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-09-17T13:32:56.000Z">2018-09-17</time></div>
-                    <a href="/2018/09/17/静态资源加速/" class="has-link-black-ter is-size-6">静态资源加速</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-12-08T09:31:53.000Z">2018-12-08</time></div>
+                    <a href="/2018/12/08/Echarts足迹图/" class="has-link-black-ter is-size-6">Echarts足迹图</a>
                     <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/categories/建站实录/">建站实录</a> / <a class="has-link-grey -link" href="/categories/建站实录/静态资源加速/">静态资源加速</a>
+                        <a class="has-link-grey -link" href="/categories/建站实录/">建站实录</a> / <a class="has-link-grey -link" href="/categories/建站实录/足迹图/">足迹图</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2018/11/30/Python模拟豆瓣登录（一）/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/CoverPicture/bg_8.png?raw=true" alt="Python模拟豆瓣登录（一）">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-11-30T02:29:08.000Z">2018-11-30</time></div>
+                    <a href="/2018/11/30/Python模拟豆瓣登录（一）/" class="has-link-black-ter is-size-6">Python模拟豆瓣登录（一）</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/数据抓取/">数据抓取</a> / <a class="has-link-grey -link" href="/categories/数据抓取/模拟登录/">模拟登录</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2018/11/20/抓取知乎用户动态数据/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/CoverPicture/bg_6.jpeg?raw=true" alt="抓取知乎用户动态数据">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-11-20T11:58:07.000Z">2018-11-20</time></div>
+                    <a href="/2018/11/20/抓取知乎用户动态数据/" class="has-link-black-ter is-size-6">抓取知乎用户动态数据</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/数据抓取/">数据抓取</a> / <a class="has-link-grey -link" href="/categories/数据抓取/知乎/">知乎</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2018/09/21/三寸气在千般用，一旦无常万事休/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/CoverPicture/bg_7.jpeg?raw=true" alt="三寸气在千般用，一旦无常万事休">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-09-20T16:15:10.000Z">2018-09-21</time></div>
+                    <a href="/2018/09/21/三寸气在千般用，一旦无常万事休/" class="has-link-black-ter is-size-6">三寸气在千般用，一旦无常万事休</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/念念不忘，必有回响/">念念不忘，必有回响</a>
                     </p>
                 </div>
             </div>
@@ -1017,7 +1032,7 @@
                     <span class="level-item">十二月 2018</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">3</span>
+                    <span class="level-item tag">2</span>
                 </span>
             </a>
         </li>
@@ -1028,7 +1043,7 @@
                     <span class="level-item">十一月 2018</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">1</span>
+                    <span class="level-item tag">2</span>
                 </span>
             </a>
         </li>
@@ -1045,20 +1060,20 @@
         </li>
         
         <li>
-            <a class="level is-marginless" href="/archives/2018/07/">
+            <a class="level is-marginless" href="/archives/2018/06/">
                 <span class="level-start">
-                    <span class="level-item">七月 2018</span>
+                    <span class="level-item">六月 2018</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">1</span>
+                    <span class="level-item tag">2</span>
                 </span>
             </a>
         </li>
         
         <li>
-            <a class="level is-marginless" href="/archives/2018/06/">
+            <a class="level is-marginless" href="/archives/2018/05/">
                 <span class="level-start">
-                    <span class="level-item">六月 2018</span>
+                    <span class="level-item">五月 2018</span>
                 </span>
                 <span class="level-end">
                     <span class="level-item tag">1</span>
@@ -1118,7 +1133,7 @@
                             <span class="level-item">Echarts</span>
                         </span>
                         <span class="level-end">
-                            <span class="level-item tag">1</span>
+                            <span class="level-item tag">2</span>
                         </span>
                     </a>
                 </li>
@@ -1151,7 +1166,7 @@
                             <span class="level-item">Python</span>
                         </span>
                         <span class="level-end">
-                            <span class="level-item tag">2</span>
+                            <span class="level-item tag">3</span>
                         </span>
                     </a>
                 </li>
@@ -1190,23 +1205,23 @@
                 </li>
                 
                 <li>
-                    <a class="level is-marginless" href="/tags/selenium/">
-                        <span class="level-start">
-                            <span class="level-item">selenium</span>
-                        </span>
-                        <span class="level-end">
-                            <span class="level-item tag">1</span>
-                        </span>
-                    </a>
-                </li>
-                
-                <li>
                     <a class="level is-marginless" href="/tags/二叉树/">
                         <span class="level-start">
                             <span class="level-item">二叉树</span>
                         </span>
                         <span class="level-end">
                             <span class="level-item tag">2</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/代理/">
+                        <span class="level-start">
+                            <span class="level-item">代理</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
                         </span>
                     </a>
                 </li>
@@ -1240,6 +1255,17 @@
                         </span>
                         <span class="level-end">
                             <span class="level-item tag">3</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/词云/">
+                        <span class="level-start">
+                            <span class="level-item">词云</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
                         </span>
                     </a>
                 </li>
