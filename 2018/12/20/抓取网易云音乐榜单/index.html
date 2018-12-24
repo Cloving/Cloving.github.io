@@ -1,0 +1,1501 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+<title>抓取网易云音乐榜单 - Daito - 修行的路注定是孤独的</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+    <meta name="description" content="摘要本文分别利用Selenium自动化测试工具与requests库抓取网易云音乐的榜单，包括歌曲名、歌曲时长以及演唱者等信息。Selenium仅仅抓取了首个榜单，requests抓取了所有榜单。抓取之后将所有数据存入MySQL数据库中。 Selenium抓取单个表单Selenium是一种自动化测试工具，它可以模拟浏览器的行为，所以也可以用于爬虫。下载对应的驱动之后，可以调用各种主流浏览器。一般在爬">
+<meta name="keywords" content="Python,MySQL,Selenium">
+<meta property="og:type" content="article">
+<meta property="og:title" content="抓取网易云音乐榜单">
+<meta property="og:url" content="http://yoursite.com/2018/12/20/抓取网易云音乐榜单/index.html">
+<meta property="og:site_name" content="Daito - 修行的路注定是孤独的">
+<meta property="og:description" content="摘要本文分别利用Selenium自动化测试工具与requests库抓取网易云音乐的榜单，包括歌曲名、歌曲时长以及演唱者等信息。Selenium仅仅抓取了首个榜单，requests抓取了所有榜单。抓取之后将所有数据存入MySQL数据库中。 Selenium抓取单个表单Selenium是一种自动化测试工具，它可以模拟浏览器的行为，所以也可以用于爬虫。下载对应的驱动之后，可以调用各种主流浏览器。一般在爬">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://github.com/Cloving/Atlas-Github/blob/master/blog/notePicture/%E6%8A%93%E5%8F%96%E7%BD%91%E6%98%93%E4%BA%91%E9%9F%B3%E4%B9%90%E6%A6%9C%E5%8D%95/%E9%BB%98%E8%AE%A4%E9%A1%B5%E9%9D%A2%E8%AF%B7%E6%B1%82.jpg?raw=true">
+<meta property="og:image" content="https://github.com/Cloving/Atlas-Github/blob/master/blog/notePicture/%E6%8A%93%E5%8F%96%E7%BD%91%E6%98%93%E4%BA%91%E9%9F%B3%E4%B9%90%E6%A6%9C%E5%8D%95/%E5%8D%95%E4%B8%AA%E6%A6%9C%E5%8D%95%E8%AF%B7%E6%B1%82.png?raw=true">
+<meta property="og:image" content="https://github.com/Cloving/Atlas-Github/blob/master/blog/notePicture/%E6%8A%93%E5%8F%96%E7%BD%91%E6%98%93%E4%BA%91%E9%9F%B3%E4%B9%90%E6%A6%9C%E5%8D%95/%E6%AD%8C%E6%9B%B2%E6%97%B6%E9%95%BF.png?raw=true">
+<meta property="og:updated_time" content="2018-12-24T08:13:15.846Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="抓取网易云音乐榜单">
+<meta name="twitter:description" content="摘要本文分别利用Selenium自动化测试工具与requests库抓取网易云音乐的榜单，包括歌曲名、歌曲时长以及演唱者等信息。Selenium仅仅抓取了首个榜单，requests抓取了所有榜单。抓取之后将所有数据存入MySQL数据库中。 Selenium抓取单个表单Selenium是一种自动化测试工具，它可以模拟浏览器的行为，所以也可以用于爬虫。下载对应的驱动之后，可以调用各种主流浏览器。一般在爬">
+<meta name="twitter:image" content="https://github.com/Cloving/Atlas-Github/blob/master/blog/notePicture/%E6%8A%93%E5%8F%96%E7%BD%91%E6%98%93%E4%BA%91%E9%9F%B3%E4%B9%90%E6%A6%9C%E5%8D%95/%E9%BB%98%E8%AE%A4%E9%A1%B5%E9%9D%A2%E8%AF%B7%E6%B1%82.jpg?raw=true">
+
+
+
+
+
+<link rel="icon" href="/images/favicon.png">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+    
+    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+    
+
+    
+    
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+    
+
+    
+    
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+
+    
+    
+    
+    
+
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                Cloving
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item" href="/">首页</a>
+                
+                <a class="navbar-item" href="/archives">归档</a>
+                
+                <a class="navbar-item" href="/categories">分类</a>
+                
+                <a class="navbar-item" href="/tags">标签</a>
+                
+                <a class="navbar-item" href="/about">关于我</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main"><div class="card card-item">
+    
+    <div class="card-image">
+        <span class="image is-7by1">
+            <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/CoverPicture/bg_11.jpeg?raw=true" alt="抓取网易云音乐榜单">
+        </span>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2018-12-20T10:33:54.000Z">2018-12-20</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/categories/数据抓取/">数据抓取</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/categories/数据抓取/网易云音乐/">网易云音乐</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    16 分钟 读完 (大约 2467 个字)
+                </span>
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                抓取网易云音乐榜单
+            
+        </h1>
+        <div class="content">
+            
+                <h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>本文分别利用<code>Selenium</code>自动化测试工具与<code>requests</code>库抓取网易云音乐的榜单，包括歌曲名、歌曲时长以及演唱者等信息。<code>Selenium</code>仅仅抓取了首个榜单，<code>requests</code>抓取了所有榜单。抓取之后将所有数据存入<code>MySQL</code>数据库中。</p>
+<h2 id="Selenium抓取单个表单"><a href="#Selenium抓取单个表单" class="headerlink" title="Selenium抓取单个表单"></a>Selenium抓取单个表单</h2><p><code>Selenium</code>是一种自动化测试工具，它可以模拟浏览器的行为，所以也可以用于爬虫。下载对应的<a href="https://sites.google.com/a/chromium.org/chromedriver/downloads" target="_blank" rel="noopener">驱动</a>之后，可以调用各种主流浏览器。一般在爬虫的过程因为效率问题并不打开浏览器，而使用无界面的模式。</p>
+<h3 id="执行过程"><a href="#执行过程" class="headerlink" title="执行过程"></a>执行过程</h3><h4 id="1、初始化变量"><a href="#1、初始化变量" class="headerlink" title="1、初始化变量"></a>1、初始化变量</h4><p>初始化的过程中包括请求的<code>url</code>，请求的数目以及数据库的一些配置。<code>selenium</code>使用<code>Chrome</code>驱动。<br><figure class="highlight Python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs Python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self)</span>:</span><br>  self.url = <span class="hljs-string">"https://music.163.com"</span><br>  self.count = <span class="hljs-number">0</span><br>  self.host = <span class="hljs-string">"127.0.0.1"</span><br>  self.user = <span class="hljs-string">"root"</span><br>  self.password = <span class="hljs-string">"******"</span><br>  self.db = <span class="hljs-string">"spider"</span><br>  self.chrome_option = Options()<br>  self.chrome_option.add_argument(<span class="hljs-string">'--headless'</span>)<br>  self.DRIVER = webdriver.Chrome(chrome_options=self.chrome_option)<br>  <span class="hljs-comment"># The format string is not really a normal Python format string.</span><br>  <span class="hljs-comment"># You must always use %s for all fields.</span><br>  self.importSQL = <span class="hljs-string">"""INSERT INTO NetEaseCloudMusic(ID, musicName, time, singer)<br>            VALUES (%s, %s, %s, %s)"""</span><br></code></pre></td></tr></table></figure></p>
+<h4 id="2、连接MySQL数据库，并从首页跳转到榜单页"><a href="#2、连接MySQL数据库，并从首页跳转到榜单页" class="headerlink" title="2、连接MySQL数据库，并从首页跳转到榜单页"></a>2、连接MySQL数据库，并从首页跳转到榜单页</h4><p>根据初始化的数据库配置信息，连接上数据库删除旧表，创建新表<br><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">connect_mysql</span><span class="hljs-params">(self)</span>:</span><br>  self.db = pymysql.connect(host=self.host, user=self.user, passwd=self.password, db=self.db)<br>  print(<span class="hljs-string">"成功连接Mysql数据库"</span>)<br>  self.cursor = self.db.cursor()<br>  self.cursor.execute(<span class="hljs-string">"DROP TABLE IF EXISTS NetEaseCloudMusic"</span>)<br>  <span class="hljs-comment"># 如果使用单引号，需要</span><br>  sql = <span class="hljs-string">'''CREATE TABLE NetEaseCloudMusic(<br>          ID INT NOT NULL,<br>          musicName LONGTEXT,<br>          time LONGTEXT,<br>          singer LONGTEXT<br>          )'''</span><br>  self.cursor.execute(sql)<br></code></pre></td></tr></table></figure></p>
+<p>榜单信息的url为<code>https://music.163.com/#/discover/toplist</code>，所以需要从首页跳转。跳转之后观察到榜单信息并不是直接加载在网页中，而是在页面的<code>iframe</code>标签中，所以需要跳转到子<code>iframe</code>拿到数据<br><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">jump_targetpage</span><span class="hljs-params">(self)</span>:</span><br>  <span class="hljs-comment"># 其中 driver.get 方法会打开请求的URL，</span><br>  <span class="hljs-comment"># WebDriver 会等待页面完全加载完成之后才会返回，</span><br>  <span class="hljs-comment"># 即程序会等待页面的所有内容加载完成，JS渲染完毕之后才继续往下执行。</span><br>  self.DRIVER.get(self.url)<br>  self.DRIVER.find_element_by_xpath(<span class="hljs-string">'//ul[@class="nav"]/li[2]'</span>).click()<br>  <span class="hljs-keyword">try</span>:<br>    self.firstChild_iframe = self.DRIVER.find_element_by_id(<span class="hljs-string">"g_iframe"</span>)<br>  <span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> e:<br>    print(<span class="hljs-string">"Get iframe Failed: "</span>, e)<br>  sleep(<span class="hljs-number">2</span>)<br>  self.DRIVER.switch_to.frame(self.firstChild_iframe)<br>  table = self.DRIVER.find_element_by_tag_name(<span class="hljs-string">'table'</span>)<br>  self.songList = table.find_elements_by_xpath(<span class="hljs-string">'tbody/tr'</span>)<br>  <span class="hljs-keyword">return</span> self.songList<br></code></pre></td></tr></table></figure></p>
+<h4 id="3、提取数据并保存到数据库中"><a href="#3、提取数据并保存到数据库中" class="headerlink" title="3、提取数据并保存到数据库中"></a>3、提取数据并保存到数据库中</h4><p>使用<code>xpath</code>来提取歌曲名称、播放时长、演唱者等信息。<br><figure class="highlight Python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs Python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">start_search</span><span class="hljs-params">(self, song)</span>:</span>    <br>  songChildList = []<br>  songChildList.append(song.find_element_by_xpath(<span class="hljs-string">'td[2]//b'</span>).get_attribute(<span class="hljs-string">'title'</span>))<br>  songChildList.append(song.find_element_by_xpath(<span class="hljs-string">'td[3]//span[@class="u-dur "]'</span>).text)<br>  songChildList.append(song.find_element_by_xpath(<span class="hljs-string">'td[last()]//span'</span>).get_attribute(<span class="hljs-string">'title'</span>))<br>  <span class="hljs-keyword">return</span> songChildList<br></code></pre></td></tr></table></figure></p>
+<p>保存到数据库中，并记录每次导入的条数<br><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">import_data</span><span class="hljs-params">(self, data)</span>:</span><br>  <span class="hljs-keyword">try</span>:<br>    self.cursor.execute(self.importSQL, (self.count+<span class="hljs-number">1</span>, data[<span class="hljs-number">0</span>], data[<span class="hljs-number">1</span>], data[<span class="hljs-number">2</span>]))<br>    self.db.commit()<br>    self.count += <span class="hljs-number">1</span><br>    print(<span class="hljs-string">"成功导入第&#123;count&#125;条数据"</span>.format(count=self.count))<br>  <span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> e:<br>    print(<span class="hljs-string">'导入数据失败： '</span>, e)<br>    self.db.rollback()<br></code></pre></td></tr></table></figure></p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>这里并不介绍<code>Selenium</code>的具体使用方式，侧重于抓取的过程描述以及如何实现这一过程的简单代码示例。完整代码：<a href="https://github.com/Cloving/NetEase-Spider/blob/master/%E7%BD%91%E6%98%93%E4%BA%91%E9%9F%B3%E4%B9%90%E6%A6%9C%E5%8D%95/selenium_NetEaseMusic.py" target="_blank" rel="noopener">Selenium抓取单个表单</a></p>
+<h2 id="requests抓取所有表单"><a href="#requests抓取所有表单" class="headerlink" title="requests抓取所有表单"></a>requests抓取所有表单</h2><p>分析网易云音乐榜单页面的网络请求，如图所示：<br><img src="https://github.com/Cloving/Atlas-Github/blob/master/blog/notePicture/%E6%8A%93%E5%8F%96%E7%BD%91%E6%98%93%E4%BA%91%E9%9F%B3%E4%B9%90%E6%A6%9C%E5%8D%95/%E9%BB%98%E8%AE%A4%E9%A1%B5%E9%9D%A2%E8%AF%B7%E6%B1%82.jpg?raw=true" alt="默认页面请求"></p>
+<p>从默认页面<code>https://music.163.com/#/discover/toplist</code>请求的响应信息可以看到各类榜单的标题以及<code>href</code>属性信息。事实上，通过观察浏览器地址栏的<code>url</code>可以看出<code>href</code>的属性值位于<code>#</code>之后，所以这是一个<code>fragment</code>，访问网站之后可以直接到达页面的指定位置。我们需要提取出每个榜单的<code>href</code>属性信息，再逐个请求这些<code>url</code>，通过返回的响应分析出每个<code>url</code>中包含的歌曲信息，再逐个保存到数据库中，并统计总的数据量。</p>
+<h3 id="请求过程"><a href="#请求过程" class="headerlink" title="请求过程"></a>请求过程</h3><p>初始化变量以及连接数据库的部分在使用<code>selenium</code>请求中已经介绍过，大同小异。此处不再过多介绍，在文章结尾处会给出源代码的链接。<br>关于发起请求的函数部分，由于请求的<code>url</code>包括初始的<code>url</code>以及每个榜单的<code>url</code>，所以在请求函数中考虑使用可变数量的参数，如果没有传入其他参数则使用初始化的<code>url</code>，否则使用传入的<code>url</code>。过程如下：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">start_request</span><span class="hljs-params">(self, *arg)</span>:</span><br>  <span class="hljs-comment"># 向给定的url请求数据，如果arg为空，请求原始的url，否则请求arg</span><br>  url = arg <span class="hljs-keyword">if</span> arg <span class="hljs-keyword">else</span> self.url<br>  <span class="hljs-keyword">if</span> isinstance(url, tuple):<br>    <span class="hljs-comment"># arg是元组类型</span><br>    request_url = url[<span class="hljs-number">0</span>]<br>  <span class="hljs-keyword">else</span>:<br>    request_url = url<br>  <span class="hljs-keyword">try</span>:<br>    response = requests.get(request_url, headers=self.header)<br>    <span class="hljs-keyword">if</span> response.status_code == <span class="hljs-number">200</span>:<br>      print(<span class="hljs-string">"请求成功"</span>)<br>    <span class="hljs-keyword">return</span> response<br>  <span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> e:<br>    print(<span class="hljs-string">"请求失败，失败原因："</span>, e)<br></code></pre></td></tr></table></figure>
+<h3 id="处理原始请求的数据"><a href="#处理原始请求的数据" class="headerlink" title="处理原始请求的数据"></a>处理原始请求的数据</h3><p>对原始的<code>url</code>发送请求时，使用<code>正则表达式</code>提取所有榜单的<code>href</code>属性，再与原始的<code>url</code>进行拼接（因为拼接的<code>url</code>即使不带有<code>#</code>也会自动跳转，所以代码中并未添加<code>#</code>），得到并请求单个榜单的<code>url</code>。<br>单个榜单的<code>url</code>中并不能够找到规则的歌曲数据。通过观察发现所有歌曲数据都存在其中一个<code>textarea</code>的标签中，标签中的数据为<code>json</code>格式，所以需要利用这些<code>json</code>数据提取歌曲信息。这里通过<code>正则表达式</code>将其提取出来。</p>
+<p><img src="https://github.com/Cloving/Atlas-Github/blob/master/blog/notePicture/%E6%8A%93%E5%8F%96%E7%BD%91%E6%98%93%E4%BA%91%E9%9F%B3%E4%B9%90%E6%A6%9C%E5%8D%95/%E5%8D%95%E4%B8%AA%E6%A6%9C%E5%8D%95%E8%AF%B7%E6%B1%82.png?raw=true" alt="单个榜单请求"></p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">process_data</span><span class="hljs-params">(self, source_response)</span>:</span><br>  <span class="hljs-comment"># 处理原始url的请求，提取并处理每个榜单的url</span><br>  pattern = re.compile(<span class="hljs-string">'&lt;p class="name"&gt;&lt;a href="(.*?)" class="s-fc0"&gt;'</span>)<br>  lists_link = pattern.findall(source_response.text)<br>  <span class="hljs-keyword">for</span> list_link <span class="hljs-keyword">in</span> lists_link:<br>    url = parse.urljoin(self.url, list_link)<br>    list_response = self.start_request(url)<br>    json_datas = self.process_jsondata(list_response)<br>    self.process_musicdata(json_datas)<br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">process_jsondata</span><span class="hljs-params">(self, response)</span>:</span><br>  <span class="hljs-comment"># 提取每个榜单的json数据 </span><br>  pattern = re.compile(<span class="hljs-string">'.*?id="song-list-pre-data".*?&gt;(.*?)&lt;/textarea&gt;'</span>)<br>  match = pattern.search(response.text)<br>  json_datas = json.loads(match.group(<span class="hljs-number">1</span>))<br>  <span class="hljs-keyword">with</span> open(<span class="hljs-string">'data.json'</span>, <span class="hljs-string">'wb'</span>) <span class="hljs-keyword">as</span> f:<br>    f.write(match.group(<span class="hljs-number">1</span>).encode(<span class="hljs-string">'utf8'</span>))<br>  <span class="hljs-keyword">return</span> json_datas<br></code></pre></td></tr></table></figure>
+<h3 id="处理包含歌曲信息的json数据"><a href="#处理包含歌曲信息的json数据" class="headerlink" title="处理包含歌曲信息的json数据"></a>处理包含歌曲信息的json数据</h3><p>歌曲名与演唱者都可以直接从<code>json</code>中直接方便的读取到，但是歌曲的时长并不能从数据中直接看出来。所以回到原始榜单的响应中寻找信息，发现了可能是控制歌曲时长显示的部分，如图所示：</p>
+<p><img src="https://github.com/Cloving/Atlas-Github/blob/master/blog/notePicture/%E6%8A%93%E5%8F%96%E7%BD%91%E6%98%93%E4%BA%91%E9%9F%B3%E4%B9%90%E6%A6%9C%E5%8D%95/%E6%AD%8C%E6%9B%B2%E6%97%B6%E9%95%BF.png?raw=true" alt="歌曲时长"></p>
+<p>以下语句为控制歌曲时长显示的代码：<br><figure class="highlight javascript hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript">$&#123;dur2time(x.duration/<span class="hljs-number">1000</span>)&#125;<br></code></pre></td></tr></table></figure></p>
+<p>实际上我并没有在所有网络请求中找到有关<code>dur2time</code>的信息（也可能是我还不知道怎样分析这一部分）。但在<code>json</code>数据中存在<code>duration</code>的<code>key</code>，所以我认为<code>duration</code>的数值可能会通过某种转换，显示为歌曲时长。将<code>duration</code>的值除以1000与页面中显示的歌曲时长对应起来，试着找到其中的规律。</p>
+<ul>
+<li>179.2 &nbsp;&nbsp;  02：59</li>
+<li>216 &nbsp;&nbsp;  03：36</li>
+</ul>
+<p>从以上的对应关系中基本上可以判断<code>duration</code>除以1000即是歌曲时长的秒数。<br>到此可以便可以对歌曲的数据进行提取。过程如下所示：</p>
+<figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">process_musicdata</span><span class="hljs-params">(self, json_datas)</span>:</span><br>  <span class="hljs-comment"># 处理每个榜单的json数据</span><br>  <span class="hljs-keyword">for</span> json_data <span class="hljs-keyword">in</span> json_datas:<br>    music_name = json_data.get(<span class="hljs-string">"name"</span>)<br>    play_time = self.process_playtime(json_data.get(<span class="hljs-string">"duration"</span>)/<span class="hljs-number">1000</span>)<br>    singers = <span class="hljs-string">''</span><br>    <span class="hljs-keyword">for</span> artist <span class="hljs-keyword">in</span> json_data.get(<span class="hljs-string">"artists"</span>):<br>      singers += <span class="hljs-string">'/'</span> + artist.get(<span class="hljs-string">"name"</span>)<br>    singers = singers.replace(<span class="hljs-string">'/'</span>, <span class="hljs-string">''</span>, <span class="hljs-number">1</span>)<br>    data = [music_name, play_time, singers]<br>    self.save_data(data)<br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">process_playtime</span><span class="hljs-params">(self, duration)</span>:</span><br>  <span class="hljs-comment"># 处理播放时间数据</span><br>  minutes = math.floor(duration/<span class="hljs-number">60</span>)<br>  seconds = math.floor(duration%<span class="hljs-number">60</span>)<br>  minutes = minutes <span class="hljs-keyword">if</span> minutes &gt;= <span class="hljs-number">10</span> <span class="hljs-keyword">else</span> <span class="hljs-string">'0'</span>+str(minutes)<br>  seconds = seconds <span class="hljs-keyword">if</span> seconds &gt;= <span class="hljs-number">10</span> <span class="hljs-keyword">else</span> <span class="hljs-string">'0'</span>+str(seconds)<br>  <span class="hljs-keyword">return</span> <span class="hljs-string">'%s:%s'</span> % (minutes, seconds)<br></code></pre></td></tr></table></figure>
+<h3 id="保存到数据库中"><a href="#保存到数据库中" class="headerlink" title="保存到数据库中"></a>保存到数据库中</h3><p>每次处理一个榜单的响应便保存到数据库中。本次提取的所有歌曲榜单，共有<code>1614</code>条音乐数据<br><figure class="highlight python hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">save_data</span><span class="hljs-params">(self, data)</span>:</span><br>  <span class="hljs-comment"># 保存数据到数据库</span><br>  <span class="hljs-keyword">try</span>:<br>    self.cursor.execute(self.importSQL, (self.count, data[<span class="hljs-number">0</span>],data[<span class="hljs-number">1</span>],data[<span class="hljs-number">2</span>]))<br>    self.db.commit()<br>    print(<span class="hljs-string">"成功导入第&#123;count&#125;条数据"</span>.format(count=self.count))<br>    self.count += <span class="hljs-number">1</span><br>  <span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> e:<br>    print(<span class="hljs-string">"导入数据失败，失败原因："</span>, e)<br>    self.db.rollback()<br></code></pre></td></tr></table></figure></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本文分别使用了<code>Selenium</code>与<code>requests</code>两种方式抓取音乐榜单数据。实际测试中<code>Selenium</code>的抓取速度较慢，但是过程相对简单。使用<code>requests</code>请求过程稍显复杂，但是速度较快。完整代码：<a href="https://github.com/Cloving/NetEase-Spider/tree/master/%E7%BD%91%E6%98%93%E4%BA%91%E9%9F%B3%E4%B9%90%E6%A6%9C%E5%8D%95" target="_blank" rel="noopener">抓取网易云音乐榜单</a></p>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p><a href="https://selenium-python.readthedocs.io/" target="_blank" rel="noopener">1、Selenium with Python Selenium Python Bindings 2 documentation</a><br><a href="https://developers.google.com/web/updates/2017/04/headless-chrome" target="_blank" rel="noopener">2、Getting Started with Headless Chrome | Web | Google Developers</a><br><a href="https://selenium-python-zh.readthedocs.io/en/latest/getting-started.html" target="_blank" rel="noopener">3、2. 快速入门 Selenium-Python中文文档 2 documentation</a><br><a href="https://blog.csdn.net/mycms5/article/details/76902041" target="_blank" rel="noopener">4、python3 urllib.parse.urljoin（）用法 - 余安 - CSDN博客</a><br><a href="https://docs.python.org/3.2/library/urllib.parse.html" target="_blank" rel="noopener">5、20.7. urllib.parse — Parse URLs into components &mdash; Python v3.2.6 documentation</a></p>
+
+            
+        </div>
+        <div class="content">
+            
+                <div class="post-copyright">
+  <div class="copyright-item">
+      <span>原文作者: </span>
+      <a href="http://yaodongsheng.com">Daito</a>
+  </div>
+  <div class="copyright-item">
+      <span>原文链接: </span>
+      <a href="#">抓取网易云音乐榜单</a>
+  </div>
+  <div class="copyright-item">
+      <span>许可协议: </span>
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>
+  </div>
+</div>
+
+            
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/tags/MySQL/">MySQL</a>, <a class="has-link-grey -link" href="/tags/Python/">Python</a>, <a class="has-link-grey -link" href="/tags/Selenium/">Selenium</a>
+                </div>
+            </div>
+        </div>
+        
+        <!--  -->
+        
+        <div class="social-share"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css">
+<script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script>
+        
+    </div>
+</div>
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/2018/12/13/抓取知乎用户粉丝数据/">
+                <span class="level-item">抓取知乎用户粉丝数据</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">评论</h3>
+        
+<div id="valine-thread"></div>
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+    new Valine({
+        el: '#valine-thread' ,
+        notify: false,
+        verify: false,
+        app_id: 'cnWuYXtAptT6FdU8rGmtCKXy-gzGzoHsz',
+        app_key: 'mxfKEzvpXpL0bnGXGrp129vf',
+        placeholder: '请在这里输入您想说的话'
+    });
+</script>
+
+    </div>
+</div>
+</div>
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left ">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <nav class="level">
+            <div class="level-item has-text-centered">
+                <div>
+                    <img class="image is-128x128 has-mb-6" src="/images/avatar.jpg" alt="Daito">
+                    
+                    <p class="is-size-4 is-block">
+                        Daito
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-block">
+                        Data Developer
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-flex is-flex-center has-text-grey">
+                        <i class="fas fa-map-marker-alt has-mr-7"></i>
+                        <span>Shanghai, China</span>
+                    </p>
+                    
+                </div>
+            </div>
+        </nav>
+        <nav class="level is-mobile">
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        文章
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        11
+                    </p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        分类
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        13
+                    </p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        标签
+                    </p>
+                    <p class="title has-text-weight-normal">
+                        19
+                    </p>
+                </div>
+            </div>
+        </nav>
+        <div class="level">
+            <a class="level-item button is-link is-rounded" target="_blank" href="https://github.com/Cloving">
+                关注我</a>
+        </div>
+        
+        
+        <div class="level is-mobile">
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Github" href="https://github.com/Cloving">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Wechat" href="https://github.com/Cloving/Atlas-Github/blob/master/blog/WechatID.png?raw=true">
+                
+                <i class="fab fa-weixin"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Facebook" href="http://facebook.com">
+                
+                <i class="fab fa-facebook"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="Dribbble" href="http://dribbble.com">
+                
+                <i class="fab fa-dribbble"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" title="RSS" href="/">
+                
+                <i class="fas fa-rss"></i>
+                
+            </a>
+            
+        </div>
+        
+    </div>
+</div>
+    
+        
+    
+        
+
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            链接库
+        </h3>
+        <ul class="menu-list">
+        
+            <li>
+                <a class="level is-mobile" href="https://book.douban.com/people/127352614/" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">豆瓣读书</span>
+                    </span>
+                    <!-- <span class="level-right">
+                        <span class="level-item tag">https://book.douban.com/people/127352614/</span>
+                    </span> -->
+                </a>
+            </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+
+
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                分类
+            </h3>
+            <ul class="menu-list">
+            <li>
+        <a class="level is-marginless" href="/categories/Vue/">
+            <span class="level-start">
+                <span class="level-item">Vue</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/Vue/基础原理类/">
+            <span class="level-start">
+                <span class="level-item">基础原理类</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li></ul></li><li>
+        <a class="level is-marginless" href="/categories/建站实录/">
+            <span class="level-start">
+                <span class="level-item">建站实录</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/建站实录/足迹图/">
+            <span class="level-start">
+                <span class="level-item">足迹图</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/建站实录/静态资源加速/">
+            <span class="level-start">
+                <span class="level-item">静态资源加速</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li></ul></li><li>
+        <a class="level is-marginless" href="/categories/念念不忘，必有回响/">
+            <span class="level-start">
+                <span class="level-item">念念不忘，必有回响</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/数据抓取/">
+            <span class="level-start">
+                <span class="level-item">数据抓取</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">4</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/数据抓取/知乎/">
+            <span class="level-start">
+                <span class="level-item">知乎</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/数据抓取/网易云音乐/">
+            <span class="level-start">
+                <span class="level-item">网易云音乐</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/数据抓取/豆瓣/">
+            <span class="level-start">
+                <span class="level-item">豆瓣</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li></ul></li><li>
+        <a class="level is-marginless" href="/categories/数据结构与算法/">
+            <span class="level-start">
+                <span class="level-item">数据结构与算法</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">3</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/categories/数据结构与算法/二分查找/">
+            <span class="level-start">
+                <span class="level-item">二分查找</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/categories/数据结构与算法/二叉树/">
+            <span class="level-start">
+                <span class="level-item">二叉树</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li></ul></li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            标签云
+        </h3>
+        <a href="/tags/C/" style="font-size: 16.67px;">C++</a> <a href="/tags/CDN/" style="font-size: 10px;">CDN</a> <a href="/tags/Echarts/" style="font-size: 13.33px;">Echarts</a> <a href="/tags/Javascript/" style="font-size: 10px;">Javascript</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/Selenium/" style="font-size: 10px;">Selenium</a> <a href="/tags/Vue/" style="font-size: 10px;">Vue</a> <a href="/tags/ajax/" style="font-size: 10px;">ajax</a> <a href="/tags/cookies/" style="font-size: 10px;">cookies</a> <a href="/tags/二叉树/" style="font-size: 13.33px;">二叉树</a> <a href="/tags/代理/" style="font-size: 10px;">代理</a> <a href="/tags/图片压缩/" style="font-size: 10px;">图片压缩</a> <a href="/tags/念念不忘，必有回响/" style="font-size: 10px;">念念不忘，必有回响</a> <a href="/tags/数据结构/" style="font-size: 16.67px;">数据结构</a> <a href="/tags/模拟登录/" style="font-size: 10px;">模拟登录</a> <a href="/tags/词云/" style="font-size: 10px;">词云</a> <a href="/tags/验证码/" style="font-size: 10px;">验证码</a>
+    </div>
+</div>
+
+    
+    
+        <div class="column-right-shadow is-hidden-widescreen ">
+        
+            
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            最新文章
+        </h3>
+        
+        <article class="media">
+            
+            <a href="/2018/12/20/抓取网易云音乐榜单/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/CoverPicture/bg_11.jpeg?raw=true" alt="抓取网易云音乐榜单">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-12-20T10:33:54.000Z">2018-12-20</time></div>
+                    <a href="/2018/12/20/抓取网易云音乐榜单/" class="has-link-black-ter is-size-6">抓取网易云音乐榜单</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/数据抓取/">数据抓取</a> / <a class="has-link-grey -link" href="/categories/数据抓取/网易云音乐/">网易云音乐</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2018/12/13/抓取知乎用户粉丝数据/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/CoverPicture/bg_10.jpeg?raw=true" alt="抓取知乎用户粉丝数据">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-12-13T00:44:41.000Z">2018-12-13</time></div>
+                    <a href="/2018/12/13/抓取知乎用户粉丝数据/" class="has-link-black-ter is-size-6">抓取知乎用户粉丝数据</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/数据抓取/">数据抓取</a> / <a class="has-link-grey -link" href="/categories/数据抓取/知乎/">知乎</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2018/12/08/Echarts足迹图/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/CoverPicture/bg_9.png?raw=true" alt="Echarts足迹图">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-12-08T09:31:53.000Z">2018-12-08</time></div>
+                    <a href="/2018/12/08/Echarts足迹图/" class="has-link-black-ter is-size-6">Echarts足迹图</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/建站实录/">建站实录</a> / <a class="has-link-grey -link" href="/categories/建站实录/足迹图/">足迹图</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2018/11/30/Python模拟豆瓣登录（一）/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/CoverPicture/bg_8.png?raw=true" alt="Python模拟豆瓣登录（一）">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-11-30T02:29:08.000Z">2018-11-30</time></div>
+                    <a href="/2018/11/30/Python模拟豆瓣登录（一）/" class="has-link-black-ter is-size-6">Python模拟豆瓣登录（一）</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/数据抓取/">数据抓取</a> / <a class="has-link-grey -link" href="/categories/数据抓取/豆瓣/">豆瓣</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2018/11/20/抓取知乎用户动态数据/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/CoverPicture/bg_6.jpeg?raw=true" alt="抓取知乎用户动态数据">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-11-20T11:58:07.000Z">2018-11-20</time></div>
+                    <a href="/2018/11/20/抓取知乎用户动态数据/" class="has-link-black-ter is-size-6">抓取知乎用户动态数据</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/数据抓取/">数据抓取</a> / <a class="has-link-grey -link" href="/categories/数据抓取/知乎/">知乎</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+
+        
+            <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            归档
+        </h3>
+        <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/12/">
+                <span class="level-start">
+                    <span class="level-item">十二月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/11/">
+                <span class="level-start">
+                    <span class="level-item">十一月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/09/">
+                <span class="level-start">
+                    <span class="level-item">九月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/06/">
+                <span class="level-start">
+                    <span class="level-item">六月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/05/">
+                <span class="level-start">
+                    <span class="level-item">五月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/04/">
+                <span class="level-start">
+                    <span class="level-item">四月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+        
+            <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                标签
+            </h3>
+            <ul class="menu-list">
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/C/">
+                        <span class="level-start">
+                            <span class="level-item">C++</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">3</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/CDN/">
+                        <span class="level-start">
+                            <span class="level-item">CDN</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/Echarts/">
+                        <span class="level-start">
+                            <span class="level-item">Echarts</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">2</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/Javascript/">
+                        <span class="level-start">
+                            <span class="level-item">Javascript</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/MongoDB/">
+                        <span class="level-start">
+                            <span class="level-item">MongoDB</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/MySQL/">
+                        <span class="level-start">
+                            <span class="level-item">MySQL</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/Python/">
+                        <span class="level-start">
+                            <span class="level-item">Python</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">4</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/Selenium/">
+                        <span class="level-start">
+                            <span class="level-item">Selenium</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/Vue/">
+                        <span class="level-start">
+                            <span class="level-item">Vue</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/ajax/">
+                        <span class="level-start">
+                            <span class="level-item">ajax</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/cookies/">
+                        <span class="level-start">
+                            <span class="level-item">cookies</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/二叉树/">
+                        <span class="level-start">
+                            <span class="level-item">二叉树</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">2</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/代理/">
+                        <span class="level-start">
+                            <span class="level-item">代理</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/图片压缩/">
+                        <span class="level-start">
+                            <span class="level-item">图片压缩</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/念念不忘，必有回响/">
+                        <span class="level-start">
+                            <span class="level-item">念念不忘，必有回响</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/数据结构/">
+                        <span class="level-start">
+                            <span class="level-item">数据结构</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">3</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/模拟登录/">
+                        <span class="level-start">
+                            <span class="level-item">模拟登录</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/词云/">
+                        <span class="level-start">
+                            <span class="level-item">词云</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/验证码/">
+                        <span class="level-start">
+                            <span class="level-item">验证码</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+</div>
+        
+        </div>
+    
+</div>
+
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only has-order-3 column-right ">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            最新文章
+        </h3>
+        
+        <article class="media">
+            
+            <a href="/2018/12/20/抓取网易云音乐榜单/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/CoverPicture/bg_11.jpeg?raw=true" alt="抓取网易云音乐榜单">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-12-20T10:33:54.000Z">2018-12-20</time></div>
+                    <a href="/2018/12/20/抓取网易云音乐榜单/" class="has-link-black-ter is-size-6">抓取网易云音乐榜单</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/数据抓取/">数据抓取</a> / <a class="has-link-grey -link" href="/categories/数据抓取/网易云音乐/">网易云音乐</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2018/12/13/抓取知乎用户粉丝数据/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/CoverPicture/bg_10.jpeg?raw=true" alt="抓取知乎用户粉丝数据">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-12-13T00:44:41.000Z">2018-12-13</time></div>
+                    <a href="/2018/12/13/抓取知乎用户粉丝数据/" class="has-link-black-ter is-size-6">抓取知乎用户粉丝数据</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/数据抓取/">数据抓取</a> / <a class="has-link-grey -link" href="/categories/数据抓取/知乎/">知乎</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2018/12/08/Echarts足迹图/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/CoverPicture/bg_9.png?raw=true" alt="Echarts足迹图">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-12-08T09:31:53.000Z">2018-12-08</time></div>
+                    <a href="/2018/12/08/Echarts足迹图/" class="has-link-black-ter is-size-6">Echarts足迹图</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/建站实录/">建站实录</a> / <a class="has-link-grey -link" href="/categories/建站实录/足迹图/">足迹图</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2018/11/30/Python模拟豆瓣登录（一）/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/CoverPicture/bg_8.png?raw=true" alt="Python模拟豆瓣登录（一）">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-11-30T02:29:08.000Z">2018-11-30</time></div>
+                    <a href="/2018/11/30/Python模拟豆瓣登录（一）/" class="has-link-black-ter is-size-6">Python模拟豆瓣登录（一）</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/数据抓取/">数据抓取</a> / <a class="has-link-grey -link" href="/categories/数据抓取/豆瓣/">豆瓣</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/2018/11/20/抓取知乎用户动态数据/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="https://github.com/Cloving/Atlas-Github/blob/master/blog/CoverPicture/bg_6.jpeg?raw=true" alt="抓取知乎用户动态数据">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-11-20T11:58:07.000Z">2018-11-20</time></div>
+                    <a href="/2018/11/20/抓取知乎用户动态数据/" class="has-link-black-ter is-size-6">抓取知乎用户动态数据</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/categories/数据抓取/">数据抓取</a> / <a class="has-link-grey -link" href="/categories/数据抓取/知乎/">知乎</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+
+    
+        <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            归档
+        </h3>
+        <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/12/">
+                <span class="level-start">
+                    <span class="level-item">十二月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/11/">
+                <span class="level-start">
+                    <span class="level-item">十一月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/09/">
+                <span class="level-start">
+                    <span class="level-item">九月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/06/">
+                <span class="level-start">
+                    <span class="level-item">六月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/05/">
+                <span class="level-start">
+                    <span class="level-item">五月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2018/04/">
+                <span class="level-start">
+                    <span class="level-item">四月 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+    
+        <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                标签
+            </h3>
+            <ul class="menu-list">
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/C/">
+                        <span class="level-start">
+                            <span class="level-item">C++</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">3</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/CDN/">
+                        <span class="level-start">
+                            <span class="level-item">CDN</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/Echarts/">
+                        <span class="level-start">
+                            <span class="level-item">Echarts</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">2</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/Javascript/">
+                        <span class="level-start">
+                            <span class="level-item">Javascript</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/MongoDB/">
+                        <span class="level-start">
+                            <span class="level-item">MongoDB</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/MySQL/">
+                        <span class="level-start">
+                            <span class="level-item">MySQL</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/Python/">
+                        <span class="level-start">
+                            <span class="level-item">Python</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">4</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/Selenium/">
+                        <span class="level-start">
+                            <span class="level-item">Selenium</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/Vue/">
+                        <span class="level-start">
+                            <span class="level-item">Vue</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/ajax/">
+                        <span class="level-start">
+                            <span class="level-item">ajax</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/cookies/">
+                        <span class="level-start">
+                            <span class="level-item">cookies</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/二叉树/">
+                        <span class="level-start">
+                            <span class="level-item">二叉树</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">2</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/代理/">
+                        <span class="level-start">
+                            <span class="level-item">代理</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/图片压缩/">
+                        <span class="level-start">
+                            <span class="level-item">图片压缩</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/念念不忘，必有回响/">
+                        <span class="level-start">
+                            <span class="level-item">念念不忘，必有回响</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/数据结构/">
+                        <span class="level-start">
+                            <span class="level-item">数据结构</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">3</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/模拟登录/">
+                        <span class="level-start">
+                            <span class="level-item">模拟登录</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/词云/">
+                        <span class="level-start">
+                            <span class="level-item">词云</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/验证码/">
+                        <span class="level-start">
+                            <span class="level-item">验证码</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+</div>
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    Cloving
+                
+                </a>
+                <p class="is-size-7">
+                    &copy; 2018 Daito&nbsp;
+                    开发商 <a href="http://hexo.io/" target="_blank">Hexo</a> &  装修师 
+                    <a href="http://github.com/ppoffice/hexo-theme-icarus">Icarus</a> & 改造家
+                    <a href="http://yaodongsheng.com/about">Daito</a>
+                </p>
+            </div>
+            <div class="level-end">
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-CN");</script>
+
+
+    
+    
+    
+    <script src="/js/animation.js"></script>
+    
+
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+    <script src="/js/gallery.js" defer></script>
+    
+
+    
+    
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {matchFontHeight: false},
+        SVG: {matchFontHeight: false},
+        CommonHTML: {matchFontHeight: false}
+    });
+});
+</script>
+
+    
+    
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+    
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么...">
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+</body>
+</html>
