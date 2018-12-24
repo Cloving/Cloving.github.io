@@ -8,7 +8,7 @@
 
 
     <meta name="description" content="摘要本文抓取并分析了知乎用户的粉丝数据，包括粉丝名、粉丝标题、粉丝男女比例、粉丝回答问题比例、粉丝被关注数等数据。之后利用pyecharts库对这些数据进行可视化显示。 抓取数据1、请求的url与代理与之前一篇文章抓取知乎用户动态数据类似，这里请求的url也是返回json数据，所以同样在控制台network选项下找到请求的url，通过观察多个请求的url将其分为通用部分与扩展部分，如下形式：123">
-<meta name="keywords" content="Echarts,Python,词云,代理">
+<meta name="keywords" content="Echarts,Python,正则表达式,词云,代理">
 <meta property="og:type" content="article">
 <meta property="og:title" content="抓取知乎用户粉丝数据">
 <meta property="og:url" content="http://yoursite.com/2018/12/13/抓取知乎用户粉丝数据/index.html">
@@ -20,7 +20,7 @@
 <meta property="og:image" content="https://github.com/Cloving/Atlas-Github/blob/master/blog/notePicture/%E6%8A%93%E5%8F%96%E7%9F%A5%E4%B9%8E%E7%94%A8%E6%88%B7%E7%B2%89%E4%B8%9D%E6%95%B0%E6%8D%AE/%E7%B2%89%E4%B8%9D%E8%A2%AB%E5%85%B3%E6%B3%A8%E6%95%B0%E9%87%8F%E7%9B%B4%E6%96%B9%E5%9B%BE.png?raw=true">
 <meta property="og:image" content="https://github.com/Cloving/Atlas-Github/blob/master/blog/notePicture/%E6%8A%93%E5%8F%96%E7%9F%A5%E4%B9%8E%E7%94%A8%E6%88%B7%E7%B2%89%E4%B8%9D%E6%95%B0%E6%8D%AE/%E7%B2%89%E4%B8%9D%E5%9B%9E%E7%AD%94%E6%95%B0%E9%87%8F%E7%9B%B4%E6%96%B9%E5%9B%BE.png?raw=true">
 <meta property="og:image" content="https://github.com/Cloving/Atlas-Github/blob/master/blog/notePicture/%E6%8A%93%E5%8F%96%E7%9F%A5%E4%B9%8E%E7%94%A8%E6%88%B7%E7%B2%89%E4%B8%9D%E6%95%B0%E6%8D%AE/%E7%B2%89%E4%B8%9D%E7%94%B7%E5%A5%B3%E6%AF%94%E4%BE%8B%E9%A5%BC%E5%9B%BE.png?raw=true">
-<meta property="og:updated_time" content="2018-12-19T07:53:06.599Z">
+<meta property="og:updated_time" content="2018-12-24T13:50:36.998Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="抓取知乎用户粉丝数据">
 <meta name="twitter:description" content="摘要本文抓取并分析了知乎用户的粉丝数据，包括粉丝名、粉丝标题、粉丝男女比例、粉丝回答问题比例、粉丝被关注数等数据。之后利用pyecharts库对这些数据进行可视化显示。 抓取数据1、请求的url与代理与之前一篇文章抓取知乎用户动态数据类似，这里请求的url也是返回json数据，所以同样在控制台network选项下找到请求的url，通过观察多个请求的url将其分为通用部分与扩展部分，如下形式：123">
@@ -207,7 +207,7 @@
             <div class="level-start">
                 <div class="level-item">
                     <span class="is-size-6 has-text-grey has-mr-7">#</span>
-                    <a class="has-link-grey -link" href="/tags/Echarts/">Echarts</a>, <a class="has-link-grey -link" href="/tags/Python/">Python</a>, <a class="has-link-grey -link" href="/tags/代理/">代理</a>, <a class="has-link-grey -link" href="/tags/词云/">词云</a>
+                    <a class="has-link-grey -link" href="/tags/Echarts/">Echarts</a>, <a class="has-link-grey -link" href="/tags/Python/">Python</a>, <a class="has-link-grey -link" href="/tags/代理/">代理</a>, <a class="has-link-grey -link" href="/tags/正则表达式/">正则表达式</a>, <a class="has-link-grey -link" href="/tags/词云/">词云</a>
                 </div>
             </div>
         </div>
@@ -316,7 +316,7 @@
                         分类
                     </p>
                     <p class="title has-text-weight-normal">
-                        13
+                        14
                     </p>
                 </div>
             </div>
@@ -326,7 +326,7 @@
                         标签
                     </p>
                     <p class="title has-text-weight-normal">
-                        19
+                        20
                     </p>
                 </div>
             </div>
@@ -528,7 +528,7 @@
         <h3 class="menu-label">
             标签云
         </h3>
-        <a href="/tags/C/" style="font-size: 16.67px;">C++</a> <a href="/tags/CDN/" style="font-size: 10px;">CDN</a> <a href="/tags/Echarts/" style="font-size: 13.33px;">Echarts</a> <a href="/tags/Javascript/" style="font-size: 10px;">Javascript</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/Selenium/" style="font-size: 10px;">Selenium</a> <a href="/tags/Vue/" style="font-size: 10px;">Vue</a> <a href="/tags/ajax/" style="font-size: 10px;">ajax</a> <a href="/tags/cookies/" style="font-size: 10px;">cookies</a> <a href="/tags/二叉树/" style="font-size: 13.33px;">二叉树</a> <a href="/tags/代理/" style="font-size: 10px;">代理</a> <a href="/tags/图片压缩/" style="font-size: 10px;">图片压缩</a> <a href="/tags/念念不忘，必有回响/" style="font-size: 10px;">念念不忘，必有回响</a> <a href="/tags/数据结构/" style="font-size: 16.67px;">数据结构</a> <a href="/tags/模拟登录/" style="font-size: 10px;">模拟登录</a> <a href="/tags/词云/" style="font-size: 10px;">词云</a> <a href="/tags/验证码/" style="font-size: 10px;">验证码</a>
+        <a href="/tags/C/" style="font-size: 16.67px;">C++</a> <a href="/tags/CDN/" style="font-size: 10px;">CDN</a> <a href="/tags/Echarts/" style="font-size: 13.33px;">Echarts</a> <a href="/tags/Javascript/" style="font-size: 10px;">Javascript</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/Selenium/" style="font-size: 10px;">Selenium</a> <a href="/tags/Vue/" style="font-size: 10px;">Vue</a> <a href="/tags/ajax/" style="font-size: 10px;">ajax</a> <a href="/tags/cookies/" style="font-size: 10px;">cookies</a> <a href="/tags/二叉树/" style="font-size: 13.33px;">二叉树</a> <a href="/tags/代理/" style="font-size: 10px;">代理</a> <a href="/tags/图片压缩/" style="font-size: 10px;">图片压缩</a> <a href="/tags/念念不忘，必有回响/" style="font-size: 10px;">念念不忘，必有回响</a> <a href="/tags/数据结构/" style="font-size: 16.67px;">数据结构</a> <a href="/tags/模拟登录/" style="font-size: 10px;">模拟登录</a> <a href="/tags/正则表达式/" style="font-size: 13.33px;">正则表达式</a> <a href="/tags/词云/" style="font-size: 10px;">词云</a> <a href="/tags/验证码/" style="font-size: 10px;">验证码</a>
     </div>
 </div>
 
@@ -912,6 +912,17 @@
                         </span>
                         <span class="level-end">
                             <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/正则表达式/">
+                        <span class="level-start">
+                            <span class="level-item">正则表达式</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">2</span>
                         </span>
                     </a>
                 </li>
@@ -1330,6 +1341,17 @@
                         </span>
                         <span class="level-end">
                             <span class="level-item tag">1</span>
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a class="level is-marginless" href="/tags/正则表达式/">
+                        <span class="level-start">
+                            <span class="level-item">正则表达式</span>
+                        </span>
+                        <span class="level-end">
+                            <span class="level-item tag">2</span>
                         </span>
                     </a>
                 </li>
