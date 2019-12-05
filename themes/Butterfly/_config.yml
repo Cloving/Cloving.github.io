@@ -15,8 +15,6 @@ menu:
     - 音乐 || /music/ || fa fa-music
     - 电影 || /movies/ || fa fa-film
 
-
-
 # Favicon
 # ---------------
 favicon: /img/favicon.png
