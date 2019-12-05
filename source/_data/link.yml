@@ -2,15 +2,15 @@ class:
   class_name: 友情链接
   link_list:
     1:
-      name: xxx
-      link: https://blog.xxx.com
+      name: どなた
+      link: https://who.com
       avatar: https://cdn.xxxxx.top/avatar.png
-      descr: xxxxxxx
+      descr: 哪位
     2:
-      name: xxxxxx
-      link: https://www.xxxxxxcn/
+      name: どなた
+      link: https://who.com
       avatar: https://xxxxx/avatar.png
-      descr: xxxxxxx  
+      descr: 哪位  
 
 # class2:
 #   class_name: 链接无效
