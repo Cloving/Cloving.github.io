@@ -428,10 +428,10 @@ subtitle:
   # source: 4  調用今日詩詞（簡體） https://www.jinrishici.com/
   # subtitle 會先顯示 source , 再顯示 sub 的内容
   source: false
-  # (如果有英文逗號' , '，請使用轉義字符 &#44;)
+  # (如果有英文逗號' , '，請使用轉義字符 &#44;) ——Unicode编码 &#160为不换行空格
   sub:
     - 愿此生尽兴，赤诚善良
-    - 夢を追い続ける もっと遠くへ行く
+    - 夢を追い続ける&#160;&#160;もっと遠くへ行く
     - Never put off till tomorrow what you can do today
 
 
