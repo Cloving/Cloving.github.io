@@ -5,12 +5,11 @@ date: 2018-11-30 10:29:08
 tags:
 - Python
 - 验证码
-- cookies
 - 模拟登录
+- 正则表达式
 categories:
 - 数据抓取
 - 豆瓣
-- 正则表达式
 cover: https://cdn.jsdelivr.net/gh/Cloving/Atlas-Github/blog/CoverPicture/bg_7.jpeg
 ---
 <br/>

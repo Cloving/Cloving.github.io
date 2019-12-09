@@ -91,6 +91,14 @@ pagination_dir: page
 ## Themes: https://hexo.io/themes/
 theme: Butterfly
 
+# algolia search
+algolia:
+  applicationID: 801ZK491IX
+  apiKey: 912fcdcec3c18e3cd187b7c263f3fba7
+  indexName: blog
+  chunkSize: 5000
+
+
 # 音乐播放
 aplayer:
   meting: true

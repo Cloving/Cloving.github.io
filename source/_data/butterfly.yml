@@ -61,8 +61,10 @@ social:
 ####    search    ####
 # Algolia search
 # ---------------
+
+
 algolia_search:
-  enable: false
+  enable: true
   hits:
     per_page: 6
 
@@ -75,7 +77,7 @@ algolia_search:
 # Please see doc for more details: https://jerryc.me/posts/21cfbf15/#本地搜索
 # ---------------
 local_search:
-  enable: true
+  enable: false
   labels:
     input_placeholder: Search for Posts
     hits_empty: "We didn't find any results for the search: ${query}" # if there are no result
@@ -176,12 +178,12 @@ addThis:
   pubid:
 
 sharejs:
-  enable: true
+  enable: false
   sites: facebook,twitter,wechat,weibo,qq
 
 # https://www.addtoany.com/
 addtoany:
-  enable: false
+  enable: true
   item:
     - facebook
     - twitter
@@ -432,7 +434,6 @@ subtitle:
   sub:
     - 愿此生尽兴，赤诚善良
     - 夢を追い続ける&#160;&#160;もっと遠くへ行く
-    - Never put off till tomorrow what you can do today
 
 
 ####    側邊欄    ####
