@@ -1,8 +1,13 @@
-extends includes/layout.pug
+//- 主页
+
+//- 首先继承layout模板
+extends includes/layout.pug   
 
 block content
   #recent-posts.recent-posts
-    include includes/recent-posts.pug  
+    //- block content 区域引入rencent-posts模板
+    include includes/recent-posts.pug
+    //- block content 区域引入pagination模板
     include includes/pagination.pug
   #aside_content.aside_content
     include includes/aside.pug
