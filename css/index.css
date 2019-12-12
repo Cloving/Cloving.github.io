@@ -3616,6 +3616,9 @@ blockquote footer cite:before {
     -ms-filter: none;
     filter: none;
   }
+  #recent-posts .recent-post-item .recent-post-info .article-title {
+    text-align: left;
+  }
   #recent-posts .recent-post-item .recent-post-info .line {
     width: 100%;
   }
