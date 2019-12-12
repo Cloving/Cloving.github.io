@@ -34,12 +34,11 @@ each article , index in page.posts.data
             span= _p('post.wordcount') + ': '
             span.word-count= wordcount(article.content)
             i.fa.fa-clock-o.post-meta__icon(aria-hidden="true")
-            span= _p('post.min2read', min2read(article.content, {cn: 350, en: 160}))
-        
-          if theme.busuanzi.page_pv
-            i.fa.fa-eye.post-meta__icon(aria-hidden="true")        
-            span= _p('post.page_pv') + ': '
-            span#busuanzi_value_page_pv
+            span= _p('post.min2read', min2read(article.content, {cn: 350, en: 160}))       
+          //- if theme.busuanzi.page_pv
+          //-   i.fa.fa-eye.post-meta__icon(aria-hidden="true")        
+          //-   span= _p('post.page_pv') + ': '
+          //-   span#busuanzi_value_page_pv
       a.ahover(href=url_for(link) title=article.title || _p('no_title'))
 
 
