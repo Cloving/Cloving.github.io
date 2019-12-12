@@ -475,11 +475,11 @@ translate:
   # 默認按鈕顯示文字
   default: 繁
   #网站默认语言，1: 繁體中文, 2: 简体中文
-  defaultEncoding: 1
+  defaultEncoding: 2
   #延迟时间,若不在前, 要设定延迟翻译时间, 如100表示100ms,默认为0
   translateDelay: 0
   #博客网址
-  cookieDomain: "https://xxx/"
+  cookieDomain: "https://yaodongsheng.com/"
   #當文字是簡體時，按鈕顯示的文字
   msgToTraditionalChinese: "繁"
   #當文字是繁體時，按鈕顯示的文字
@@ -513,7 +513,7 @@ medium_zoom:
 # position 彈窗位置
 # 可選 top-left / top-center / top-right / bottom-left / bottom-center / bottom-right
 snackbar:
-  enable: true
+  enable: false
   position: bottom-left
   bg_light: '#49b1f5' #light mode時彈窗背景
   bg_dark: '#2d3035' #dark mode時彈窗背景
