@@ -1,7 +1,8 @@
 ---
 title: Vue生命周期解析
 layout: post
-date: 2018-6-10 18:44:07
+date: 2018-10-10 18:44:07
+description: Vuer ???
 categories: 
 - Vue
 - 基础原理类

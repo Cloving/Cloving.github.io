@@ -1,5 +1,6 @@
 .layout_page
   display: flex 
+  justify-content: space-between
   margin: 0 auto
   max-width: 1200px
   align-items: flex-start
@@ -7,40 +8,52 @@
 
 //index
 #recent-posts
-  width: 75%
+  width: 70%
 
   .recent-post-item 
     padding: 0
     box-shadow: 0 4px 8px 6px rgba(7,17,27,0.06)
-    border-radius: 15px
+    border-radius: 10px
     transition: all 0.3s
-    background: #fff
     margin-top: 20px
-    height: 280px
+    height: 300px
+    overflow: hidden
 
     &:hover 
       -webkit-box-shadow: 0 4px 12px 12px rgba(7,17,27,0.15)
       box-shadow: 0 4px 12px 12px rgba(7,17,27,0.15)
 
+      .recent-post-info
+        background-color: rgba(0,0,0,.6)
+
+        div
+          opacity: 1
+          transform: translateY(0)
+
       img.post_bg
         transform:scale(1.1)
-   
-  .left_radius
-    border-top-left-radius: 15px
-    border-bottom-left-radius: 15px
+        filter: blur(3px)
 
-  .right_radius
-    border-top-right-radius: 15px
-    border-bottom-right-radius: 15px
+      .recent-post-info
+        padding-top: 80px!important
+
+
+  .radius
+    border-radius: 10px 
+
+  .wrapper-lg
+    padding: 20px
 
   .post_cover
-    width: 45%
-    height: 280px
+    width: 100%
+    height: 300px
     overflow: hidden
+    // &:hover
+    //   filter: blur(3px)
 
   .post_bg
     border: 0
-    transition: all .6s
+    transition: all .3s
     display: block
     width: 100%
     height: 100%
@@ -49,33 +62,77 @@
     object-fit: cover
 
     &:hover
-      transform:scale(1.1)
+      // transform:scale(1.1)
   
-  .recent-post-info 
-    padding: 50px 40px
-    display: inline-block
-    width: 55%
-    overflow hidden
+  .recent-post-info
+    position: relative
+    height: 300px
+    margin-top: -300px
+    padding-top: 133px!important
+    padding-bottom: 0px!important
+    background-color: rgba(0,0,0,.3)
+    color: $white!important
+    overflow: hidden
+    transition: all 0.3s
 
+    div 
+      transition: all 0.3s
+      transform: translateY(-10px)
+      opacity: 0
+
+    .line
+      position: absolute
+      left: 0
+      right: 0
+      bottom: 40px;
+      width: calc(100% - 40px)
+    .b-b
+      border-bottom: 1px solid #bbb4
+    .line-lg
+      margin: 15px auto
+ 
+    .content
+      position: absolute
+      bottom: 60px
+      overflow: hidden
+      word-break: break-word
+
+    .text-muted
+      position: absolute
+      bottom: 20px
+      
+      .post-meta-wordcount>i
+        margin-left: 10px
+        
+    a.ahover
+      display: block
+      position: absolute
+      top: 0
+      bottom: 0
+      left: 0
+      right: 0
+
+    .article-title
+      text-align: center
+      color: #fff
+      text-decoration: none
+      font-size: 1.2rem
+      font-weight: bold
+      cursor: pointer
+      transition: all 0.2s ease-in-out
+      line-height: 1.4
+      text-overflow: ellipsis
+      display: -webkit-box
+      -webkit-box-orient: vertical
+      -webkit-line-clamp: 2
+      overflow: hidden
+      word-wrap: break-word
 
   a.article-meta__categories
     text-decoration: none
-    color: #858585
 
     &:hover
       color: #49b1f5 !important
-
-  .content
-    display: -webkit-box
-    -webkit-line-clamp: 3
-    -webkit-box-orient: vertical
-    overflow: hidden
-    height: 90px
-    margin-top: 0.5rem
-    word-break: break-word
-
-  .article-meta
-    color: $grey
 
     .sticky
       color: $theme-button-hover-color
@@ -90,26 +147,6 @@
     &__link
       margin: 0 0 0 0.3rem
 
-  time
-    color: $grey
-
-  .article-title
-    margin-bottom: 0.3rem
-    color: $black
-    text-decoration: none
-    font-size: 1.2rem
-    cursor: pointer
-    transition: all 0.2s ease-in-out
-    line-height: 1.4
-    text-overflow: ellipsis
-    display: -webkit-box
-    -webkit-box-orient: vertical
-    -webkit-line-clamp: 2
-    overflow: hidden
-    word-wrap: break-word
-
-    &:hover
-      color: $light-blue !important
 
 .tag-cloud
   padding: 40px 44px 44px
@@ -328,18 +365,33 @@
     .recent-post-item
       height: auto !important
 
+      &:hover 
+        img.post_bg
+          filter: none
+        .recent-post-info
+          padding-top: 30px!important
+
       .post_cover 
         width: 100% 
         height: 230px 
-        border-radius: 8px 8px 0 0
+        border-radius: 10px 10px 0 0
 
-      .recent-post-info 
+      .recent-post-info
+        margin-top: 0
         padding: 30px 25px 18px!important
         width: 100%
-              
-        .article-title
-          font-size: 1rem
-        
+        height: auto
+        background-color: rgba(0,0,0,.6)
+
+        div
+          position: static
+          transform: translateY(0)
+          opacity: 1
+
+        .line
+          width: 100%
+        a.ahover
+          display: none
         .article-meta.tags
           display: none
 
