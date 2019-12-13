@@ -225,9 +225,9 @@ valine:
   verify: false # valine verify code (true/false)
   pageSize: 10 # comment list page size
   avatar: monsterid # gravatar style https://valine.js.org/#/avatar
-  lang: en # i18n: zh-cn/en
-  placeholder: Please leave your footprints # valine comment input placeholder(like: Please leave your footprints )
-  guest_info: nick,mail,link #valine comment header info
+  lang: zh-cn # i18n: zh-cn/en
+  placeholder: ここ、ここ # valine comment input placeholder(like: Please leave your footprints )
+  guest_info: 君の名,电子邮件,链接 #valine comment header info
   bg: /img/comment_bg.png # valine background
 
 #####     Footer Settings    ####

@@ -26,9 +26,16 @@ each article , index in page.posts.data
       .line.line-lg.b-b.b-light
       .text-muted
         if (theme.post_meta.date_type)
-          - var date_type = theme.post_meta.date_type == 'updated' ? 'updated' : 'date'
-          time.post-meta__date #[i.fa.fa-calendar(aria-hidden="true")] #[=date(article[date_type], config.date_format)]
-        span.post-meta-wordcount
+          if (theme.post_meta.date_type === 'both')
+            time.post-meta__date
+              i.fa.fa-calendar(aria-hidden="true")
+              =' '+_p('post.created')+' '+date(article.date, config.date_format)
+              i.fa.fa-history(aria-hidden="true")
+              =' '+_p('post.updated')+' '+date(article.updated, config.date_format)
+          else
+            - var date_type = theme.post_meta.date_type === 'updated' ? 'updated' : 'date'
+            time.post-meta__date #[i.fa.fa-calendar(aria-hidden="true")] #[=date(page[date_type], config.date_format)]
+        .post-meta-wordcount
           if (theme.wordcount && theme.wordcount.enable)
             i.fa.fa-file-word-o.post-meta__icon(aria-hidden="true")
             span= _p('post.wordcount') + ': '
