@@ -110,6 +110,7 @@ h6 code {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 #content-inner .img-alt {
   text-decoration: none;
@@ -3262,7 +3263,7 @@ blockquote footer cite:before {
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 40px;
+  bottom: 60px;
   width: calc(100% - 40px);
 }
 #recent-posts .recent-post-info .b-b {
@@ -3273,15 +3274,15 @@ blockquote footer cite:before {
 }
 #recent-posts .recent-post-info .content {
   position: absolute;
-  bottom: 60px;
+  bottom: 80px;
   overflow: hidden;
   word-break: break-word;
 }
 #recent-posts .recent-post-info .text-muted {
   position: absolute;
-  bottom: 20px;
+  bottom: 10px;
 }
-#recent-posts .recent-post-info .text-muted .post-meta-wordcount>i {
+#recent-posts .recent-post-info .text-muted i:not(:first-child) {
   margin-left: 10px;
 }
 #recent-posts .recent-post-info a.ahover {
@@ -3662,28 +3663,46 @@ blockquote footer cite:before {
 }
 #pagination {
   overflow: hidden;
-  margin-top: 1rem;
+  margin: 2rem auto;
   width: 100%;
 }
 #pagination .pagination {
   text-align: center;
 }
-#pagination .space {
-  color: #99a9bf;
+#pagination .pagination a:first-child,
+#pagination .pagination span:first-child {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
 }
-#pagination .page-number {
+#pagination .pagination a:last-child,
+#pagination .pagination span:last-child {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+#pagination .pagination a,
+#pagination .pagination span {
   display: inline-block;
-  margin: 0 0.2rem;
-  min-width: 1.2rem;
-  height: 1.2rem;
+  min-width: 2rem;
+  height: 2rem;
   text-align: center;
-  line-height: 1.2rem;
+  text-decoration: none;
+  font-weight: 700;
+  line-height: 2rem;
+  background-color: #fff;
+  color: #00c4b6;
   cursor: pointer;
 }
-#pagination .page-number.current {
+#pagination .pagination a:not(.current):hover,
+#pagination .pagination span:not(.current):hover {
+  background: #eee;
+}
+#pagination .pagination .current {
   background: #00c4b6;
   color: #fff;
   cursor: default;
+}
+#pagination .pagination .space {
+  color: #99a9bf;
 }
 #pagination img.prev_cover,
 #pagination img.next_cover {

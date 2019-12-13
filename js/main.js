@@ -98,7 +98,7 @@ $(function () {
     $('#toggle-sidebar').animate({}, function () {
       $('#toggle-sidebar').css({
         'transform': 'rotateZ(0deg)',
-        'color': '#1F2D3D',
+        'color': '#FFF',
         'opacity': "1"
 
       })
